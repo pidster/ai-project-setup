@@ -75,7 +75,9 @@ through the intended generator where one exists.
 - `merge`: Update a branch, resolve conflicts, validate, and prepare a safe merge.
 - `migrate`: Run a structured codebase migration with checkpoints and validation.
 - `observability`: Add logs, metrics, traces, and alerts without leaking sensitive data.
+- `onboard-repo`: Inspect a repository and generate initial AI-tool guidance.
 - `perf-check`: Run benchmarks or profiling and compare results against a meaningful baseline.
+- `policy-check`: Verify repository instructions and rules are coherent and non-conflicting.
 - `pr-address-comments`: Address pull request review comments one actionable thread at a time.
 - `pr-create`: Prepare a pull request with summary, validation, and risk notes.
 - `pre-commit`: Run repository-appropriate checks before committing.

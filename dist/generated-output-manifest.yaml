@@ -29,7 +29,9 @@ generated_outputs:
       - skill.compositional.merge
       - skill.compositional.migrate
       - skill.compositional.observability
+      - skill.compositional.onboard-repo
       - skill.compositional.perf-check
+      - skill.compositional.policy-check
       - skill.compositional.pr-address-comments
       - skill.compositional.pr-create
       - skill.compositional.pre-commit
@@ -80,7 +82,9 @@ generated_outputs:
       - skill.compositional.merge
       - skill.compositional.migrate
       - skill.compositional.observability
+      - skill.compositional.onboard-repo
       - skill.compositional.perf-check
+      - skill.compositional.policy-check
       - skill.compositional.pr-address-comments
       - skill.compositional.pr-create
       - skill.compositional.pre-commit
@@ -206,10 +210,18 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.observability
+  - path: dist/opencode/.opencode/skills/onboard-repo/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.onboard-repo
   - path: dist/opencode/.opencode/skills/perf-check/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.perf-check
+  - path: dist/opencode/.opencode/skills/policy-check/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.policy-check
   - path: dist/opencode/.opencode/skills/pr-address-comments/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:

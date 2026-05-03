@@ -5,7 +5,7 @@
 This generated file adapts canonical repository guidance for Codex.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.api-change`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.data-change`, `skill.compositional.db-migration`, `skill.compositional.debug`, `skill.compositional.deploy`, `skill.compositional.docs-update`, `skill.compositional.e2e-test`, `skill.compositional.environment-setup`, `skill.compositional.format`, `skill.compositional.incident-investigation`, `skill.compositional.lint`, `skill.compositional.merge`, `skill.compositional.migrate`, `skill.compositional.observability`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.release`, `skill.compositional.review`, `skill.compositional.rollback`, `skill.compositional.scaffold-feature`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.typecheck`, `skill.compositional.update-dependencies`, `skill.compositional.upgrade-runtime`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.api-change`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.data-change`, `skill.compositional.db-migration`, `skill.compositional.debug`, `skill.compositional.deploy`, `skill.compositional.docs-update`, `skill.compositional.e2e-test`, `skill.compositional.environment-setup`, `skill.compositional.format`, `skill.compositional.incident-investigation`, `skill.compositional.lint`, `skill.compositional.merge`, `skill.compositional.migrate`, `skill.compositional.observability`, `skill.compositional.onboard-repo`, `skill.compositional.perf-check`, `skill.compositional.policy-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.release`, `skill.compositional.review`, `skill.compositional.rollback`, `skill.compositional.scaffold-feature`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.typecheck`, `skill.compositional.update-dependencies`, `skill.compositional.upgrade-runtime`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Rules
 
@@ -456,6 +456,26 @@ Verify with tests, local logs, telemetry assertions, or configuration checks whe
 available. Report signal names, emitted context, privacy considerations,
 validation performed, and any dashboard or alert follow-up.
 
+### Onboard Repo
+
+Source: `skill.compositional.onboard-repo`
+
+Use project discovery to identify repository purpose, instruction files,
+language ecosystems, package managers, tests, builds, services, CI, generated
+files, security posture, and existing workflow documentation.
+
+Preserve existing project guidance. Do not replace established instructions with
+generic assumptions, and do not introduce vendor-specific policy as the source of
+truth.
+
+Generate initial AI-tool guidance from observed repository evidence: canonical
+rules, reusable skills, vendor capability data, adapter notes, and generated
+outputs where the project architecture supports them.
+
+Run policy checks and available validation before delivery. Report evidence
+used, guidance created or updated, validation performed, assumptions, and open
+questions for maintainers.
+
 ### Perf Check
 
 Source: `skill.compositional.perf-check`
@@ -472,6 +492,26 @@ artifact changes before drawing conclusions.
 
 Report the command used, baseline source, result summary, variance or confidence
 limits, suspected cause of regressions, and any environment limitation.
+
+### Policy Check
+
+Source: `skill.compositional.policy-check`
+
+Use project discovery to identify instruction files, canonical rules, skills,
+vendor-specific adapters, generated outputs, scoped documentation instructions,
+and validation tooling.
+
+Compare guidance for conflicts, duplication, stale generated output, unclear
+source-of-truth boundaries, missing dependencies, unsupported vendor mechanics,
+and policy stated only in vendor-specific files.
+
+When guidance conflicts, stop and report the discrepancy instead of silently
+choosing one source. Preserve canonical boundaries: policy belongs in canonical
+content, while vendor files adapt formatting and mechanics.
+
+Run available validation and review uncovered invariants manually. Report
+conflicts, missing coverage, validation performed, and recommended corrective
+changes.
 
 ### PR Address Comments
 
