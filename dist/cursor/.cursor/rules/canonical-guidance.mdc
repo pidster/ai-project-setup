@@ -10,7 +10,7 @@ alwaysApply: true
 This generated Cursor rule adapts canonical repository guidance.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.build`, `skill.compositional.commit`, `skill.compositional.pre-commit`, `skill.compositional.test`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.debug`, `skill.compositional.pre-commit`, `skill.compositional.review`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.update-dependencies`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Git Safety
 
@@ -93,6 +93,25 @@ Prefer repository-defined commands over generic commands when both exist.
 
 Record uncertain findings as assumptions instead of converting them into policy.
 
+## Audit
+
+Source: `skill.compositional.audit`
+
+Use project discovery to identify dependency manifests, lockfiles, security
+configuration, CI checks, generated artifacts, and repository-defined audit
+commands.
+
+Prefer existing repository audit, dependency, and configuration checks over
+generic commands.
+
+Inspect results for actionable risk. Separate known vulnerabilities,
+misconfiguration, stale generated output, unsupported dependencies, and policy
+drift from informational noise.
+
+Do not suppress, ignore, or downgrade audit findings without explicit rationale.
+Report the command used, finding severity, affected surface, recommended fix,
+and any unresolved external dependency or vendor risk.
+
 ## Build
 
 Source: `skill.compositional.build`
@@ -110,6 +129,43 @@ public artifacts, dependency metadata, or cross-package contracts are affected.
 Stop on failures. Preserve the exact failing command, identify whether the
 failure is compile-time, packaging, generation, dependency, or configuration
 related, and report the next useful diagnostic step.
+
+## CI Fix
+
+Source: `skill.compositional.ci-fix`
+
+Inspect failing jobs, failing commands, logs, changed files, and relevant CI
+configuration before editing code.
+
+Reproduce locally when the required tooling, services, credentials, and runtime
+conditions are available. If local reproduction is not practical, preserve the
+CI evidence and state the limitation.
+
+Patch the underlying issue rather than weakening CI, tests, validation, typing,
+security checks, or timeouts to make the failure disappear.
+
+Verify with the closest local command and any broader validation justified by
+the failure surface. Report the CI failure, reproduction status, fix, validation
+performed, and any remaining CI-only risk.
+
+## Cleanup
+
+Source: `skill.compositional.cleanup`
+
+Use project discovery to understand ownership, entry points, generated files,
+configuration references, tests, and package metadata before deleting or
+simplifying anything.
+
+Prefer small cleanup changes with clear evidence that the removed code,
+configuration, dependency, or artifact is unused.
+
+Do not mix broad refactors with cleanup unless the task explicitly asks for it.
+Avoid changing public behavior, compatibility, generated-output conventions, or
+security posture as a side effect.
+
+Verify with commands that cover the removed surface. Report what was removed,
+why it was safe to remove, validation performed, and any remaining references or
+uncertainty.
 
 ## Commit
 
@@ -133,6 +189,41 @@ not the mechanical editing steps.
 Report the commit identifier, validation performed, and any remaining dirty
 worktree state that was intentionally left out.
 
+## Coverage
+
+Source: `skill.compositional.coverage`
+
+Use project discovery to identify existing coverage commands, reports, CI
+thresholds, and affected packages or workspaces.
+
+Prefer repository-defined coverage commands over generic tool invocations.
+
+Measure coverage only where it can inform risk. Focus on meaningful gaps in
+changed behavior, public contracts, edge cases, error paths, and
+security-sensitive logic. Avoid adding shallow tests only to improve aggregate
+percentages.
+
+Report the command used, relevant coverage signal, uncovered risk, and the
+smallest useful test or validation follow-up.
+
+## Debug
+
+Source: `skill.compositional.debug`
+
+Start by reproducing the failure or unexpected behavior with the narrowest
+available command, input, fixture, log, or scenario.
+
+Isolate the failing surface before patching. Prefer reading code paths,
+configuration, recent changes, and existing tests over speculative edits.
+
+Add focused diagnostics only when they materially shorten the investigation.
+Remove temporary diagnostics before delivery unless they are intentional
+observability improvements.
+
+Verify the fix with the original reproducer and the smallest broader validation
+that covers likely regressions. Report commands run, failures observed, root
+cause, fix, and remaining risk.
+
 ## Pre-Commit
 
 Source: `skill.compositional.pre-commit`
@@ -149,6 +240,42 @@ code.
 
 Stop on failures, preserve the exact failing command, and report the next useful
 debugging step.
+
+## Review
+
+Source: `skill.compositional.review`
+
+Inspect the changed files, surrounding code, tests, configuration, generated
+artifacts, and relevant project guidance before forming findings.
+
+Prioritize bugs, behavioral regressions, security issues, missing validation,
+missing tests, generated-output drift, and maintainability risks. Do not treat
+style preferences as findings unless they affect correctness or project
+consistency.
+
+Ground findings in concrete files, commands, inputs, or expected behavior.
+Separate confirmed issues from assumptions and open questions.
+
+When no issues are found, say that directly and call out any residual validation
+or test coverage gaps.
+
+## Sync Generated
+
+Source: `skill.compositional.sync-generated`
+
+Use project discovery to identify generated files, source inputs, generator
+commands, manifests, lockfiles, snapshots, and freshness validation.
+
+Regenerate derived output through the intended generator or package manager.
+Do not hand-author generated files unless the repository explicitly documents
+that workflow.
+
+Keep generated-output changes tied to the source inputs or generator changes
+that caused them. If generated output changes unexpectedly, inspect the
+generator version, environment, ordering, and source data before accepting it.
+
+Run freshness validation when available. Report generators run, source inputs,
+generated outputs changed, validation performed, and any unexplained churn.
 
 ## Test
 
@@ -167,6 +294,27 @@ security-sensitive code.
 
 Stop on failures. Preserve the exact failing command, summarize the failing
 surface, and report the next useful isolation step.
+
+## Update Dependencies
+
+Source: `skill.compositional.update-dependencies`
+
+Use project discovery to identify package managers, manifests, lockfiles,
+workspaces, dependency groups, changelog sources, and existing update commands.
+
+Keep updates scoped to the requested dependency, ecosystem, or risk unless the
+task explicitly asks for a broad refresh.
+
+Inspect meaningful release notes, migration notes, security advisories, and
+breaking-change signals before accepting major or behavior-sensitive updates.
+
+Update generated lockfiles or dependency metadata through the intended package
+manager. Do not hand-edit generated dependency output unless the ecosystem
+explicitly requires it.
+
+Verify with the narrowest meaningful tests or builds, then broaden when shared
+runtime behavior, public contracts, security-sensitive code, or generated
+artifacts are affected.
 
 ## Adapter Validation
 

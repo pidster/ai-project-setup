@@ -55,10 +55,18 @@ through the intended generator where one exists.
 - `git`: Use Git safely and intentionally during AI-assisted changes.
 - `language-toolchain`: Select language and package tooling from repository evidence.
 - `project-discovery`: Discover repository structure, ecosystems, commands, and local guidance.
+- `audit`: Audit security, dependency, and configuration risk.
 - `build`: Run repository-appropriate build or package checks.
+- `ci-fix`: Inspect failing CI, reproduce locally where possible, patch, and verify.
+- `cleanup`: Remove dead code, stale configuration, and unused generated artifacts safely.
 - `commit`: Inspect, stage, validate, and commit an intentional change.
+- `coverage`: Measure coverage and identify meaningful validation gaps.
+- `debug`: Reproduce, isolate, diagnose, and verify a focused fix.
 - `pre-commit`: Run repository-appropriate checks before committing.
+- `review`: Review a local or pull-request diff for correctness, risk, and maintainability.
+- `sync-generated`: Regenerate and validate derived files, schemas, clients, lockfiles, and snapshots.
 - `test`: Select and run repository-appropriate tests for a change.
+- `update-dependencies`: Update dependency sets safely and verify affected behavior.
 - `adapter-validation`: Validate adapter and generated-output policy-drift guardrails.
 - `canonical-validation`: Validate canonical rule and skill metadata and dependency graph.
 - `generated-manifest`: Generate and check the generated-output manifest.

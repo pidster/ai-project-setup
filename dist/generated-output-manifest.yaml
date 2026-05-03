@@ -9,10 +9,18 @@ generated_outputs:
       - skill.atomic.git
       - skill.atomic.language-toolchain
       - skill.atomic.project-discovery
+      - skill.compositional.audit
       - skill.compositional.build
+      - skill.compositional.ci-fix
+      - skill.compositional.cleanup
       - skill.compositional.commit
+      - skill.compositional.coverage
+      - skill.compositional.debug
       - skill.compositional.pre-commit
+      - skill.compositional.review
+      - skill.compositional.sync-generated
       - skill.compositional.test
+      - skill.compositional.update-dependencies
       - skill.tool.adapter-validation
       - skill.tool.canonical-validation
       - skill.tool.generated-manifest
@@ -28,10 +36,18 @@ generated_outputs:
       - skill.atomic.git
       - skill.atomic.language-toolchain
       - skill.atomic.project-discovery
+      - skill.compositional.audit
       - skill.compositional.build
+      - skill.compositional.ci-fix
+      - skill.compositional.cleanup
       - skill.compositional.commit
+      - skill.compositional.coverage
+      - skill.compositional.debug
       - skill.compositional.pre-commit
+      - skill.compositional.review
+      - skill.compositional.sync-generated
       - skill.compositional.test
+      - skill.compositional.update-dependencies
       - skill.tool.adapter-validation
       - skill.tool.canonical-validation
       - skill.tool.generated-manifest
@@ -42,6 +58,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.tool.adapter-validation
+  - path: dist/opencode/.opencode/skills/audit/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.audit
   - path: dist/opencode/.opencode/skills/build/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -50,10 +70,26 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.tool.canonical-validation
+  - path: dist/opencode/.opencode/skills/ci-fix/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.ci-fix
+  - path: dist/opencode/.opencode/skills/cleanup/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.cleanup
   - path: dist/opencode/.opencode/skills/commit/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.commit
+  - path: dist/opencode/.opencode/skills/coverage/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.coverage
+  - path: dist/opencode/.opencode/skills/debug/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.debug
   - path: dist/opencode/.opencode/skills/generated-manifest/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -78,10 +114,22 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.atomic.project-discovery
+  - path: dist/opencode/.opencode/skills/review/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.review
+  - path: dist/opencode/.opencode/skills/sync-generated/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.sync-generated
   - path: dist/opencode/.opencode/skills/test/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.test
+  - path: dist/opencode/.opencode/skills/update-dependencies/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.update-dependencies
   - path: dist/opencode/.opencode/skills/validation/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
