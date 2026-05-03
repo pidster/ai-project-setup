@@ -13,3 +13,12 @@ Adapters may handle:
 - runtime caveats
 
 Adapters must not redefine canonical policy.
+
+Implemented renderer entry points:
+
+- `python3 adapters/codex/render.py`
+- `python3 adapters/cursor/render.py`
+
+Run `python3 core/skills/tools/adapter_validation.py` to check adapter
+policy-drift guardrails, and `python3 core/skills/tools/generated_validation.py`
+to check that generated outputs are up to date.

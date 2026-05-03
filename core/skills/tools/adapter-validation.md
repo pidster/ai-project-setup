@@ -1,0 +1,35 @@
+---
+id: skill.tool.adapter-validation
+kind: skill
+scope: atomic
+category: tool
+domain: validation
+tool: python
+summary: Validate adapter and generated-output policy-drift guardrails.
+depends_on:
+  - skill.atomic.project-discovery
+commands:
+  - python3 core/skills/tools/adapter_validation.py
+---
+
+# Adapter Validation
+
+Use this skill when adapter renderers or generated vendor outputs are added or
+changed.
+
+Run the deterministic adapter validator:
+
+```sh
+python3 core/skills/tools/adapter_validation.py
+```
+
+The validator checks implemented renderer registrations, vendor output
+placement, generated-file markers, canonical-boundary notices, and source ID
+coverage in generated outputs.
+
+This validator does not prove semantic policy equivalence. Review adapter logic
+manually for policy drift when renderer behavior changes.
+
+Do not run `py_compile` or `compileall` as part of normal validation. Direct
+execution already catches syntax errors and avoids creating repo-local bytecode
+cache artifacts.

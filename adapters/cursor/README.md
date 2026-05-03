@@ -1,4 +1,21 @@
 # Cursor Adapter
 
-Stub for rendering canonical content into Cursor surfaces such as
-`.cursor/rules/*.mdc` and `.cursor/commands/*.md`.
+Renders canonical content into Cursor surfaces.
+
+Current output:
+
+- `dist/cursor/.cursor/rules/canonical-guidance.mdc`
+
+Run:
+
+```sh
+python3 adapters/cursor/render.py
+```
+
+Check freshness:
+
+```sh
+python3 adapters/cursor/render.py --check
+```
+
+Future output may include `.cursor/commands/*.md` workflow projections.

@@ -200,13 +200,11 @@ See `docs/activity-skill-backlog.md` for the full list.
 
 Likely next steps:
 
-1. Define the canonical metadata schema.
-2. Add a small set of language-neutral atomic rules.
-3. Add atomic skills for Git, project discovery, and language toolchain handling.
-4. Add one compositional skill such as `pre-commit`.
-5. Add initial vendor capability data.
-6. Build renderers for two contrasting vendors.
-7. Add validation for dependency direction, required metadata, and stale output.
+1. Expand validation coverage for vendor adapter policy drift.
+2. Extend renderer coverage beyond the initial Codex and Cursor outputs.
+3. Add snapshot-style checks for generated output reviewability.
+4. Add more compositional activity skills after renderer and validation seams are
+   proven.
 
 Good first vendor pair: Codex and Cursor for instruction/rule contrast, or Claude
 Code and OpenCode for first-class plugin-package exploration.
