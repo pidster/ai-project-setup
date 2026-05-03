@@ -1,0 +1,33 @@
+---
+id: skill.compositional.pr-address-comments
+kind: skill
+scope: compositional
+category: workflow
+domain: pr-address-comments
+summary: Address pull request review comments one actionable thread at a time.
+depends_on:
+  - skill.atomic.git
+  - skill.atomic.project-discovery
+  - skill.atomic.language-toolchain
+  - skill.compositional.debug
+  - skill.compositional.test
+  - rule.atomic.source-code
+optional_tools: []
+---
+
+# PR Address Comments
+
+Inspect review comments, unresolved threads, requested changes, current branch
+state, and the surrounding code before editing.
+
+Handle one actionable concern at a time. Distinguish required fixes from
+questions, preferences, stale comments, and comments already addressed by later
+changes.
+
+Patch the underlying issue while preserving the intent of existing code and
+nearby reviewer feedback. Do not revert unrelated user or reviewer changes.
+
+Verify the addressed surface with the narrowest meaningful command, then broaden
+when the comment affects shared behavior, public contracts, generated output, or
+security-sensitive logic. Report what was addressed, validation performed, and
+which threads or questions remain.

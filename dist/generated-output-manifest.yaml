@@ -16,7 +16,11 @@ generated_outputs:
       - skill.compositional.commit
       - skill.compositional.coverage
       - skill.compositional.debug
+      - skill.compositional.merge
+      - skill.compositional.pr-address-comments
+      - skill.compositional.pr-create
       - skill.compositional.pre-commit
+      - skill.compositional.rebase
       - skill.compositional.review
       - skill.compositional.sync-generated
       - skill.compositional.test
@@ -43,7 +47,11 @@ generated_outputs:
       - skill.compositional.commit
       - skill.compositional.coverage
       - skill.compositional.debug
+      - skill.compositional.merge
+      - skill.compositional.pr-address-comments
+      - skill.compositional.pr-create
       - skill.compositional.pre-commit
+      - skill.compositional.rebase
       - skill.compositional.review
       - skill.compositional.sync-generated
       - skill.compositional.test
@@ -106,6 +114,18 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.atomic.language-toolchain
+  - path: dist/opencode/.opencode/skills/merge/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.merge
+  - path: dist/opencode/.opencode/skills/pr-address-comments/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.pr-address-comments
+  - path: dist/opencode/.opencode/skills/pr-create/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.pr-create
   - path: dist/opencode/.opencode/skills/pre-commit/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -114,6 +134,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.atomic.project-discovery
+  - path: dist/opencode/.opencode/skills/rebase/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.rebase
   - path: dist/opencode/.opencode/skills/review/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:

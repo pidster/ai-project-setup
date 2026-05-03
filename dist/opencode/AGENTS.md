@@ -62,7 +62,11 @@ through the intended generator where one exists.
 - `commit`: Inspect, stage, validate, and commit an intentional change.
 - `coverage`: Measure coverage and identify meaningful validation gaps.
 - `debug`: Reproduce, isolate, diagnose, and verify a focused fix.
+- `merge`: Update a branch, resolve conflicts, validate, and prepare a safe merge.
+- `pr-address-comments`: Address pull request review comments one actionable thread at a time.
+- `pr-create`: Prepare a pull request with summary, validation, and risk notes.
 - `pre-commit`: Run repository-appropriate checks before committing.
+- `rebase`: Rebase a branch with conflict handling and post-rebase validation.
 - `review`: Review a local or pull-request diff for correctness, risk, and maintainability.
 - `sync-generated`: Regenerate and validate derived files, schemas, clients, lockfiles, and snapshots.
 - `test`: Select and run repository-appropriate tests for a change.

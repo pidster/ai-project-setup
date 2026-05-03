@@ -5,7 +5,7 @@
 This generated file adapts canonical repository guidance for Codex.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.debug`, `skill.compositional.pre-commit`, `skill.compositional.review`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.update-dependencies`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.debug`, `skill.compositional.merge`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.review`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.update-dependencies`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Rules
 
@@ -223,6 +223,61 @@ Verify the fix with the original reproducer and the smallest broader validation
 that covers likely regressions. Report commands run, failures observed, root
 cause, fix, and remaining risk.
 
+### Merge
+
+Source: `skill.compositional.merge`
+
+Inspect branch state, remote state, worktree status, changed files, and project
+guidance before merging or updating a branch.
+
+Do not discard local or user changes to simplify a merge. Preserve intentional
+changes from both sides and inspect conflicts in their surrounding context.
+
+Resolve conflicts by maintaining behavior, public contracts, generated-output
+conventions, and security posture. Regenerate derived files through the intended
+generator when conflicts affect generated output.
+
+Validate the merged result with checks appropriate to the conflict surface.
+Report the merge source, conflicts resolved, validation performed, and any
+remaining risk.
+
+### PR Address Comments
+
+Source: `skill.compositional.pr-address-comments`
+
+Inspect review comments, unresolved threads, requested changes, current branch
+state, and the surrounding code before editing.
+
+Handle one actionable concern at a time. Distinguish required fixes from
+questions, preferences, stale comments, and comments already addressed by later
+changes.
+
+Patch the underlying issue while preserving the intent of existing code and
+nearby reviewer feedback. Do not revert unrelated user or reviewer changes.
+
+Verify the addressed surface with the narrowest meaningful command, then broaden
+when the comment affects shared behavior, public contracts, generated output, or
+security-sensitive logic. Report what was addressed, validation performed, and
+which threads or questions remain.
+
+### PR Create
+
+Source: `skill.compositional.pr-create`
+
+Inspect branch state, worktree status, staged changes, commit history, changed
+files, and relevant project guidance before preparing a pull request.
+
+Ensure the branch contains only intentional commits for the requested work. Do
+not include unrelated local changes or generated churn that is not tied to the
+change.
+
+Run relevant validation or record why validation was unavailable. Review the diff
+for design-impacting changes, generated output, security risk, and missing tests.
+
+Write a pull request summary that covers user-visible behavior or content
+changes, validation performed, risk, and follow-up work. Keep implementation
+detail proportional to the review burden.
+
 ### Pre-Commit
 
 Source: `skill.compositional.pre-commit`
@@ -239,6 +294,25 @@ code.
 
 Stop on failures, preserve the exact failing command, and report the next useful
 debugging step.
+
+### Rebase
+
+Source: `skill.compositional.rebase`
+
+Inspect branch state, upstream target, commit range, worktree status, and project
+guidance before rebasing.
+
+Do not rewrite public or shared history unless the workflow and user request
+allow it. Preserve user changes and avoid destructive cleanup during conflict
+resolution.
+
+Resolve conflicts commit by commit when needed, preserving the intent of both the
+rebased work and upstream changes. Regenerate derived files through the intended
+generator when generated output is affected.
+
+Validate the rebased result with checks appropriate to the changed and conflicted
+surface. Report the upstream target, conflict handling, validation performed,
+and any remaining risk.
 
 ### Review
 
