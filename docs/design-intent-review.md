@@ -29,13 +29,17 @@ Follow-up questions:
 Status: pass with one design pressure to watch.
 
 The design preserves the key rule: compositional skills may call atomic skills,
-but atomic skills should not depend on compositional skills.
+but atomic skills should not depend on compositional skills. Compositional
+skills may depend on other compositional skills when the dependency represents
+workflow reuse rather than lower-level tool procedure.
 
 Findings:
 
 - Tool skills are now explicitly atomic through `scope: atomic` and identified
   separately with `category: tool`.
 - Compositional workflows own sequencing, scope, failure behavior, and reporting.
+- Compositional-to-compositional dependencies are allowed for workflow reuse,
+  provided the dependency graph remains acyclic.
 - Atomic skills own detailed recipes for one domain or tool.
 
 Design pressure:

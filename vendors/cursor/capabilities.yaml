@@ -1,0 +1,25 @@
+vendor: cursor
+display_name: Cursor
+last_reviewed: 2026-05-02
+confidence: verified
+profile_fit: partial
+sources:
+  - https://docs.cursor.com/en/context/rules
+  - https://docs.cursor.com/en/agent/chat/commands
+  - https://docs.cursor.com/cli/mcp
+supports:
+  always_on_instructions: true
+  path_scoped_rules: true
+  skills: false
+  manual_commands: true
+  custom_agents: false
+  hooks: false
+  mcp: true
+  plugin_package: false
+preferred_outputs:
+  - .cursor/rules/*.mdc
+  - .cursor/commands/*.md
+  - AGENTS.md
+notes:
+  - Cursor rules are the main rich adapter surface.
+  - No verified repo-native SKILL.md or event hook support yet.

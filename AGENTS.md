@@ -112,13 +112,19 @@ As tooling is added, validation should check:
 - Existing dependencies.
 - No dependency cycles.
 - Atomic skills do not depend on compositional skills.
+- Compositional skills may depend on compositional skills for workflow reuse,
+  but cycles remain invalid.
 - Rules do not depend on skills unless explicitly justified.
 - Tool skills use `scope: atomic` and `category: tool`.
 - Vendor capability files are declarative data only.
 - Generated output is up to date.
 
-Until validation tooling exists, review changes manually against these
-expectations.
+For invariants not yet covered by validation tooling, review changes manually
+against these expectations.
+
+Prefer Python for project scripting and validation tooling. Use `jq`, `yq`, and
+`mdq` for focused JSON, YAML, and Markdown inspection where they are simpler than
+a script. Do not infer a project dependency from ad hoc local command choices.
 
 ## Git and Delivery
 

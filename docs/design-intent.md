@@ -113,8 +113,12 @@ Compositional skills may cover workflows such as:
 - build
 - audit
 
-Compositional skills may call atomic skills. Atomic skills may reference
-compositional workflows, but should not depend on them for normal operation.
+Compositional skills may call atomic skills. They may also depend on other
+compositional skills when the dependency represents reusable workflow
+sequencing, such as `commit` depending on `pre-commit`.
+
+Atomic skills may reference compositional workflows, but should not depend on
+them for normal operation.
 
 ### Vendor Configs
 
@@ -352,6 +356,8 @@ Minimum checks:
 - Every dependency exists.
 - No dependency graph cycles exist.
 - Atomic skills do not depend on compositional skills.
+- Compositional skills may depend on compositional skills for workflow reuse,
+  but cycles remain invalid.
 - Rules do not depend on skills unless an explicit exception is justified.
 - Required metadata fields exist for each `kind` and `scope`.
 - Tool skills use `scope: atomic` and `category: tool`.

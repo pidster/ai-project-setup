@@ -1,0 +1,34 @@
+version: 0
+status: stub
+description: Canonical manifest for vendor-neutral AI project setup content.
+
+content_roots:
+  rules:
+    - core/rules/atomic
+    - core/rules/languages
+    - core/rules/compositional
+  skills:
+    - core/skills/atomic
+    - core/skills/tools
+    - core/skills/compositional
+
+vendor_roots:
+  - vendors/claude
+  - vendors/codex
+  - vendors/cursor
+  - vendors/copilot
+  - vendors/opencode
+  - vendors/windsurf-devin
+
+adapter_roots:
+  - adapters/claude
+  - adapters/codex
+  - adapters/cursor
+  - adapters/copilot
+  - adapters/opencode
+  - adapters/windsurf-devin
+
+notes:
+  - Canonical content is the source of truth.
+  - Vendor adapters may adapt formatting and mechanics, but not redefine policy.
+  - Generated output belongs under dist/.

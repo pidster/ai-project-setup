@@ -1,0 +1,24 @@
+vendor: codex
+display_name: OpenAI Codex
+last_reviewed: 2026-05-02
+confidence: verified
+profile_fit: partial
+sources:
+  - https://openai.com/index/introducing-codex/
+  - https://openai.com/index/unrolling-the-codex-agent-loop/
+  - https://github.com/openai/codex/blob/main/docs/config.md
+supports:
+  always_on_instructions: true
+  path_scoped_rules: true
+  skills: true
+  manual_commands: false
+  custom_agents: false
+  hooks: partial
+  mcp: true
+  plugin_package: partial
+preferred_outputs:
+  - AGENTS.md
+  - .agents/skills/*/SKILL.md
+notes:
+  - Use AGENTS.md as the primary committed instruction output.
+  - No verified committed Codex-specific slash-command or custom-agent profile format yet.

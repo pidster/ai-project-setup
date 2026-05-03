@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pidster/ai-project-setup/schemas/canonical-item.schema.json",
+  "title": "Canonical Item",
+  "description": "Frontmatter shape for canonical rules and skills.",
+  "type": "object",
+  "required": ["id", "kind", "scope", "summary"],
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(rule|skill)\\.[a-z0-9-]+(\\.[a-z0-9-]+)+$"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["rule", "skill"]
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["atomic", "compositional"]
+    },
+    "category": {
+      "type": "string",
+      "enum": ["domain", "language", "tool", "workflow", "policy"]
+    },
+    "domain": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "extends": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "optional_tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  }
+}

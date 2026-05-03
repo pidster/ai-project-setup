@@ -1,0 +1,32 @@
+vendor: windsurf-devin
+display_name: Windsurf and Devin
+last_reviewed: 2026-05-02
+confidence: verified
+profile_fit: mixed
+sources:
+  - https://docs.windsurf.com/windsurf/cascade/memories
+  - https://docs.windsurf.com/windsurf/cascade/skills
+  - https://docs.windsurf.com/windsurf/cascade/hooks
+  - https://docs.devin.ai/product-guides/skills
+  - https://cli.devin.ai/docs/extensibility
+supports:
+  always_on_instructions: true
+  path_scoped_rules: true
+  skills: true
+  manual_commands: true
+  custom_agents: partial
+  hooks: true
+  mcp: true
+  plugin_package: partial
+preferred_outputs:
+  - AGENTS.md
+  - .windsurf/rules/*.md
+  - .windsurf/skills/*/SKILL.md
+  - .windsurf/workflows/*.md
+  - .windsurf/hooks.json
+  - .agents/skills/*/SKILL.md
+  - .devin/config.json
+  - .devin/agents/*/AGENT.md
+notes:
+  - Windsurf has full rich fit except no verified committed custom-agent profile format.
+  - Devin product and Devin for Terminal have different capability surfaces.

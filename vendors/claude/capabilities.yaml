@@ -1,0 +1,27 @@
+vendor: claude
+display_name: Claude Code
+last_reviewed: 2026-05-02
+confidence: verified
+profile_fit: full
+sources:
+  - https://code.claude.com/docs/en/memory
+  - https://docs.claude.com/en/docs/claude-code/skills
+  - https://docs.claude.com/en/docs/claude-code/plugins
+supports:
+  always_on_instructions: true
+  path_scoped_rules: true
+  skills: true
+  manual_commands: true
+  custom_agents: true
+  hooks: true
+  mcp: true
+  plugin_package: true
+preferred_outputs:
+  - CLAUDE.md
+  - .claude/rules/*.md
+  - .claude/skills/*/SKILL.md
+  - .claude/commands/*.md
+  - .claude/agents/*.md
+notes:
+  - Use CLAUDE.md as the native entry point and import AGENTS.md when sharing guidance.
+  - Treat settings, hooks, MCP, and plugins as runtime adapters, not canonical policy.

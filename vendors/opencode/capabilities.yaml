@@ -1,0 +1,29 @@
+vendor: opencode
+display_name: OpenCode
+last_reviewed: 2026-05-02
+confidence: verified
+profile_fit: full
+sources:
+  - https://opencode.ai/docs/rules
+  - https://opencode.ai/docs/config/
+  - https://opencode.ai/docs/skills/
+  - https://opencode.ai/docs/plugins/
+supports:
+  always_on_instructions: true
+  path_scoped_rules: true
+  skills: true
+  manual_commands: true
+  custom_agents: true
+  hooks: true
+  mcp: true
+  plugin_package: true
+preferred_outputs:
+  - AGENTS.md
+  - opencode.json
+  - .opencode/skills/*/SKILL.md
+  - .opencode/commands/*.md
+  - .opencode/agents/*.md
+  - .opencode/plugins/*.ts
+notes:
+  - OpenCode is a first-class plugin-package target.
+  - Use .agents/skills for cross-vendor skills when appropriate.

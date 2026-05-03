@@ -1,0 +1,28 @@
+vendor: copilot
+display_name: GitHub Copilot
+last_reviewed: 2026-05-02
+confidence: verified
+profile_fit: full
+sources:
+  - https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions
+  - https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
+  - https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-hooks
+supports:
+  always_on_instructions: true
+  path_scoped_rules: true
+  skills: true
+  manual_commands: true
+  custom_agents: true
+  hooks: true
+  mcp: true
+  plugin_package: partial
+preferred_outputs:
+  - .github/copilot-instructions.md
+  - .github/instructions/*.instructions.md
+  - .github/prompts/*.prompt.md
+  - .github/skills/*/SKILL.md
+  - .github/agents/*.md
+  - .github/hooks/*.json
+notes:
+  - AGENTS.md support varies by Copilot surface, so keep a compact Copilot instructions projection.
+  - Copilot coding agent supports MCP tools, not MCP prompts or resources.

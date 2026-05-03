@@ -1,0 +1,33 @@
+---
+id: skill.compositional.commit
+kind: skill
+scope: compositional
+category: workflow
+domain: commit
+summary: Inspect, stage, validate, and commit an intentional change.
+depends_on:
+  - skill.atomic.git
+  - skill.compositional.pre-commit
+  - rule.atomic.git-safety
+optional_tools: []
+---
+
+# Commit
+
+Inspect worktree status before staging. Separate files that belong to the
+requested change from unrelated user or generated changes.
+
+Review the diff before committing and understand the behavioral, documentation,
+configuration, or generated-artifact impact being recorded.
+
+Run the pre-commit workflow, or record why validation was not available or not
+appropriate for the change.
+
+Stage only files that belong to the intended commit. Do not stage unrelated
+changes, and do not discard user changes to create a cleaner diff.
+
+Write a concise commit message that describes the committed behavior or content,
+not the mechanical editing steps.
+
+Report the commit identifier, validation performed, and any remaining dirty
+worktree state that was intentionally left out.
