@@ -5,7 +5,7 @@
 This generated file adapts canonical repository guidance for Codex.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.api-change`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.data-change`, `skill.compositional.db-migration`, `skill.compositional.debug`, `skill.compositional.docs-update`, `skill.compositional.e2e-test`, `skill.compositional.format`, `skill.compositional.lint`, `skill.compositional.merge`, `skill.compositional.migrate`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.review`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.typecheck`, `skill.compositional.update-dependencies`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.api-change`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.data-change`, `skill.compositional.db-migration`, `skill.compositional.debug`, `skill.compositional.deploy`, `skill.compositional.docs-update`, `skill.compositional.e2e-test`, `skill.compositional.format`, `skill.compositional.lint`, `skill.compositional.merge`, `skill.compositional.migrate`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.release`, `skill.compositional.review`, `skill.compositional.rollback`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.typecheck`, `skill.compositional.update-dependencies`, `skill.compositional.upgrade-runtime`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Rules
 
@@ -276,6 +276,24 @@ Verify the fix with the original reproducer and the smallest broader validation
 that covers likely regressions. Report commands run, failures observed, root
 cause, fix, and remaining risk.
 
+### Deploy
+
+Source: `skill.compositional.deploy`
+
+Use project discovery to identify deployment documentation, environments,
+artifacts, secrets requirements, approvals, infrastructure configuration,
+rollback procedures, and deployment validation.
+
+Do not invent deployment commands. Prefer documented repository workflows,
+release pipelines, CI jobs, or deployment tooling.
+
+Verify that artifacts, configuration, generated output, environment variables,
+permissions, and migrations match the target environment before deployment.
+
+Report the target environment, artifact or revision, checks performed, deployment
+status, rollback path, and any missing approval, secret, or environment
+dependency.
+
 ### Docs Update
 
 Source: `skill.compositional.docs-update`
@@ -474,6 +492,25 @@ Validate the rebased result with checks appropriate to the changed and conflicte
 surface. Report the upstream target, conflict handling, validation performed,
 and any remaining risk.
 
+### Release
+
+Source: `skill.compositional.release`
+
+Use project discovery to identify release process documentation, version files,
+changelog conventions, package artifacts, tags, signing, publishing steps, and
+CI release checks.
+
+Inspect the commit range and generated artifacts that belong to the release.
+Separate user-facing changes, internal maintenance, security fixes, breaking
+changes, and migration notes.
+
+Update version metadata, changelog entries, release notes, generated artifacts,
+and package manifests through the repository's intended workflow.
+
+Run release validation before tagging or publishing when available. Report the
+release version, commit range, artifacts, validation performed, publishing
+status, and any manual follow-up.
+
 ### Review
 
 Source: `skill.compositional.review`
@@ -491,6 +528,26 @@ Separate confirmed issues from assumptions and open questions.
 
 When no issues are found, say that directly and call out any residual validation
 or test coverage gaps.
+
+### Rollback
+
+Source: `skill.compositional.rollback`
+
+Use project discovery to identify rollback procedures, release artifacts,
+deployment history, database migrations, configuration changes, feature flags,
+and validation commands.
+
+Choose the least risky rollback path for the affected environment: redeploy a
+known-good artifact, revert a commit, disable a flag, restore configuration, or
+apply a documented database rollback.
+
+Do not discard local or user changes as part of rollback unless explicitly
+requested. Treat data and migration rollback as high-risk and preserve evidence
+before acting.
+
+Verify restored behavior with health checks, targeted tests, logs, or monitoring
+signals. Report rollback target, commands or actions taken, validation
+performed, and remaining operational risk.
 
 ### Service Start
 
@@ -584,6 +641,25 @@ explicitly requires it.
 Verify with the narrowest meaningful tests or builds, then broaden when shared
 runtime behavior, public contracts, security-sensitive code, or generated
 artifacts are affected.
+
+### Upgrade Runtime
+
+Source: `skill.compositional.upgrade-runtime`
+
+Use project discovery to identify runtime declarations, version managers,
+framework metadata, lockfiles, CI matrices, container images, deployment
+configuration, and compatibility constraints.
+
+Inspect release notes, migration guides, deprecations, breaking changes, and
+ecosystem support windows before applying the upgrade.
+
+Keep the upgrade scoped to the requested runtime, language, or framework unless
+the migration explicitly requires dependency or configuration updates.
+
+Update generated files, lockfiles, CI configuration, and docs through intended
+workflows. Verify with builds, tests, type checks, or end-to-end checks
+appropriate to the runtime surface. Report compatibility impact and remaining
+migration work.
 
 ### Visual Check
 

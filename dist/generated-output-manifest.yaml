@@ -19,6 +19,7 @@ generated_outputs:
       - skill.compositional.data-change
       - skill.compositional.db-migration
       - skill.compositional.debug
+      - skill.compositional.deploy
       - skill.compositional.docs-update
       - skill.compositional.e2e-test
       - skill.compositional.format
@@ -30,12 +31,15 @@ generated_outputs:
       - skill.compositional.pr-create
       - skill.compositional.pre-commit
       - skill.compositional.rebase
+      - skill.compositional.release
       - skill.compositional.review
+      - skill.compositional.rollback
       - skill.compositional.service-start
       - skill.compositional.sync-generated
       - skill.compositional.test
       - skill.compositional.typecheck
       - skill.compositional.update-dependencies
+      - skill.compositional.upgrade-runtime
       - skill.compositional.visual-check
       - skill.tool.adapter-validation
       - skill.tool.canonical-validation
@@ -62,6 +66,7 @@ generated_outputs:
       - skill.compositional.data-change
       - skill.compositional.db-migration
       - skill.compositional.debug
+      - skill.compositional.deploy
       - skill.compositional.docs-update
       - skill.compositional.e2e-test
       - skill.compositional.format
@@ -73,12 +78,15 @@ generated_outputs:
       - skill.compositional.pr-create
       - skill.compositional.pre-commit
       - skill.compositional.rebase
+      - skill.compositional.release
       - skill.compositional.review
+      - skill.compositional.rollback
       - skill.compositional.service-start
       - skill.compositional.sync-generated
       - skill.compositional.test
       - skill.compositional.typecheck
       - skill.compositional.update-dependencies
+      - skill.compositional.upgrade-runtime
       - skill.compositional.visual-check
       - skill.tool.adapter-validation
       - skill.tool.canonical-validation
@@ -134,6 +142,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.debug
+  - path: dist/opencode/.opencode/skills/deploy/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.deploy
   - path: dist/opencode/.opencode/skills/docs-update/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -198,10 +210,18 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.rebase
+  - path: dist/opencode/.opencode/skills/release/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.release
   - path: dist/opencode/.opencode/skills/review/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.review
+  - path: dist/opencode/.opencode/skills/rollback/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.rollback
   - path: dist/opencode/.opencode/skills/service-start/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -222,6 +242,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.update-dependencies
+  - path: dist/opencode/.opencode/skills/upgrade-runtime/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.upgrade-runtime
   - path: dist/opencode/.opencode/skills/validation/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:

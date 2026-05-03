@@ -65,6 +65,7 @@ through the intended generator where one exists.
 - `data-change`: Validate structured data, fixtures, migrations, and generated data changes.
 - `db-migration`: Create, review, validate, and document database migrations and rollback risk.
 - `debug`: Reproduce, isolate, diagnose, and verify a focused fix.
+- `deploy`: Run deployment checks or prepare deployment artifacts safely.
 - `docs-update`: Update documentation affected by code, API, behavior, or workflow changes.
 - `e2e-test`: Run browser or end-to-end validation against realistic workflows.
 - `format`: Run formatters safely and limit formatting churn.
@@ -76,12 +77,15 @@ through the intended generator where one exists.
 - `pr-create`: Prepare a pull request with summary, validation, and risk notes.
 - `pre-commit`: Run repository-appropriate checks before committing.
 - `rebase`: Rebase a branch with conflict handling and post-rebase validation.
+- `release`: Prepare changelog, versioning, tags, artifacts, and release notes.
 - `review`: Review a local or pull-request diff for correctness, risk, and maintainability.
+- `rollback`: Revert deployment or code changes safely with validation.
 - `service-start`: Start local services, verify health, and report ports and logs.
 - `sync-generated`: Regenerate and validate derived files, schemas, clients, lockfiles, and snapshots.
 - `test`: Select and run repository-appropriate tests for a change.
 - `typecheck`: Run static type checks and interpret failures.
 - `update-dependencies`: Update dependency sets safely and verify affected behavior.
+- `upgrade-runtime`: Upgrade language, runtime, or framework versions with compatibility checks.
 - `visual-check`: Verify user interface changes with screenshots or browser inspection.
 - `adapter-validation`: Validate adapter and generated-output policy-drift guardrails.
 - `canonical-validation`: Validate canonical rule and skill metadata and dependency graph.
