@@ -22,6 +22,10 @@ Run the deterministic validator:
 python3 core/skills/tools/canonical_validation.py
 ```
 
+Do not run `py_compile` or `compileall` as part of normal validation. Direct
+execution already catches syntax errors and avoids creating repo-local bytecode
+cache artifacts.
+
 The validator checks canonical Markdown frontmatter, stable IDs, dependency
 references, dependency cycles, dependency direction, and tool-skill metadata.
 

@@ -22,6 +22,10 @@ Run the deterministic validator:
 python3 core/skills/tools/vendor_validation.py
 ```
 
+Do not run `py_compile` or `compileall` as part of normal validation. Direct
+execution already catches syntax errors and avoids creating repo-local bytecode
+cache artifacts.
+
 The validator checks vendor capability metadata shape, review metadata,
 source-list presence, support flag values, preferred output lists, and obvious
 rendering-logic keys that would violate the declarative-data boundary.

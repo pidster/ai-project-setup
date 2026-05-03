@@ -126,6 +126,11 @@ Prefer Python for project scripting and validation tooling. Use `jq`, `yq`, and
 `mdq` for focused JSON, YAML, and Markdown inspection where they are simpler than
 a script. Do not infer a project dependency from ad hoc local command choices.
 
+Run validation scripts directly with `python3`. Do not run `py_compile` or
+`compileall` as part of normal validation unless there is a specific diagnostic
+reason; direct execution already catches syntax errors for these scripts and
+avoids creating repo-local bytecode cache artifacts.
+
 ## Git and Delivery
 
 Do not stage unrelated changes.
