@@ -16,15 +16,19 @@ generated_outputs:
       - skill.compositional.commit
       - skill.compositional.coverage
       - skill.compositional.debug
+      - skill.compositional.e2e-test
       - skill.compositional.merge
+      - skill.compositional.perf-check
       - skill.compositional.pr-address-comments
       - skill.compositional.pr-create
       - skill.compositional.pre-commit
       - skill.compositional.rebase
       - skill.compositional.review
+      - skill.compositional.service-start
       - skill.compositional.sync-generated
       - skill.compositional.test
       - skill.compositional.update-dependencies
+      - skill.compositional.visual-check
       - skill.tool.adapter-validation
       - skill.tool.canonical-validation
       - skill.tool.generated-manifest
@@ -47,15 +51,19 @@ generated_outputs:
       - skill.compositional.commit
       - skill.compositional.coverage
       - skill.compositional.debug
+      - skill.compositional.e2e-test
       - skill.compositional.merge
+      - skill.compositional.perf-check
       - skill.compositional.pr-address-comments
       - skill.compositional.pr-create
       - skill.compositional.pre-commit
       - skill.compositional.rebase
       - skill.compositional.review
+      - skill.compositional.service-start
       - skill.compositional.sync-generated
       - skill.compositional.test
       - skill.compositional.update-dependencies
+      - skill.compositional.visual-check
       - skill.tool.adapter-validation
       - skill.tool.canonical-validation
       - skill.tool.generated-manifest
@@ -98,6 +106,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.debug
+  - path: dist/opencode/.opencode/skills/e2e-test/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.e2e-test
   - path: dist/opencode/.opencode/skills/generated-manifest/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -118,6 +130,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.merge
+  - path: dist/opencode/.opencode/skills/perf-check/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.perf-check
   - path: dist/opencode/.opencode/skills/pr-address-comments/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -142,6 +158,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.review
+  - path: dist/opencode/.opencode/skills/service-start/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.service-start
   - path: dist/opencode/.opencode/skills/sync-generated/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -162,6 +182,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.tool.vendor-validation
+  - path: dist/opencode/.opencode/skills/visual-check/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.visual-check
   - path: dist/opencode/AGENTS.md
     renderer: adapters/opencode/render.py
     source_ids:

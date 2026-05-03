@@ -5,7 +5,7 @@
 This generated file adapts canonical repository guidance for Codex.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.debug`, `skill.compositional.merge`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.review`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.update-dependencies`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.debug`, `skill.compositional.e2e-test`, `skill.compositional.merge`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.review`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.update-dependencies`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Rules
 
@@ -223,6 +223,25 @@ Verify the fix with the original reproducer and the smallest broader validation
 that covers likely regressions. Report commands run, failures observed, root
 cause, fix, and remaining risk.
 
+### E2E Test
+
+Source: `skill.compositional.e2e-test`
+
+Use project discovery to identify end-to-end test frameworks, service startup
+requirements, fixtures, seeded data, browser dependencies, and CI-equivalent
+commands.
+
+Prefer repository-defined end-to-end commands and documented service setup over
+generic tool invocations.
+
+Run focused scenarios that cover the changed user workflow or integration
+surface. Broaden when routing, authentication, persistence, public contracts, or
+shared UI behavior are affected.
+
+Preserve failing artifacts, logs, screenshots, traces, or videos when available.
+Report the command used, service state, scenario coverage, failures, and any
+environment limitation.
+
 ### Merge
 
 Source: `skill.compositional.merge`
@@ -240,6 +259,23 @@ generator when conflicts affect generated output.
 Validate the merged result with checks appropriate to the conflict surface.
 Report the merge source, conflicts resolved, validation performed, and any
 remaining risk.
+
+### Perf Check
+
+Source: `skill.compositional.perf-check`
+
+Use project discovery to identify benchmarks, profiling commands, load tests,
+performance budgets, CI perf checks, and existing baselines.
+
+Prefer repository-defined benchmark or profiling commands over invented
+measurements.
+
+Compare results against a meaningful baseline whenever possible. Account for
+warmup, sample size, machine variance, external services, caches, and generated
+artifact changes before drawing conclusions.
+
+Report the command used, baseline source, result summary, variance or confidence
+limits, suspected cause of regressions, and any environment limitation.
 
 ### PR Address Comments
 
@@ -332,6 +368,24 @@ Separate confirmed issues from assumptions and open questions.
 When no issues are found, say that directly and call out any residual validation
 or test coverage gaps.
 
+### Service Start
+
+Source: `skill.compositional.service-start`
+
+Use project discovery to identify service manifests, start commands,
+environment requirements, ports, logs, health checks, and dependent services.
+
+Prefer repository-defined service scripts, compose files, process managers, or
+documented development commands over ad hoc command construction.
+
+Start only the services needed for the requested workflow. Preserve existing
+running services unless the user asks to restart them or the project workflow
+requires it.
+
+Verify readiness with the narrowest health check available. Report commands run,
+service URLs or ports, log locations, readiness status, and any missing
+environment or dependency.
+
 ### Sync Generated
 
 Source: `skill.compositional.sync-generated`
@@ -388,6 +442,24 @@ explicitly requires it.
 Verify with the narrowest meaningful tests or builds, then broaden when shared
 runtime behavior, public contracts, security-sensitive code, or generated
 artifacts are affected.
+
+### Visual Check
+
+Source: `skill.compositional.visual-check`
+
+Use project discovery to identify UI entry points, service startup commands,
+browser tooling, storybooks, screenshots, snapshots, and visual regression
+commands.
+
+Prefer repository-defined visual checks, storybook workflows, or browser test
+commands over ad hoc screenshots.
+
+Inspect the changed UI at relevant viewports and states. Check layout,
+overlapping content, loading or error states, generated assets, accessibility
+signals, and whether the visible behavior matches the change.
+
+Report the URLs or views checked, viewport or state coverage, artifacts captured,
+issues found, and any browser or environment limitation.
 
 ### Adapter Validation
 

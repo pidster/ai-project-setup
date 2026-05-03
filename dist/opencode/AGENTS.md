@@ -62,15 +62,19 @@ through the intended generator where one exists.
 - `commit`: Inspect, stage, validate, and commit an intentional change.
 - `coverage`: Measure coverage and identify meaningful validation gaps.
 - `debug`: Reproduce, isolate, diagnose, and verify a focused fix.
+- `e2e-test`: Run browser or end-to-end validation against realistic workflows.
 - `merge`: Update a branch, resolve conflicts, validate, and prepare a safe merge.
+- `perf-check`: Run benchmarks or profiling and compare results against a meaningful baseline.
 - `pr-address-comments`: Address pull request review comments one actionable thread at a time.
 - `pr-create`: Prepare a pull request with summary, validation, and risk notes.
 - `pre-commit`: Run repository-appropriate checks before committing.
 - `rebase`: Rebase a branch with conflict handling and post-rebase validation.
 - `review`: Review a local or pull-request diff for correctness, risk, and maintainability.
+- `service-start`: Start local services, verify health, and report ports and logs.
 - `sync-generated`: Regenerate and validate derived files, schemas, clients, lockfiles, and snapshots.
 - `test`: Select and run repository-appropriate tests for a change.
 - `update-dependencies`: Update dependency sets safely and verify affected behavior.
+- `visual-check`: Verify user interface changes with screenshots or browser inspection.
 - `adapter-validation`: Validate adapter and generated-output policy-drift guardrails.
 - `canonical-validation`: Validate canonical rule and skill metadata and dependency graph.
 - `generated-manifest`: Generate and check the generated-output manifest.
