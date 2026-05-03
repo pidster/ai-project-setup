@@ -55,18 +55,22 @@ through the intended generator where one exists.
 - `git`: Use Git safely and intentionally during AI-assisted changes.
 - `language-toolchain`: Select language and package tooling from repository evidence.
 - `project-discovery`: Discover repository structure, ecosystems, commands, and local guidance.
+- `api-change`: Change API contracts, schemas, clients, documentation, and compatibility checks.
 - `audit`: Audit security, dependency, and configuration risk.
 - `build`: Run repository-appropriate build or package checks.
 - `ci-fix`: Inspect failing CI, reproduce locally where possible, patch, and verify.
 - `cleanup`: Remove dead code, stale configuration, and unused generated artifacts safely.
 - `commit`: Inspect, stage, validate, and commit an intentional change.
 - `coverage`: Measure coverage and identify meaningful validation gaps.
+- `data-change`: Validate structured data, fixtures, migrations, and generated data changes.
+- `db-migration`: Create, review, validate, and document database migrations and rollback risk.
 - `debug`: Reproduce, isolate, diagnose, and verify a focused fix.
 - `docs-update`: Update documentation affected by code, API, behavior, or workflow changes.
 - `e2e-test`: Run browser or end-to-end validation against realistic workflows.
 - `format`: Run formatters safely and limit formatting churn.
 - `lint`: Run repository linters and interpret failures.
 - `merge`: Update a branch, resolve conflicts, validate, and prepare a safe merge.
+- `migrate`: Run a structured codebase migration with checkpoints and validation.
 - `perf-check`: Run benchmarks or profiling and compare results against a meaningful baseline.
 - `pr-address-comments`: Address pull request review comments one actionable thread at a time.
 - `pr-create`: Prepare a pull request with summary, validation, and risk notes.
