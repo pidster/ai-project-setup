@@ -396,7 +396,7 @@ applicability metadata or a vendor caveat that explains the runtime limitation.
 
 ## Initial Milestone
 
-A useful first implementation milestone should be intentionally narrow:
+The first implementation milestone was intentionally narrow:
 
 1. Define the canonical metadata schema.
 2. Add a small set of language-neutral atomic rules.
@@ -408,4 +408,7 @@ A useful first implementation milestone should be intentionally narrow:
 8. Validate dependency direction and required metadata.
 9. Generate outputs reproducibly.
 
-This proves the model before expanding to every vendor and tool.
+The repository now has canonical metadata, canonical rules and skills, vendor
+capability data, validation tooling, and generated outputs for Codex, Cursor, and
+OpenCode. The next expansion point is broader renderer coverage and richer
+vendor-specific output shapes.

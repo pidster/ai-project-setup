@@ -1,5 +1,5 @@
 version: 0
-status: stub
+status: active
 description: Canonical manifest for vendor-neutral AI project setup content.
 
 content_roots:

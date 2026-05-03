@@ -13,13 +13,12 @@ policy sources.
 
 ## Status
 
-This repository is currently in design setup.
+This repository is in early implementation.
 
 The repo contains design intent, vendor capability research, instruction files,
-an activity-skill backlog, and an initial project skeleton. It has schema stubs,
-starter canonical content, vendor capability stubs, adapter placeholders, and
-generated-output placeholders. It does not yet contain working renderers or
-generated vendor packages.
+canonical rules and skills, schema definitions, validation tooling, vendor
+capability data, adapter scaffolds, implemented Codex/Cursor/OpenCode renderers,
+and generated outputs for those implemented adapters.
 
 ## Why This Exists
 
@@ -85,8 +84,7 @@ Current boundaries:
 - `dist/`: generated vendor artifacts.
 - `docs/`: design notes, reviews, and rationale.
 
-These directories now exist as a scaffold. Preserve their ownership boundaries
-when adding real content and tooling.
+Preserve these ownership boundaries when adding content and tooling.
 
 ## Core Concepts
 
@@ -148,14 +146,14 @@ hooks, or external setup, but do not all expose one unified plugin bundle format
 - `docs/design-intent-review.md`: first review pass against the design.
 - `docs/vendor-adapter-capabilities.md`: verified vendor capability matrix,
   superset, common rich profile, LCD, and plugin-package notes.
-- `docs/activity-skill-backlog.md`: candidate compositional activity skills and
-  suggested implementation batches.
+- `docs/activity-skill-backlog.md`: implemented compositional activity skills
+  and the original batching rationale.
 - `AGENTS.md`: primary repository instructions for AI agents.
 - `docs/AGENTS.md`: scoped documentation-editing instructions.
 
 ## Current Instruction Files
 
-This repository includes initial guidance files for several AI tool surfaces:
+This repository includes guidance files for several AI tool surfaces:
 
 - `AGENTS.md`
 - `CLAUDE.md`
@@ -171,7 +169,7 @@ policy. Do not let them drift into separate vendor-specific rule sets.
 
 ## Activity Skill Backlog
 
-The current candidate backlog includes:
+The implemented compositional activity skills include:
 
 - daily change loop: `pre-commit`, `commit`, `test`, `build`
 - quality loop: `review`, `coverage`, `debug`, `ci-fix`
@@ -180,7 +178,8 @@ The current candidate backlog includes:
 - collaboration loop: `pr-create`, `pr-address-comments`, `merge`, `rebase`
 - runtime loop: `service-start`, `e2e-test`, `visual-check`, `perf-check`
 
-See `docs/activity-skill-backlog.md` for the full list.
+See `docs/activity-skill-backlog.md` for the full implemented list and original
+batching notes.
 
 ## Development Principles
 
@@ -203,8 +202,5 @@ Likely next steps:
 1. Expand validation coverage for vendor adapter policy drift.
 2. Extend renderer coverage beyond the initial Codex, Cursor, and OpenCode
    outputs.
-3. Add more compositional activity skills after renderer and validation seams are
-   proven.
-
-Good first vendor pair: Codex and Cursor for instruction/rule contrast, or Claude
-Code and OpenCode for first-class plugin-package exploration.
+3. Add richer vendor-specific projections, such as command, hook, agent, or
+   plugin-package outputs where supported by verified vendor capabilities.

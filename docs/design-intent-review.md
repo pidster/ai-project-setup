@@ -72,10 +72,11 @@ Follow-up questions:
 
 ## Review 4: Compatibility Across Vendors
 
-Status: partially proven.
+Status: partially proven, with initial renderers implemented.
 
 The design identifies three rendering modes: full-fidelity, compact, and hybrid.
-That is likely enough to support vendors with different mechanics.
+Initial renderers now cover Codex, Cursor, and OpenCode, which exercise compact
+instruction output, rule-style output, and skill-style output.
 
 Findings:
 
@@ -101,31 +102,31 @@ sources: []
 
 ## Review 5: Validation and Drift Prevention
 
-Status: directionally sound, needs executable checks.
+Status: executable checks implemented for core metadata, vendor metadata,
+adapter guardrails, generated-output freshness, and generated-output manifest
+freshness.
 
 The validation expectations cover the important graph and metadata invariants.
 
 Findings:
 
-- Dependency direction is validateable.
-- Unique IDs and missing dependency checks are straightforward.
-- Vendor adapter policy drift is harder to validate mechanically.
+- Dependency direction, unique IDs, missing dependencies, and dependency cycles
+  are checked.
+- Vendor capability metadata is checked for required declarative fields.
+- Generated outputs are checked for freshness and source ID coverage.
+- Vendor adapter policy drift remains harder to validate semantically.
 
-Suggested validation additions:
+Remaining validation additions:
 
-- Require generated files to include source IDs.
 - Require adapter overlays to use an allowlisted schema.
-- Fail if generated output is stale.
-- Snapshot generated output for the first two vendor adapters.
-- Add a check that every compositional skill declares the atomic skills or
-  selection rules it relies on.
+- Add semantic checks or review workflows for adapter policy drift beyond
+  mechanical source ID and generated marker checks.
 
 ## Review 6: First Milestone
 
-Status: good scope.
+Status: complete.
 
-The milestone is narrow enough to prove the model without attempting every
-vendor immediately.
+The first milestone proved the model without attempting every vendor immediately.
 
 Recommended first vendor pair:
 
@@ -137,7 +138,8 @@ Alternative pair:
 - Codex and Copilot, if the first milestone should prove both rich and compact
   rendering immediately.
 
-Recommendation:
+Implemented first renderers:
 
-Start with Codex and Cursor. Add Copilot immediately after the graph validation
-and rendering pipeline are stable.
+- Codex, for compact repository instruction output.
+- Cursor, for rule-style output.
+- OpenCode, for richer skill-style output.

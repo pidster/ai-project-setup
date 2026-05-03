@@ -1,16 +1,15 @@
-# Activity Skill Backlog
+# Activity Skill Inventory
 
-This is a candidate backlog for compositional activity skills. It is not a
-commitment to implement everything at once.
+This document records the implemented compositional activity skills and the
+batching rationale used while building them.
 
 Activity skills should coordinate atomic rules, atomic skills, and concrete tool
 skills. They should own sequencing, scope, stop or fail behavior, and reporting.
 They should not duplicate detailed recipes owned by atomic or tool skills.
 
-## Initial Batch Candidate
+## Initial Batch
 
-These are strong candidates for the first implementation batches because they
-cover common day-to-day repository work.
+These skills cover common day-to-day repository work.
 
 - `pre-commit`: run relevant checks before committing.
 - `commit`: inspect diff, stage intentionally, write commit message.
@@ -27,7 +26,7 @@ cover common day-to-day repository work.
 - `pr-create`: prepare branch, summary, tests, and risk notes.
 - `pr-address-comments`: handle review comments one at a time.
 
-## Additional Candidates
+## Additional Implemented Skills
 
 - `lint`: run linters and interpret failures.
 - `format`: run formatters safely and limit churn.
@@ -62,10 +61,10 @@ cover common day-to-day repository work.
 
 ## Batching Notes
 
-Prefer batches that prove composition without requiring every tool ecosystem at
-once.
+The implementation used batches that proved composition without requiring every
+tool ecosystem at once.
 
-Possible batches:
+Batches:
 
 1. Daily change loop: `pre-commit`, `commit`, `test`, `build`.
 2. Quality loop: `review`, `coverage`, `debug`, `ci-fix`.
