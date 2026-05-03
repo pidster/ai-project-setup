@@ -10,7 +10,7 @@ alwaysApply: true
 This generated Cursor rule adapts canonical repository guidance.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.debug`, `skill.compositional.e2e-test`, `skill.compositional.merge`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.review`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.update-dependencies`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.debug`, `skill.compositional.docs-update`, `skill.compositional.e2e-test`, `skill.compositional.format`, `skill.compositional.lint`, `skill.compositional.merge`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.review`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.typecheck`, `skill.compositional.update-dependencies`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Git Safety
 
@@ -224,6 +224,23 @@ Verify the fix with the original reproducer and the smallest broader validation
 that covers likely regressions. Report commands run, failures observed, root
 cause, fix, and remaining risk.
 
+## Docs Update
+
+Source: `skill.compositional.docs-update`
+
+Use project discovery to identify documentation ownership, scoped documentation
+instructions, generated docs, public API references, examples, and release or
+workflow notes affected by the change.
+
+Update documentation that describes behavior, configuration, commands, public
+interfaces, generated outputs, or operational workflows changed by the work.
+
+Keep design intent, review findings, implementation plans, and vendor-specific
+adaptation mechanics separate when the repository has those boundaries.
+
+Do not duplicate long policy sections across documents. Prefer links, source
+references, or concise summaries when canonical content already owns the policy.
+
 ## E2E Test
 
 Source: `skill.compositional.e2e-test`
@@ -242,6 +259,40 @@ shared UI behavior are affected.
 Preserve failing artifacts, logs, screenshots, traces, or videos when available.
 Report the command used, service state, scenario coverage, failures, and any
 environment limitation.
+
+## Format
+
+Source: `skill.compositional.format`
+
+Use project discovery to identify formatter commands, configuration files,
+language ecosystems, generated files, and CI formatting checks.
+
+Prefer repository-defined formatting commands over generic formatter invocations.
+
+Limit formatting to files affected by the requested change when the formatter
+and project workflow support that safely. Broaden only when project conventions
+or tooling require it.
+
+Do not mix broad formatting churn with behavioral changes unless explicitly
+requested. Report the formatter command used, scope formatted, and any unrelated
+formatting changes left untouched.
+
+## Lint
+
+Source: `skill.compositional.lint`
+
+Use project discovery to identify linters, formatter overlap, configuration
+files, affected packages, CI lint commands, and repository-defined scripts.
+
+Prefer repository-defined lint commands over generic tool invocations.
+
+Scope linting to the affected package or workspace when supported. Broaden when
+shared configuration, generated artifacts, public contracts, or cross-package
+code are affected.
+
+Treat lint failures as signals about correctness, consistency, or maintainability
+within the project style. Do not silence rules or weaken configuration without
+explicit rationale.
 
 ## Merge
 
@@ -422,6 +473,24 @@ security-sensitive code.
 
 Stop on failures. Preserve the exact failing command, summarize the failing
 surface, and report the next useful isolation step.
+
+## Typecheck
+
+Source: `skill.compositional.typecheck`
+
+Use project discovery to identify typecheck commands, compiler checks, typed
+workspaces, generated type artifacts, and CI-equivalent validation.
+
+Prefer repository-defined typecheck or compiler-check commands over generic tool
+invocations.
+
+Scope type checks to affected packages when supported. Broaden when shared types,
+public contracts, generated clients, dependency metadata, or cross-package
+interfaces are affected.
+
+Do not weaken type strictness, suppress errors, or cast away uncertainty just to
+make the check pass. Fix the underlying contract or report the unresolved type
+risk.
 
 ## Update Dependencies
 

@@ -62,7 +62,10 @@ through the intended generator where one exists.
 - `commit`: Inspect, stage, validate, and commit an intentional change.
 - `coverage`: Measure coverage and identify meaningful validation gaps.
 - `debug`: Reproduce, isolate, diagnose, and verify a focused fix.
+- `docs-update`: Update documentation affected by code, API, behavior, or workflow changes.
 - `e2e-test`: Run browser or end-to-end validation against realistic workflows.
+- `format`: Run formatters safely and limit formatting churn.
+- `lint`: Run repository linters and interpret failures.
 - `merge`: Update a branch, resolve conflicts, validate, and prepare a safe merge.
 - `perf-check`: Run benchmarks or profiling and compare results against a meaningful baseline.
 - `pr-address-comments`: Address pull request review comments one actionable thread at a time.
@@ -73,6 +76,7 @@ through the intended generator where one exists.
 - `service-start`: Start local services, verify health, and report ports and logs.
 - `sync-generated`: Regenerate and validate derived files, schemas, clients, lockfiles, and snapshots.
 - `test`: Select and run repository-appropriate tests for a change.
+- `typecheck`: Run static type checks and interpret failures.
 - `update-dependencies`: Update dependency sets safely and verify affected behavior.
 - `visual-check`: Verify user interface changes with screenshots or browser inspection.
 - `adapter-validation`: Validate adapter and generated-output policy-drift guardrails.
