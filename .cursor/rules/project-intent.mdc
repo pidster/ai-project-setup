@@ -1,0 +1,23 @@
+---
+description: Project architecture and policy boundaries for ai-project-setup
+alwaysApply: true
+---
+
+# Project Intent
+
+Follow `AGENTS.md` as the primary repository instruction source.
+
+This repository produces vendor-neutral AI-tool guidance from canonical rules and
+skills. Preserve these boundaries:
+
+- `core/` is canonical policy and procedure.
+- `vendors/` is declarative capability data.
+- `adapters/` is rendering logic and templates.
+- `dist/` is generated output.
+- `docs/` is design rationale and review.
+
+Do not redefine canonical policy in Cursor rules. Cursor-specific material may
+adapt frontmatter, globs, descriptions, file placement, and invocation hints.
+
+When a design choice is unclear, record the open question instead of assuming a
+vendor-specific answer.

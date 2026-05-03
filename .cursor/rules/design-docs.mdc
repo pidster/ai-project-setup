@@ -1,0 +1,14 @@
+---
+description: Documentation editing rules for design and review files
+globs: "docs/**/*.md"
+alwaysApply: false
+---
+
+# Design Docs
+
+Keep design intent separate from review findings.
+
+Use generic source-code, language, and toolchain concepts unless a document is
+explicitly about a concrete language or tool.
+
+Vendor-specific notes should describe adaptation mechanics, not redefine policy.
