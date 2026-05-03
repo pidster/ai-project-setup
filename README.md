@@ -16,8 +16,10 @@ policy sources.
 This repository is currently in design setup.
 
 The repo contains design intent, vendor capability research, instruction files,
-and an activity-skill backlog. It does not yet contain the canonical `core/`
-content model, schemas, renderers, or generated vendor packages.
+an activity-skill backlog, and an initial project skeleton. It has schema stubs,
+starter canonical content, vendor capability stubs, adapter placeholders, and
+generated-output placeholders. It does not yet contain working renderers or
+generated vendor packages.
 
 ## Why This Exists
 
@@ -83,8 +85,8 @@ Current boundaries:
 - `dist/`: generated vendor artifacts.
 - `docs/`: design notes, reviews, and rationale.
 
-Some of these directories do not exist yet. Preserve the boundary when adding
-them.
+These directories now exist as a scaffold. Preserve their ownership boundaries
+when adding real content and tooling.
 
 ## Core Concepts
 
@@ -189,6 +191,9 @@ See `docs/activity-skill-backlog.md` for the full list.
 - Keep language rules separate from tool procedures.
 - Generate vendor outputs from canonical content.
 - Mark generated files as generated.
+- Prefer Python for project scripting and validation tooling.
+- Use `jq`, `yq`, and `mdq` for focused JSON, YAML, and Markdown inspection when
+  that is simpler than a script.
 - Do not stage unrelated changes.
 
 ## Near-Term Work
