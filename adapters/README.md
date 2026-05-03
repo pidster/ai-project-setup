@@ -18,7 +18,9 @@ Implemented renderer entry points:
 
 - `python3 adapters/codex/render.py`
 - `python3 adapters/cursor/render.py`
+- `python3 adapters/opencode/render.py`
 
 Run `python3 core/skills/tools/adapter_validation.py` to check adapter
 policy-drift guardrails, and `python3 core/skills/tools/generated_validation.py`
-to check that generated outputs are up to date.
+to check that generated outputs and the generated-output manifest are up to
+date.

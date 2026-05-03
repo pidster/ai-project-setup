@@ -201,9 +201,9 @@ See `docs/activity-skill-backlog.md` for the full list.
 Likely next steps:
 
 1. Expand validation coverage for vendor adapter policy drift.
-2. Extend renderer coverage beyond the initial Codex and Cursor outputs.
-3. Add snapshot-style checks for generated output reviewability.
-4. Add more compositional activity skills after renderer and validation seams are
+2. Extend renderer coverage beyond the initial Codex, Cursor, and OpenCode
+   outputs.
+3. Add more compositional activity skills after renderer and validation seams are
    proven.
 
 Good first vendor pair: Codex and Cursor for instruction/rule contrast, or Claude

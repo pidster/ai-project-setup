@@ -10,7 +10,7 @@ alwaysApply: true
 This generated Cursor rule adapts canonical repository guidance.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.build`, `skill.compositional.commit`, `skill.compositional.pre-commit`, `skill.compositional.test`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.build`, `skill.compositional.commit`, `skill.compositional.pre-commit`, `skill.compositional.test`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Git Safety
 
@@ -214,6 +214,32 @@ references, dependency cycles, dependency direction, and tool-skill metadata.
 When validation fails, report the failing file, the exact invariant, and the
 smallest correction that preserves canonical boundaries.
 
+## Generated Manifest
+
+Source: `skill.tool.generated-manifest`
+
+Use this skill when generated vendor outputs are added, removed, or regenerated.
+
+Write the generated-output manifest:
+
+```sh
+python3 core/skills/tools/generated_manifest.py
+```
+
+Check the manifest without changing files:
+
+```sh
+python3 core/skills/tools/generated_manifest.py --check
+```
+
+The manifest records generated files, their renderer marker, and canonical source
+IDs found in the generated content. This makes generated-output reviews easier
+without replacing renderer freshness checks.
+
+Do not run `py_compile` or `compileall` as part of normal validation. Direct
+execution already catches syntax errors and avoids creating repo-local bytecode
+cache artifacts.
+
 ## Generated Validation
 
 Source: `skill.tool.generated-validation`
@@ -229,6 +255,8 @@ python3 core/skills/tools/generated_validation.py
 
 The validator runs each implemented renderer in check mode and reports generated
 outputs that are missing or stale.
+
+It also checks that `dist/generated-output-manifest.yaml` is up to date.
 
 Do not run `py_compile` or `compileall` as part of normal validation. Direct
 execution already catches syntax errors and avoids creating repo-local bytecode

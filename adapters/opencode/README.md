@@ -1,5 +1,23 @@
 # OpenCode Adapter
 
-Stub for rendering canonical content into OpenCode surfaces such as `AGENTS.md`,
-`opencode.json`, `.opencode/skills/`, `.opencode/commands/`,
+Renders canonical content into OpenCode surfaces.
+
+Current outputs:
+
+- `dist/opencode/AGENTS.md`
+- `dist/opencode/.opencode/skills/*/SKILL.md`
+
+Run:
+
+```sh
+python3 adapters/opencode/render.py
+```
+
+Check freshness:
+
+```sh
+python3 adapters/opencode/render.py --check
+```
+
+Future output may include `opencode.json`, `.opencode/commands/`,
 `.opencode/agents/`, and `.opencode/plugins/`.

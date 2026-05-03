@@ -21,13 +21,30 @@ CANONICAL_ROOTS = (
 IMPLEMENTED_RENDERERS = {
     "codex": {
         "renderer": REPO_ROOT / "adapters" / "codex" / "render.py",
-        "outputs": [REPO_ROOT / "dist" / "codex" / "AGENTS.md"],
+        "outputs": [
+            {
+                "path": REPO_ROOT / "dist" / "codex" / "AGENTS.md",
+                "source_ids": "all",
+            }
+        ],
     },
     "cursor": {
         "renderer": REPO_ROOT / "adapters" / "cursor" / "render.py",
         "outputs": [
-            REPO_ROOT / "dist" / "cursor" / ".cursor" / "rules" / "canonical-guidance.mdc"
+            {
+                "path": REPO_ROOT
+                / "dist"
+                / "cursor"
+                / ".cursor"
+                / "rules"
+                / "canonical-guidance.mdc",
+                "source_ids": "all",
+            }
         ],
+    },
+    "opencode": {
+        "renderer": REPO_ROOT / "adapters" / "opencode" / "render.py",
+        "outputs": [],
     },
 }
 
@@ -70,11 +87,47 @@ def parse_frontmatter(path: Path) -> dict[str, Any]:
     return metadata
 
 
-def canonical_ids() -> list[str]:
-    paths: list[Path] = []
+def canonical_id_map() -> dict[str, dict[str, Any]]:
+    items: dict[str, dict[str, Any]] = {}
     for root in CANONICAL_ROOTS:
-        paths.extend(path for path in root.glob("*.md") if path.is_file())
-    return sorted(str(parse_frontmatter(path)["id"]) for path in sorted(paths))
+        for path in sorted(root.glob("*.md")):
+            if path.is_file():
+                metadata = parse_frontmatter(path)
+                items[str(metadata["id"])] = metadata
+    return items
+
+
+def skill_name(item_id: str) -> str:
+    return item_id.rsplit(".", 1)[-1]
+
+
+def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
+    opencode_outputs = IMPLEMENTED_RENDERERS["opencode"]["outputs"]
+    opencode_outputs.clear()
+    opencode_outputs.append(
+        {
+            "path": REPO_ROOT / "dist" / "opencode" / "AGENTS.md",
+            "source_ids": [
+                item_id
+                for item_id, metadata in sorted(source_items.items())
+                if metadata.get("kind") == "rule"
+            ],
+        }
+    )
+    for item_id, metadata in sorted(source_items.items()):
+        if metadata.get("kind") == "skill":
+            opencode_outputs.append(
+                {
+                    "path": REPO_ROOT
+                    / "dist"
+                    / "opencode"
+                    / ".opencode"
+                    / "skills"
+                    / skill_name(item_id)
+                    / "SKILL.md",
+                    "source_ids": [item_id],
+                }
+            )
 
 
 def vendor_dirs() -> set[str]:
@@ -102,18 +155,26 @@ def validate_renderer_registry(errors: list[str]) -> None:
         if not isinstance(outputs, list) or not outputs:
             errors.append(f"adapters/{vendor}: renderer must declare at least one output")
             continue
-        for output in outputs:
+        for output_registration in outputs:
+            if not isinstance(output_registration, dict):
+                errors.append(f"adapters/{vendor}: output registration must be a map")
+                continue
+            output = output_registration.get("path")
             if not isinstance(output, Path):
-                errors.append(f"adapters/{vendor}: output registration must be a path")
+                errors.append(f"adapters/{vendor}: output registration path must be a path")
                 continue
             expected_root = REPO_ROOT / "dist" / vendor
             if expected_root not in output.parents and output != expected_root:
                 errors.append(f"{rel(output)}: generated output must live under dist/{vendor}/")
+            source_ids = output_registration.get("source_ids")
+            if source_ids != "all" and not isinstance(source_ids, list):
+                errors.append(f"{rel(output)}: output registration must declare source IDs")
 
 
 def validate_generated_outputs(source_ids: list[str], errors: list[str]) -> None:
     for vendor, registration in sorted(IMPLEMENTED_RENDERERS.items()):
-        for output in registration["outputs"]:
+        for output_registration in registration["outputs"]:
+            output = output_registration["path"]
             if not output.exists():
                 errors.append(f"{rel(output)}: missing generated output")
                 continue
@@ -122,7 +183,12 @@ def validate_generated_outputs(source_ids: list[str], errors: list[str]) -> None
                 errors.append(f"{rel(output)}: missing generated-file marker")
             if "Canonical policy and procedure remain in `core/`." not in text:
                 errors.append(f"{rel(output)}: missing canonical-boundary notice")
-            missing_ids = [item_id for item_id in source_ids if f"`{item_id}`" not in text]
+            expected_ids = (
+                source_ids
+                if output_registration["source_ids"] == "all"
+                else output_registration["source_ids"]
+            )
+            missing_ids = [item_id for item_id in expected_ids if f"`{item_id}`" not in text]
             if missing_ids:
                 errors.append(
                     f"{rel(output)}: missing canonical source IDs: {', '.join(missing_ids)}"
@@ -133,7 +199,9 @@ def main() -> int:
     errors: list[str] = []
 
     try:
-        source_ids = canonical_ids()
+        source_items = canonical_id_map()
+        source_ids = sorted(source_items)
+        populate_dynamic_outputs(source_items)
     except (OSError, ValueError) as exc:
         errors.append(str(exc))
         source_ids = []

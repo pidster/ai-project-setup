@@ -13,7 +13,9 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 CHECKS = (
     ("codex", "adapters/codex/render.py"),
     ("cursor", "adapters/cursor/render.py"),
+    ("opencode", "adapters/opencode/render.py"),
 )
+MANIFEST_CHECK = "core/skills/tools/generated_manifest.py"
 
 
 def main() -> int:
@@ -25,6 +27,12 @@ def main() -> int:
         result = subprocess.run(command, cwd=REPO_ROOT, check=False)
         if result.returncode != 0:
             failures.append(vendor)
+
+    command = [sys.executable, MANIFEST_CHECK, "--check"]
+    print(f"checking generated manifest: {' '.join(command)}", flush=True)
+    result = subprocess.run(command, cwd=REPO_ROOT, check=False)
+    if result.returncode != 0:
+        failures.append("generated manifest")
 
     if failures:
         print("generated validation failed", file=sys.stderr)
