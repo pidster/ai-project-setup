@@ -22,10 +22,13 @@ generated_outputs:
       - skill.compositional.deploy
       - skill.compositional.docs-update
       - skill.compositional.e2e-test
+      - skill.compositional.environment-setup
       - skill.compositional.format
+      - skill.compositional.incident-investigation
       - skill.compositional.lint
       - skill.compositional.merge
       - skill.compositional.migrate
+      - skill.compositional.observability
       - skill.compositional.perf-check
       - skill.compositional.pr-address-comments
       - skill.compositional.pr-create
@@ -34,6 +37,7 @@ generated_outputs:
       - skill.compositional.release
       - skill.compositional.review
       - skill.compositional.rollback
+      - skill.compositional.scaffold-feature
       - skill.compositional.service-start
       - skill.compositional.sync-generated
       - skill.compositional.test
@@ -69,10 +73,13 @@ generated_outputs:
       - skill.compositional.deploy
       - skill.compositional.docs-update
       - skill.compositional.e2e-test
+      - skill.compositional.environment-setup
       - skill.compositional.format
+      - skill.compositional.incident-investigation
       - skill.compositional.lint
       - skill.compositional.merge
       - skill.compositional.migrate
+      - skill.compositional.observability
       - skill.compositional.perf-check
       - skill.compositional.pr-address-comments
       - skill.compositional.pr-create
@@ -81,6 +88,7 @@ generated_outputs:
       - skill.compositional.release
       - skill.compositional.review
       - skill.compositional.rollback
+      - skill.compositional.scaffold-feature
       - skill.compositional.service-start
       - skill.compositional.sync-generated
       - skill.compositional.test
@@ -154,6 +162,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.e2e-test
+  - path: dist/opencode/.opencode/skills/environment-setup/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.environment-setup
   - path: dist/opencode/.opencode/skills/format/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -170,6 +182,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.atomic.git
+  - path: dist/opencode/.opencode/skills/incident-investigation/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.incident-investigation
   - path: dist/opencode/.opencode/skills/language-toolchain/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -186,6 +202,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.migrate
+  - path: dist/opencode/.opencode/skills/observability/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.observability
   - path: dist/opencode/.opencode/skills/perf-check/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:
@@ -222,6 +242,10 @@ generated_outputs:
     renderer: adapters/opencode/render.py
     source_ids:
       - skill.compositional.rollback
+  - path: dist/opencode/.opencode/skills/scaffold-feature/SKILL.md
+    renderer: adapters/opencode/render.py
+    source_ids:
+      - skill.compositional.scaffold-feature
   - path: dist/opencode/.opencode/skills/service-start/SKILL.md
     renderer: adapters/opencode/render.py
     source_ids:

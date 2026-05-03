@@ -5,7 +5,7 @@
 This generated file adapts canonical repository guidance for Codex.
 Canonical policy and procedure remain in `core/`.
 
-Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.api-change`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.data-change`, `skill.compositional.db-migration`, `skill.compositional.debug`, `skill.compositional.deploy`, `skill.compositional.docs-update`, `skill.compositional.e2e-test`, `skill.compositional.format`, `skill.compositional.lint`, `skill.compositional.merge`, `skill.compositional.migrate`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.release`, `skill.compositional.review`, `skill.compositional.rollback`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.typecheck`, `skill.compositional.update-dependencies`, `skill.compositional.upgrade-runtime`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
+Sources: `rule.atomic.git-safety`, `rule.atomic.security`, `rule.atomic.source-code`, `skill.atomic.git`, `skill.atomic.language-toolchain`, `skill.atomic.project-discovery`, `skill.compositional.api-change`, `skill.compositional.audit`, `skill.compositional.build`, `skill.compositional.ci-fix`, `skill.compositional.cleanup`, `skill.compositional.commit`, `skill.compositional.coverage`, `skill.compositional.data-change`, `skill.compositional.db-migration`, `skill.compositional.debug`, `skill.compositional.deploy`, `skill.compositional.docs-update`, `skill.compositional.e2e-test`, `skill.compositional.environment-setup`, `skill.compositional.format`, `skill.compositional.incident-investigation`, `skill.compositional.lint`, `skill.compositional.merge`, `skill.compositional.migrate`, `skill.compositional.observability`, `skill.compositional.perf-check`, `skill.compositional.pr-address-comments`, `skill.compositional.pr-create`, `skill.compositional.pre-commit`, `skill.compositional.rebase`, `skill.compositional.release`, `skill.compositional.review`, `skill.compositional.rollback`, `skill.compositional.scaffold-feature`, `skill.compositional.service-start`, `skill.compositional.sync-generated`, `skill.compositional.test`, `skill.compositional.typecheck`, `skill.compositional.update-dependencies`, `skill.compositional.upgrade-runtime`, `skill.compositional.visual-check`, `skill.tool.adapter-validation`, `skill.tool.canonical-validation`, `skill.tool.generated-manifest`, `skill.tool.generated-validation`, `skill.tool.validation`, `skill.tool.vendor-validation`
 
 ## Rules
 
@@ -330,6 +330,24 @@ Preserve failing artifacts, logs, screenshots, traces, or videos when available.
 Report the command used, service state, scenario coverage, failures, and any
 environment limitation.
 
+### Environment Setup
+
+Source: `skill.compositional.environment-setup`
+
+Use project discovery to identify required runtimes, package managers, lockfiles,
+tool versions, environment variables, services, local secrets guidance, and setup
+documentation.
+
+Prefer documented setup commands and version managers over ad hoc installation
+steps. Do not introduce local machine assumptions as project dependencies.
+
+Treat credentials, tokens, and local secret files as sensitive. Do not commit
+machine-specific configuration or secret material.
+
+Verify setup with the narrowest meaningful command, then broaden to build, test,
+service-start, or validation workflows when appropriate. Report installed or
+verified tools, commands run, environment gaps, and follow-up manual steps.
+
 ### Format
 
 Source: `skill.compositional.format`
@@ -346,6 +364,23 @@ or tooling require it.
 Do not mix broad formatting churn with behavioral changes unless explicitly
 requested. Report the formatter command used, scope formatted, and any unrelated
 formatting changes left untouched.
+
+### Incident Investigation
+
+Source: `skill.compositional.incident-investigation`
+
+Start by preserving evidence: reports, alerts, logs, traces, metrics, recent
+changes, deployments, configuration, external dependencies, and user impact.
+
+Build a timeline from observable facts. Separate confirmed evidence from
+hypotheses, assumptions, and missing data.
+
+Identify suspected cause, contributing factors, blast radius, mitigation,
+rollback or recovery options, and follow-up validation. Do not expose secrets or
+private user data in notes or artifacts.
+
+Report current status, impact, timeline, evidence, suspected cause, mitigation
+taken, validation performed, and recommended follow-up work.
 
 ### Lint
 
@@ -401,6 +436,25 @@ it and the compatibility impact is documented.
 Validate incrementally and at the final scope. Report migration strategy,
 checkpoints completed, validation performed, behavior changes, and remaining
 follow-up work.
+
+### Observability
+
+Source: `skill.compositional.observability`
+
+Use project discovery to identify logging, metrics, tracing, alerting,
+dashboards, telemetry libraries, privacy constraints, and operational
+conventions.
+
+Add observability that helps diagnose meaningful system behavior, user impact,
+failure modes, or performance risk. Avoid noisy, redundant, or high-cardinality
+signals that will not be acted on.
+
+Do not log secrets, credentials, private data, tokens, or sensitive payloads.
+Preserve existing redaction, sampling, retention, and access-control patterns.
+
+Verify with tests, local logs, telemetry assertions, or configuration checks when
+available. Report signal names, emitted context, privacy considerations,
+validation performed, and any dashboard or alert follow-up.
 
 ### Perf Check
 
@@ -548,6 +602,25 @@ before acting.
 Verify restored behavior with health checks, targeted tests, logs, or monitoring
 signals. Report rollback target, commands or actions taken, validation
 performed, and remaining operational risk.
+
+### Scaffold Feature
+
+Source: `skill.compositional.scaffold-feature`
+
+Use project discovery to identify existing feature layout, naming conventions,
+entry points, tests, docs, generated files, configuration, and ownership
+boundaries.
+
+Follow established project patterns before introducing new abstractions,
+directories, dependencies, or framework conventions.
+
+Create the smallest useful feature skeleton that supports the requested
+workflow: source files, tests, configuration, docs, generated artifacts, and
+integration points where appropriate.
+
+Verify the scaffold with targeted tests, builds, type checks, or generated-output
+freshness checks. Report files created, patterns followed, validation performed,
+and intentional gaps left for later implementation.
 
 ### Service Start
 

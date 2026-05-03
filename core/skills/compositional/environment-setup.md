@@ -1,0 +1,31 @@
+---
+id: skill.compositional.environment-setup
+kind: skill
+scope: compositional
+category: workflow
+domain: environment-setup
+summary: Install tools and dependencies, then verify local setup.
+depends_on:
+  - skill.atomic.project-discovery
+  - skill.atomic.language-toolchain
+  - skill.compositional.build
+  - skill.compositional.test
+  - rule.atomic.security
+optional_tools: []
+---
+
+# Environment Setup
+
+Use project discovery to identify required runtimes, package managers, lockfiles,
+tool versions, environment variables, services, local secrets guidance, and setup
+documentation.
+
+Prefer documented setup commands and version managers over ad hoc installation
+steps. Do not introduce local machine assumptions as project dependencies.
+
+Treat credentials, tokens, and local secret files as sensitive. Do not commit
+machine-specific configuration or secret material.
+
+Verify setup with the narrowest meaningful command, then broaden to build, test,
+service-start, or validation workflows when appropriate. Report installed or
+verified tools, commands run, environment gaps, and follow-up manual steps.

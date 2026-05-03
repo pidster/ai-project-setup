@@ -68,10 +68,13 @@ through the intended generator where one exists.
 - `deploy`: Run deployment checks or prepare deployment artifacts safely.
 - `docs-update`: Update documentation affected by code, API, behavior, or workflow changes.
 - `e2e-test`: Run browser or end-to-end validation against realistic workflows.
+- `environment-setup`: Install tools and dependencies, then verify local setup.
 - `format`: Run formatters safely and limit formatting churn.
+- `incident-investigation`: Gather evidence, timeline, suspected cause, mitigation, and follow-up for an incident.
 - `lint`: Run repository linters and interpret failures.
 - `merge`: Update a branch, resolve conflicts, validate, and prepare a safe merge.
 - `migrate`: Run a structured codebase migration with checkpoints and validation.
+- `observability`: Add logs, metrics, traces, and alerts without leaking sensitive data.
 - `perf-check`: Run benchmarks or profiling and compare results against a meaningful baseline.
 - `pr-address-comments`: Address pull request review comments one actionable thread at a time.
 - `pr-create`: Prepare a pull request with summary, validation, and risk notes.
@@ -80,6 +83,7 @@ through the intended generator where one exists.
 - `release`: Prepare changelog, versioning, tags, artifacts, and release notes.
 - `review`: Review a local or pull-request diff for correctness, risk, and maintainability.
 - `rollback`: Revert deployment or code changes safely with validation.
+- `scaffold-feature`: Create a new feature following existing project structure and patterns.
 - `service-start`: Start local services, verify health, and report ports and logs.
 - `sync-generated`: Regenerate and validate derived files, schemas, clients, lockfiles, and snapshots.
 - `test`: Select and run repository-appropriate tests for a change.
