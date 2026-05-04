@@ -16,9 +16,13 @@ Adapters must not redefine canonical policy.
 
 Implemented renderer entry points:
 
+- `python3 adapters/claude/render.py`
 - `python3 adapters/codex/render.py`
+- `python3 adapters/copilot/render.py`
 - `python3 adapters/cursor/render.py`
+- `python3 adapters/devin/render.py`
 - `python3 adapters/opencode/render.py`
+- `python3 adapters/windsurf/render.py`
 
 Run `python3 core/skills/tools/adapter_validation.py` to check adapter
 policy-drift guardrails, and `python3 core/skills/tools/generated_validation.py`

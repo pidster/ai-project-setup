@@ -11,9 +11,13 @@ import sys
 REPO_ROOT = Path(__file__).resolve().parents[3]
 
 CHECKS = (
+    ("claude", "adapters/claude/render.py"),
     ("codex", "adapters/codex/render.py"),
+    ("copilot", "adapters/copilot/render.py"),
     ("cursor", "adapters/cursor/render.py"),
+    ("devin", "adapters/devin/render.py"),
     ("opencode", "adapters/opencode/render.py"),
+    ("windsurf", "adapters/windsurf/render.py"),
 )
 MANIFEST_CHECK = "core/skills/tools/generated_manifest.py"
 

@@ -1,24 +1,33 @@
 vendor: codex
 display_name: OpenAI Codex
-last_reviewed: 2026-05-02
+last_reviewed: 2026-05-04
 confidence: verified
-profile_fit: partial
+profile_fit: full
 sources:
-  - https://openai.com/index/introducing-codex/
-  - https://openai.com/index/unrolling-the-codex-agent-loop/
-  - https://github.com/openai/codex/blob/main/docs/config.md
+  - https://developers.openai.com/codex/guides/agents-md
+  - https://developers.openai.com/codex/rules
+  - https://developers.openai.com/codex/skills
+  - https://developers.openai.com/codex/subagents
+  - https://developers.openai.com/codex/hooks
+  - https://developers.openai.com/codex/config-reference
+  - https://developers.openai.com/codex/plugins
 supports:
   always_on_instructions: true
   path_scoped_rules: true
   skills: true
-  manual_commands: false
-  custom_agents: false
-  hooks: partial
+  manual_commands: partial
+  custom_agents: true
+  hooks: true
   mcp: true
-  plugin_package: partial
+  plugin_package: true
 preferred_outputs:
   - AGENTS.md
   - .agents/skills/*/SKILL.md
+  - .codex/agents/*.toml
+  - .codex/config.toml
+  - .codex/rules/*.rules
 notes:
   - Use AGENTS.md as the primary committed instruction output.
-  - No verified committed Codex-specific slash-command or custom-agent profile format yet.
+  - Codex rules are execution policy rules, not prompt-policy rule files.
+  - No verified committed custom slash-command prompt file format was found.
+  - Project-scoped .codex configuration loads only for trusted projects.

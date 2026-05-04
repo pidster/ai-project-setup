@@ -19,6 +19,10 @@ CANONICAL_ROOTS = (
 )
 
 IMPLEMENTED_RENDERERS = {
+    "claude": {
+        "renderer": REPO_ROOT / "adapters" / "claude" / "render.py",
+        "outputs": [],
+    },
     "codex": {
         "renderer": REPO_ROOT / "adapters" / "codex" / "render.py",
         "outputs": [
@@ -42,8 +46,20 @@ IMPLEMENTED_RENDERERS = {
             }
         ],
     },
+    "devin": {
+        "renderer": REPO_ROOT / "adapters" / "devin" / "render.py",
+        "outputs": [],
+    },
     "opencode": {
         "renderer": REPO_ROOT / "adapters" / "opencode" / "render.py",
+        "outputs": [],
+    },
+    "copilot": {
+        "renderer": REPO_ROOT / "adapters" / "copilot" / "render.py",
+        "outputs": [],
+    },
+    "windsurf": {
+        "renderer": REPO_ROOT / "adapters" / "windsurf" / "render.py",
         "outputs": [],
     },
 }
@@ -101,33 +117,157 @@ def skill_name(item_id: str) -> str:
     return item_id.rsplit(".", 1)[-1]
 
 
+def append_skill_outputs(
+    outputs: list[dict[str, Any]],
+    source_items: dict[str, dict[str, Any]],
+    output_root: Path,
+) -> None:
+    for item_id, metadata in sorted(source_items.items()):
+        if metadata.get("kind") == "skill":
+            outputs.append(
+                {
+                    "path": output_root / skill_name(item_id) / "SKILL.md",
+                    "source_ids": [item_id],
+                }
+            )
+
+
+def append_workflow_outputs(
+    outputs: list[dict[str, Any]],
+    source_items: dict[str, dict[str, Any]],
+    output_root: Path,
+) -> None:
+    for item_id, metadata in sorted(source_items.items()):
+        if metadata.get("kind") == "skill" and metadata.get("scope") == "compositional":
+            outputs.append(
+                {
+                    "path": output_root / f"{skill_name(item_id)}.md",
+                    "source_ids": [item_id],
+                }
+            )
+
+
 def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
+    rule_ids = [
+        item_id
+        for item_id, metadata in sorted(source_items.items())
+        if metadata.get("kind") == "rule"
+    ]
+
+    claude_outputs = IMPLEMENTED_RENDERERS["claude"]["outputs"]
+    claude_outputs.clear()
+    claude_outputs.append(
+        {
+            "path": REPO_ROOT / "dist" / "claude" / "CLAUDE.md",
+            "source_ids": rule_ids,
+        }
+    )
+    append_skill_outputs(
+        claude_outputs,
+        source_items,
+        REPO_ROOT / "dist" / "claude" / ".claude" / "skills",
+    )
+
+    copilot_outputs = IMPLEMENTED_RENDERERS["copilot"]["outputs"]
+    copilot_outputs.clear()
+    copilot_outputs.append(
+        {
+            "path": REPO_ROOT / "dist" / "copilot" / ".github" / "copilot-instructions.md",
+            "source_ids": rule_ids,
+        }
+    )
+    append_skill_outputs(
+        copilot_outputs,
+        source_items,
+        REPO_ROOT / "dist" / "copilot" / ".github" / "skills",
+    )
+
     opencode_outputs = IMPLEMENTED_RENDERERS["opencode"]["outputs"]
     opencode_outputs.clear()
     opencode_outputs.append(
         {
             "path": REPO_ROOT / "dist" / "opencode" / "AGENTS.md",
-            "source_ids": [
-                item_id
-                for item_id, metadata in sorted(source_items.items())
-                if metadata.get("kind") == "rule"
-            ],
+            "source_ids": rule_ids,
         }
     )
-    for item_id, metadata in sorted(source_items.items()):
-        if metadata.get("kind") == "skill":
-            opencode_outputs.append(
-                {
-                    "path": REPO_ROOT
-                    / "dist"
-                    / "opencode"
-                    / ".opencode"
-                    / "skills"
-                    / skill_name(item_id)
-                    / "SKILL.md",
-                    "source_ids": [item_id],
-                }
-            )
+    append_skill_outputs(
+        opencode_outputs,
+        source_items,
+        REPO_ROOT / "dist" / "opencode" / ".opencode" / "skills",
+    )
+
+    devin_outputs = IMPLEMENTED_RENDERERS["devin"]["outputs"]
+    devin_outputs.clear()
+    devin_outputs.extend(
+        [
+            {
+                "path": REPO_ROOT / "dist" / "devin" / "AGENTS.md",
+                "source_ids": "all",
+            },
+            {
+                "path": REPO_ROOT / "dist" / "devin" / ".devin" / "config.json",
+                "source_ids": "all",
+            },
+            {
+                "path": REPO_ROOT
+                / "dist"
+                / "devin"
+                / ".devin"
+                / "agents"
+                / "canonical-guidance"
+                / "AGENT.md",
+                "source_ids": "all",
+            },
+            {
+                "path": REPO_ROOT / "dist" / "devin" / ".devin" / "hooks.v1.json",
+                "source_ids": [],
+            },
+        ]
+    )
+    append_skill_outputs(
+        devin_outputs,
+        source_items,
+        REPO_ROOT / "dist" / "devin" / ".agents" / "skills",
+    )
+    append_skill_outputs(
+        devin_outputs,
+        source_items,
+        REPO_ROOT / "dist" / "devin" / ".devin" / "skills",
+    )
+
+    windsurf_outputs = IMPLEMENTED_RENDERERS["windsurf"]["outputs"]
+    windsurf_outputs.clear()
+    windsurf_outputs.extend(
+        [
+            {
+                "path": REPO_ROOT / "dist" / "windsurf" / "AGENTS.md",
+                "source_ids": "all",
+            },
+            {
+                "path": REPO_ROOT
+                / "dist"
+                / "windsurf"
+                / ".windsurf"
+                / "rules"
+                / "canonical-rules.md",
+                "source_ids": rule_ids,
+            },
+            {
+                "path": REPO_ROOT / "dist" / "windsurf" / ".windsurf" / "hooks.json",
+                "source_ids": [],
+            },
+        ]
+    )
+    append_skill_outputs(
+        windsurf_outputs,
+        source_items,
+        REPO_ROOT / "dist" / "windsurf" / ".windsurf" / "skills",
+    )
+    append_workflow_outputs(
+        windsurf_outputs,
+        source_items,
+        REPO_ROOT / "dist" / "windsurf" / ".windsurf" / "workflows",
+    )
 
 
 def vendor_dirs() -> set[str]:

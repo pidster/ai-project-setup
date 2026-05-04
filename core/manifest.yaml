@@ -17,16 +17,18 @@ vendor_roots:
   - vendors/codex
   - vendors/cursor
   - vendors/copilot
+  - vendors/devin
   - vendors/opencode
-  - vendors/windsurf-devin
+  - vendors/windsurf
 
 adapter_roots:
   - adapters/claude
   - adapters/codex
   - adapters/cursor
   - adapters/copilot
+  - adapters/devin
   - adapters/opencode
-  - adapters/windsurf-devin
+  - adapters/windsurf
 
 notes:
   - Canonical content is the source of truth.

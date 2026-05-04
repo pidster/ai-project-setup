@@ -5,7 +5,7 @@ effective for AI coding tools.
 
 This project aims to provide canonical rules, reusable skills, and vendor
 adapters for tools such as Claude Code, GitHub Copilot, Codex, OpenCode,
-Windsurf/Devin, and Cursor.
+Windsurf, Devin, and Cursor.
 
 The basic idea: author the guidance once, then project it into each tool's native
 configuration surface without letting vendor-specific files become separate
@@ -17,8 +17,7 @@ This repository is in early implementation.
 
 The repo contains design intent, vendor capability research, instruction files,
 canonical rules and skills, schema definitions, validation tooling, vendor
-capability data, adapter scaffolds, implemented Codex/Cursor/OpenCode renderers,
-and generated outputs for those implemented adapters.
+capability data, implemented renderers, and generated outputs.
 
 ## Why This Exists
 
@@ -56,24 +55,27 @@ vendors/
   codex/
   cursor/
   copilot/
+  devin/
   opencode/
-  windsurf-devin/
+  windsurf/
 
 adapters/
   claude/
   codex/
   cursor/
   copilot/
+  devin/
   opencode/
-  windsurf-devin/
+  windsurf/
 
 dist/
   claude/
   codex/
   cursor/
   copilot/
+  devin/
   opencode/
-  windsurf-devin/
+  windsurf/
 ```
 
 Current boundaries:
@@ -131,14 +133,20 @@ Current verified fit for the Common Rich Profile:
 | GitHub Copilot | Full |
 | OpenCode | Full |
 | Windsurf | Full except committed custom agents |
-| Devin for Terminal | Full |
-| Codex | Partial |
+| Devin for Terminal | Full, but no verified `.devin/rules/` directory |
+| Codex | Full, but no verified custom slash-command prompt files |
 | Cursor | Partial |
 | Devin product | Partial |
 
 Claude Code and OpenCode currently look like the strongest first-class
 plugin-package targets. Other vendors may still support rich file sets, skills,
 hooks, or external setup, but do not all expose one unified plugin bundle format.
+The Devin adapter uses `AGENTS.md` for committed rule guidance, `.agents/skills`
+for Devin product skills, and `.devin/skills`, `.devin/agents`,
+`.devin/hooks.v1.json`, and `.devin/config.json` for Devin for Terminal.
+The Codex adapter currently emits only the baseline `AGENTS.md`; verified Codex
+surfaces also include `.agents/skills`, `.codex/agents`, `.codex/rules`,
+`.codex/config.toml`, hooks, MCP, and plugins.
 
 ## Current Documents
 
@@ -200,7 +208,7 @@ batching notes.
 Likely next steps:
 
 1. Expand validation coverage for vendor adapter policy drift.
-2. Extend renderer coverage beyond the initial Codex, Cursor, and OpenCode
-   outputs.
+2. Deepen renderer coverage beyond the initial output shapes for each supported
+   vendor.
 3. Add richer vendor-specific projections, such as command, hook, agent, or
    plugin-package outputs where supported by verified vendor capabilities.

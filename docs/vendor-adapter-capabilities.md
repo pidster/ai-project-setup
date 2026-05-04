@@ -1,6 +1,6 @@
 # Vendor Adapter Capabilities
 
-Last reviewed: 2026-05-02
+Last reviewed: 2026-05-04
 
 This document records the current vendor instruction and extension surfaces this
 project should account for when designing vendor adapters. Vendor capabilities
@@ -92,18 +92,20 @@ dates.
   <https://cli.devin.ai/docs/extensibility/hooks/overview>
 - Devin for Terminal configuration:
   <https://cli.devin.ai/docs/extensibility/configuration>
-- OpenAI Codex AGENTS.md behavior:
-  <https://openai.com/index/introducing-codex/>
-- Codex agent loop and instruction aggregation:
-  <https://openai.com/index/unrolling-the-codex-agent-loop/>
-- OpenAI Codex config:
-  <https://github.com/openai/codex/blob/main/docs/config.md>
 - OpenAI Codex AGENTS.md docs:
-  <https://github.com/openai/codex/blob/main/docs/agents_md.md>
+  <https://developers.openai.com/codex/guides/agents-md>
+- OpenAI Codex rules:
+  <https://developers.openai.com/codex/rules>
 - OpenAI Codex skills:
-  <https://github.com/openai/codex/blob/main/docs/skills.md>
-- OpenAI Skills catalog and skill format:
-  <https://github.com/openai/skills>
+  <https://developers.openai.com/codex/skills>
+- OpenAI Codex subagents:
+  <https://developers.openai.com/codex/subagents>
+- OpenAI Codex hooks:
+  <https://developers.openai.com/codex/hooks>
+- OpenAI Codex config:
+  <https://developers.openai.com/codex/config-reference>
+- OpenAI Codex plugins:
+  <https://developers.openai.com/codex/plugins>
 
 ## Full Vendor Surfaces
 
@@ -338,10 +340,12 @@ Instruction and extension surfaces:
   elsewhere in the repository.
 - Devin for Terminal also reads `AGENT.md` and `CLAUDE.md` as equivalent
   always-on rules.
-- Devin for Terminal loads workspace-root rule files at session start and
-  discovers subdirectory rule files lazily.
+- Devin for Terminal loads `AGENTS.md`, `AGENT.md`, or `CLAUDE.md` as rule
+  files at session start and discovers subdirectory rule files lazily.
 - Devin for Terminal imports rules from `.cursor/rules/*.md`, `.cursorrules`,
   and `.windsurf/rules/*.md` when enabled.
+- No current official Devin docs found for a committed `.devin/rules/` rule
+  directory.
 - `.devin/config.json`: project configuration for permissions, MCP servers,
   imports, and hooks.
 - `.devin/config.local.json`: local project overrides.
@@ -373,6 +377,8 @@ Instruction and extension surfaces:
 Adapter notes:
 
 - Use `AGENTS.md` as the portable committed instruction file.
+- Do not emit `.devin/rules/` unless official Devin docs add that committed
+  rule surface; use `AGENTS.md` and supported imports for rule guidance.
 - Treat Devin repo setup as an external environment adapter, not a committed
   vendor rule format.
 - Keep lint/test command guidance canonical so it can be copied into Devin repo
@@ -386,8 +392,7 @@ Adapter notes:
 
 ### Codex
 
-Status: verified from OpenAI Codex public documentation and system-message
-description.
+Status: verified from current OpenAI Codex docs.
 
 Instruction and extension surfaces:
 
@@ -397,21 +402,27 @@ Instruction and extension surfaces:
 - Direct user, developer, and system instructions take precedence over
   `AGENTS.md`.
 - Codex aggregates instructions from configured home and project sources.
+- `AGENTS.override.md`: overrides same-directory `AGENTS.md` where present.
 - Codex project configuration can specify fallback instruction filenames.
+- `.codex/config.toml`: project-scoped configuration loaded only for trusted
+  projects.
+- `.codex/rules/*.rules`: trusted project execution policy rules. These are
+  deterministic command execution rules, not prompt-policy rule files.
 - Codex supports skills using `SKILL.md` folders with required `name` and
   `description` frontmatter and optional bundled resources.
+- Codex scans repository skills under `.agents/skills` from the current working
+  directory up to the repository root.
 - Codex skills use progressive disclosure: metadata is always available, the
   skill body loads when triggered, and supporting resources are loaded or used as
   needed.
+- `.codex/agents/*.toml`: custom agent profiles for Codex subagents.
 - `~/.codex/config.toml`: Codex configuration, including MCP servers and project
   document fallback behavior.
 - MCP servers can be configured in Codex config, including tool approval behavior
   and parallel-tool-call support where safe.
-- Codex supports notification hooks when the agent finishes a turn.
-- Codex can use ChatGPT connector apps where available.
-- No current official committed repo format found for Codex-specific custom
-  subagent profiles comparable to Claude `.claude/agents/`, OpenCode agents, or
-  Devin `.devin/agents/`.
+- Codex supports lifecycle hooks in configuration, including `PreToolUse` and
+  `PostToolUse`, behind the `codex_hooks` feature.
+- Codex can use ChatGPT connector apps and Codex plugins where available.
 - No current official committed repo format found for Codex-specific slash
   command prompt files comparable to `.claude/commands/`, `.cursor/commands/`, or
   `.opencode/commands/`.
@@ -422,14 +433,29 @@ Adapter notes:
 - Use nested `AGENTS.md` files for directory-specific guidance.
 - Put verification commands in `AGENTS.md` only when they are real and intended
   to be run.
-- Use cross-vendor `.agents/skills/` for Codex-consumable skills unless a
-  Codex-specific package format is later verified.
-- Treat Codex config and MCP settings as environment/runtime adapters, not
-  canonical policy.
+- Use cross-vendor `.agents/skills/` for Codex-consumable skills.
+- Use `.codex/agents/` for Codex custom agent profiles when rendering agent
+  outputs.
+- Treat `.codex/config.toml`, `.codex/rules/`, hooks, and MCP settings as
+  runtime adapters, not canonical prompt policy.
 
 ## Capability Coverage Summary
 
 This table summarizes the second pass across the expanded superset.
+
+| Product | Rich Fit | Instructions / Rules | Skills | Workflows / Commands | Agents | Hooks / Runtime Controls | MCP / Plugins |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Claude Code | Full | `CLAUDE.md`, `.claude/rules/*` | `.claude/skills/*` | `.claude/commands/*` | `.claude/agents/*` | settings hooks, permissions | MCP, plugins |
+| GitHub Copilot | Full | `.github/copilot-instructions.md`, `.github/instructions/*`, `AGENTS.md` where supported | `.github/skills/*`, `.agents/skills/*`, `.claude/skills/*` | `.github/prompts/*`, custom agents | `.github/agents/*` | `.github/hooks/*` | MCP tools |
+| OpenCode | Full | `AGENTS.md`, `CLAUDE.md`, `opencode.json` instruction globs | `.opencode/skills/*`, `.agents/skills/*`, `.claude/skills/*` | `.opencode/commands/*`, `opencode.json` commands | `.opencode/agents/*`, `opencode.json` agents | permissions, plugin events | MCP, plugins, custom tools |
+| Windsurf | Full except committed agents | `AGENTS.md`, `.windsurf/rules/*` | `.windsurf/skills/*`, `.agents/skills/*`, optional `.claude/skills/*` | `.windsurf/workflows/*` | No verified repo-committed agent profile | `.windsurf/hooks.json` | MCP |
+| Devin for Terminal | Full, different rule shape | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`, nested/imported rules; no `.devin/rules/*` | `.devin/skills/*`, `.agents/skills/*` | skills invoked as `/skill-name` | `.devin/agents/*`, `.agents/agents/*` | `.devin/hooks.v1.json`, `.devin/config.json` | MCP via `.devin/config.json` |
+| Codex | Full, different command/rule shape | `AGENTS.md`, `AGENTS.override.md`, nested instructions, fallback filenames; `.codex/rules/*` for execution policy | `.agents/skills/*` | built-in slash commands, skill invocation; no verified custom command prompt files | `.codex/agents/*.toml` | `.codex/config.toml`, hooks, approvals, sandbox | MCP, plugins, connector apps |
+| Cursor | Partial | `.cursor/rules/*.mdc`, `AGENTS.md` / `CLAUDE.md` in CLI | No verified repo-native `SKILL.md` | `.cursor/commands/*`, manual rules | No verified repo-native agent profile | No verified repo-native event hooks | MCP |
+| Devin product | Partial | `AGENTS.md`, external repo setup | `.agents/skills/*`, also scans `.github/skills/*`, `.claude/skills/*` | External repo setup / skills | No verified committed agent profile for product surface | External repo setup | External integrations |
+
+The table above is the preferred quick reference. The narrower matrix below
+keeps the original capability-column comparison for detailed review.
 
 | Vendor | Custom Agents | Skills | Path-Based Rules | Custom Prompts or Commands | Event Hooks | MCP, Tools, or Plugins |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -438,8 +464,8 @@ This table summarizes the second pass across the expanded superset.
 | Cursor | No verified repo-native agent-profile format | No verified repo-native `SKILL.md` support | `.cursor/rules/*.mdc`, `AGENTS.md`, `CLAUDE.md` in CLI | `.cursor/commands/*.md`, manual rules | No verified repo-native event hooks | MCP configuration shared by editor and CLI |
 | OpenCode | `opencode.json` `agent`, `.opencode/agents/*.md` | `.opencode/skills/`, `.claude/skills/`, `.agents/skills/` | `AGENTS.md`, `CLAUDE.md`, `opencode.json` `instructions` globs | `.opencode/commands/*.md`, `opencode.json` `command` | `.opencode/plugins/` event subscriptions | MCP, plugins, custom tools, permissions |
 | Windsurf | No verified repo-committed custom subagent profile format | `.windsurf/skills/`, `.agents/skills/`, optional `.claude/skills/` | `AGENTS.md`, `.windsurf/rules/*.md` with `trigger: glob` | `.windsurf/workflows/*.md` | `.windsurf/hooks.json` | MCP plus hooks observing MCP usage |
-| Devin | `.devin/agents/*/AGENT.md`, `.agents/agents/*/AGENT.md` in Devin for Terminal | `.agents/skills/`, `.github/skills/`, `.claude/skills/`, `.devin/skills/` in Terminal | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`; imports Cursor/Windsurf rules in Terminal | Devin for Terminal skills as `/skill-name` | `.devin/hooks.v1.json`, config hooks | `.devin/config.json` MCP, permissions, imports |
-| Codex | No verified committed Codex-specific subagent-profile format | Codex `SKILL.md` folders | `AGENTS.md`, nested `AGENTS.md`, fallback filenames | No verified committed Codex-specific slash-command file format | notification hook in config | MCP servers, connector apps |
+| Devin | `.devin/agents/*/AGENT.md`, `.agents/agents/*/AGENT.md` in Devin for Terminal | `.agents/skills/`, `.github/skills/`, `.claude/skills/`, `.devin/skills/` in Terminal | `AGENTS.md`, `AGENT.md`, `CLAUDE.md`; imports Cursor/Windsurf rules in Terminal; no verified `.devin/rules/` | Devin for Terminal skills as `/skill-name` | `.devin/hooks.v1.json`, config hooks | `.devin/config.json` MCP, permissions, imports |
+| Codex | `.codex/agents/*.toml` | `.agents/skills/*/SKILL.md` | `AGENTS.md`, `AGENTS.override.md`, nested `AGENTS.md`, fallback filenames | Built-in slash commands and skill invocation; no verified custom command prompt file format | `.codex/config.toml` hooks, feature-gated | MCP servers, connector apps, plugins |
 
 ## Equivalent Variants
 
@@ -459,6 +485,8 @@ Equivalent surfaces:
 - `.github/copilot-instructions.md`: Copilot repository-wide instructions.
 - `.cursor/rules/*.mdc` with `alwaysApply: true`: Cursor always-on project rule.
 - `.windsurf/rules/*.md` with `trigger: always_on`: Windsurf always-on rule.
+- Devin does not currently have a verified `.devin/rules/` equivalent; use
+  `AGENTS.md`, `AGENT.md`, or `CLAUDE.md`.
 
 ### Path-Scoped Instructions
 
@@ -472,6 +500,8 @@ Equivalent surfaces:
 - `.github/instructions/**/*.instructions.md` with `applyTo`: Copilot.
 - `.cursor/rules/*.mdc` with `globs`: Cursor.
 - `.windsurf/rules/*.md` with `trigger: glob` and `globs`: Windsurf.
+- Devin for Terminal uses nested rule files and optional imported Cursor or
+  Windsurf rule files rather than a native `.devin/rules/` directory.
 
 ### Model-Selected Rules or Skills
 
@@ -526,9 +556,10 @@ Equivalent surfaces:
 - `.devin/agents/<agent-name>/AGENT.md`: Devin for Terminal custom subagents.
 - `.agents/agents/<agent-name>/AGENT.md`: Devin for Terminal alternate custom
   subagent location.
-- Codex and Windsurf task agents may exist as product-level concepts, but this
-  project should not assume a committed repo file format unless official docs
-  define one.
+- `.codex/agents/*.toml`: Codex custom agent profiles.
+- Windsurf task agents may exist as a product-level concept, but this project
+  should not assume a committed repo file format unless official docs define
+  one.
 
 ### Runtime Enforcement and Permissions
 
@@ -545,8 +576,8 @@ Equivalent surfaces:
 - `.windsurf/hooks.json`: Windsurf workspace hooks.
 - `.devin/hooks.v1.json` and `.devin/config*.json`: Devin for Terminal hooks.
 - `.devin/config.json`: Devin for Terminal permissions, MCP, imports, and hooks.
-- Codex `~/.codex/config.toml`: MCP servers, approval behavior, instruction-file
-  fallback behavior, and notification hooks.
+- Codex `.codex/config.toml` or `~/.codex/config.toml`: MCP servers, approval
+  behavior, instruction-file fallback behavior, hooks, and execution rules.
 - Devin repo setup: external upkeep, lint, and test commands.
 
 These are adapters for execution behavior. They should not redefine canonical
@@ -586,7 +617,7 @@ Current support:
 | Windsurf | Partial | Skills, workflows, rules, hooks; enterprise system-level deployment | Windsurf has several loadable customization surfaces, but current docs do not show a single general-purpose plugin package format comparable to Claude or OpenCode. |
 | Devin for Terminal | Partial | Rules, skills, subagents, hooks, MCP, imported vendor config | Devin has a project `.devin/` extensibility directory and imports other vendors' config, but current docs do not show a separate plugin package mechanism. |
 | Cursor | No verified first-class plugin bundle for agent capabilities | Rules, commands, MCP, modes | Cursor supports useful customization files, but no verified repo-native plugin package surface for bundling rules, skills, hooks, and agents together. |
-| Codex | Partial | Skills, MCP servers, connector apps, config | Codex supports skills and connector apps, but no verified repo-committed plugin package that bundles rules, skills, commands, hooks, and agents together. |
+| Codex | Yes | Plugins, apps, MCP servers, and bundled skills | Codex has an installable plugin directory. Project-local `.codex/` config, agents, rules, and hooks remain separate repository surfaces. |
 | Devin product | No verified committed plugin package | AGENTS.md, skills, external repo setup | Most rich extensibility appears in Devin for Terminal or external setup. |
 
 Adapter guidance:
@@ -673,6 +704,11 @@ The common rich profile includes:
 - Event hooks, lifecycle hooks, or plugin event subscriptions.
 - Optional specialized agents or subagents where the vendor supports them.
 
+The profile describes capability classes, not identical file paths. A vendor can
+support rules without exposing a dedicated `rules/` directory, or support manual
+workflows through skills rather than command files. Adapter output should follow
+the verified native surface for that vendor.
+
 The common rich profile does not require:
 
 - A committed custom-agent profile format.
@@ -692,8 +728,8 @@ Current fit:
 | GitHub Copilot | Full | Supports instructions, path instructions, skills, custom agents, prompts, hooks, and MCP tools. |
 | OpenCode | Full | Supports rules, skills, commands, agents, permissions, MCP, plugins, hooks, and custom tools. |
 | Windsurf | Full except committed custom agents | Supports rules, skills, workflows, hooks, MCP, and AGENTS.md. |
-| Devin for Terminal | Full | Supports rules, skills, custom subagents, MCP, permissions, hooks, and imports. |
-| Codex | Partial | Supports AGENTS.md, skills, MCP, config, connector apps, and notification hooks, but no verified committed slash-command or custom-agent profile format. |
+| Devin for Terminal | Full with different rule shape | Supports rules through `AGENTS.md`, `AGENT.md`, `CLAUDE.md`, nested rule files, and imported rules; no verified `.devin/rules/`. Supports skills, custom subagents, MCP, permissions, hooks, and imports. |
+| Codex | Full with different command/rule shape | Supports AGENTS.md, skills, custom agents, MCP, config, hooks, execution rules, connector apps, and plugins; no verified committed custom slash-command prompt file format. |
 | Cursor | Partial | Supports rules, commands, AGENTS/CLAUDE in CLI, custom modes, and MCP, but no verified repo-native `SKILL.md` skills or event hooks. |
 | Devin product | Partial | Supports AGENTS.md, skills, and external repo setup, but most rich configuration is in Devin for Terminal. |
 

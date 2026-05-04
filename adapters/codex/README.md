@@ -18,4 +18,7 @@ Check freshness:
 python3 adapters/codex/render.py --check
 ```
 
-Future output may include cross-vendor skills under `.agents/skills/`.
+Future output may include `.agents/skills/*/SKILL.md`, `.codex/agents/*.toml`,
+`.codex/rules/*.rules`, and project-scoped `.codex/config.toml` where those
+runtime outputs can be generated from canonical content without redefining
+policy.

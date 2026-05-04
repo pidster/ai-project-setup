@@ -1,0 +1,36 @@
+vendor: devin
+display_name: Devin
+last_reviewed: 2026-05-04
+confidence: verified
+profile_fit: mixed
+sources:
+  - https://docs.devin.ai/onboard-devin/agents-md
+  - https://docs.devin.ai/onboard-devin/new-repo-setup
+  - https://docs.devin.ai/product-guides/skills
+  - https://cli.devin.ai/docs/extensibility
+  - https://cli.devin.ai/docs/extensibility/rules
+  - https://cli.devin.ai/docs/extensibility/skills/overview
+  - https://cli.devin.ai/docs/extensibility/skills/creating-skills
+  - https://cli.devin.ai/docs/subagents
+  - https://cli.devin.ai/docs/extensibility/hooks/overview
+  - https://cli.devin.ai/docs/extensibility/configuration
+supports:
+  always_on_instructions: true
+  path_scoped_rules: partial
+  skills: true
+  manual_commands: true
+  custom_agents: true
+  hooks: true
+  mcp: true
+  plugin_package: partial
+preferred_outputs:
+  - AGENTS.md
+  - .agents/skills/*/SKILL.md
+  - .devin/config.json
+  - .devin/skills/*/SKILL.md
+  - .devin/agents/*/AGENT.md
+  - .devin/hooks.v1.json
+notes:
+  - Devin product and Devin for Terminal have different capability surfaces.
+  - Use .agents/skills for Devin product sessions and .devin/skills for Devin for Terminal.
+  - Treat Devin repository setup as external environment configuration, not committed canonical policy.

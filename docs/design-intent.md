@@ -2,7 +2,7 @@
 
 This project provides vendor-neutral guidance for configuring repositories so AI
 tools can work effectively, safely, and consistently. It should support multiple
-AI tool surfaces, including Claude, Copilot, Codex, OpenCode, Windsurf/Devin, and
+AI tool surfaces, including Claude, Copilot, Codex, OpenCode, Windsurf, Devin, and
 Cursor, without allowing each vendor format to become its own source of policy.
 
 The project should be treated as a content compiler: canonical rules and skills
@@ -156,24 +156,27 @@ vendors/
   codex/
   cursor/
   copilot/
+  devin/
   opencode/
-  windsurf-devin/
+  windsurf/
 
 adapters/
   claude/
   codex/
   cursor/
   copilot/
+  devin/
   opencode/
-  windsurf-devin/
+  windsurf/
 
 dist/
   claude/
   codex/
   cursor/
   copilot/
+  devin/
   opencode/
-  windsurf-devin/
+  windsurf/
 ```
 
 `core/` is the canonical source of truth. `vendors/` contains declarative data
@@ -344,7 +347,7 @@ Likely target: Copilot.
 Use when a vendor supports some scoped files but not true skill composition. Emit
 scoped rules plus compact workflow guidance.
 
-Potential targets include Windsurf/Devin, depending on supported formats.
+Potential targets include Windsurf and Devin, depending on supported formats.
 
 ## Validation Expectations
 
@@ -409,6 +412,6 @@ The first implementation milestone was intentionally narrow:
 9. Generate outputs reproducibly.
 
 The repository now has canonical metadata, canonical rules and skills, vendor
-capability data, validation tooling, and generated outputs for Codex, Cursor, and
-OpenCode. The next expansion point is broader renderer coverage and richer
-vendor-specific output shapes.
+capability data, validation tooling, implemented renderers, and generated
+outputs. The next expansion point is deeper coverage within each vendor's
+native output surfaces.

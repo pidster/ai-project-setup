@@ -1,0 +1,29 @@
+vendor: windsurf
+display_name: Windsurf
+last_reviewed: 2026-05-04
+confidence: verified
+profile_fit: full
+sources:
+  - https://docs.windsurf.com/windsurf/cascade/agents-md
+  - https://docs.windsurf.com/windsurf/cascade/memories
+  - https://docs.windsurf.com/windsurf/cascade/skills
+  - https://docs.windsurf.com/windsurf/cascade/workflows
+  - https://docs.windsurf.com/windsurf/cascade/hooks
+supports:
+  always_on_instructions: true
+  path_scoped_rules: true
+  skills: true
+  manual_commands: true
+  custom_agents: unsupported
+  hooks: true
+  mcp: true
+  plugin_package: partial
+preferred_outputs:
+  - AGENTS.md
+  - .windsurf/rules/*.md
+  - .windsurf/skills/*/SKILL.md
+  - .windsurf/workflows/*.md
+  - .windsurf/hooks.json
+notes:
+  - No verified committed custom-agent profile format was found for Windsurf.
+  - Windsurf also discovers .agents/skills and optionally Claude skills, but this adapter emits the native Windsurf skill surface.
