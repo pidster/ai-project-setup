@@ -1,0 +1,31 @@
+vendor: codex
+display_name: Codex
+last_reviewed: 2026-05-04
+confidence: verified
+plugin_model: package_manifest
+has_package_manifest: true
+direct_config_surfaces:
+  - ~/.codex/config.toml
+  - .codex/config.toml
+  - .codex/rules/*.rules
+  - .agents/skills/*/SKILL.md
+  - .codex/agents/*.toml
+plugin_config_surfaces:
+  - .codex-plugin/plugin.json
+  - skills/
+  - .mcp.json
+  - .app.json
+  - hooks/hooks.json
+  - assets/
+marketplace_surfaces:
+  - .agents/plugins/marketplace.json
+  - .claude-plugin/marketplace.json
+notes:
+  - Direct lifecycle hooks can be configured inline in config.toml.
+  - Plugin lifecycle hooks can be declared from plugin.json or default to hooks/hooks.json.
+  - Installed plugin enablement state is stored in user config.
+sources:
+  - https://developers.openai.com/codex/plugins
+  - https://developers.openai.com/codex/plugins/build
+  - https://developers.openai.com/codex/config-reference
+  - https://developers.openai.com/codex/hooks

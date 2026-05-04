@@ -48,3 +48,9 @@ Status: verified from current Claude Code docs.
 - Use `.claude/commands/` for manually invoked workflows.
 - Treat settings, hooks, MCP, and plugins as runtime adapters, not canonical
   prompt policy.
+
+## Plugin Model
+
+Claude Code has a verified installable plugin package model. See
+[plugin-model.yaml](../../vendors/claude/plugin-model.yaml) for structured
+details.

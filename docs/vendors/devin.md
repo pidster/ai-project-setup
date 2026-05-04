@@ -52,3 +52,10 @@ are not identical.
   canonical policy.
 - Document any imported vendor config explicitly to avoid hidden policy
   duplication.
+
+## Plugin Model
+
+Devin currently has direct configuration surfaces, with no verified repo-native
+plugin package model. See
+[plugin-model.yaml](../../vendors/devin/plugin-model.yaml) for structured
+details.

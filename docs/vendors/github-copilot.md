@@ -45,3 +45,9 @@ Status: verified from current GitHub Docs.
   cross-vendor reuse.
 - Use custom agents for role-specific execution profiles, not canonical policy.
 - Avoid relying solely on `AGENTS.md`, because support varies by surface.
+
+## Plugin Model
+
+GitHub Copilot CLI has a verified installable plugin package model. See
+[plugin-model.yaml](../../vendors/copilot/plugin-model.yaml) for structured
+details.

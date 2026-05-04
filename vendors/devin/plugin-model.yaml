@@ -1,0 +1,26 @@
+vendor: devin
+display_name: Devin
+last_reviewed: 2026-05-04
+confidence: verified
+plugin_model: direct_config_only
+has_package_manifest: false
+direct_config_surfaces:
+  - AGENTS.md
+  - AGENT.md
+  - CLAUDE.md
+  - .agents/skills/*/SKILL.md
+  - .devin/config.json
+  - .devin/hooks.v1.json
+  - .devin/skills/*/SKILL.md
+  - .devin/agents/*/AGENT.md
+plugin_config_surfaces: []
+marketplace_surfaces: []
+notes:
+  - Devin product supports committed skills and external repo setup.
+  - Devin for Terminal uses direct .devin project configuration.
+  - No verified Devin plugin package manifest surface found.
+sources:
+  - https://docs.devin.ai/product-guides/skills
+  - https://cli.devin.ai/docs/extensibility
+  - https://cli.devin.ai/docs/extensibility/configuration
+  - https://cli.devin.ai/docs/extensibility/hooks/overview

@@ -1,0 +1,37 @@
+vendor: copilot
+display_name: GitHub Copilot
+last_reviewed: 2026-05-04
+confidence: verified
+plugin_model: package_manifest
+has_package_manifest: true
+direct_config_surfaces:
+  - .github/copilot-instructions.md
+  - .github/instructions/*.instructions.md
+  - .github/hooks/*.json
+  - .github/skills/*/SKILL.md
+  - .github/agents/*.md
+  - .github/prompts/*.prompt.md
+plugin_config_surfaces:
+  - plugin.json
+  - .github/plugin/plugin.json
+  - .claude-plugin/plugin.json
+  - agents/
+  - skills/
+  - hooks.json
+  - hooks/hooks.json
+  - .mcp.json
+  - .github/mcp.json
+  - lsp.json
+  - .github/lsp.json
+marketplace_surfaces:
+  - .github/plugin/marketplace.json
+  - .claude-plugin/marketplace.json
+notes:
+  - Direct repository hooks are loaded from .github/hooks/*.json.
+  - Copilot CLI plugins can bundle hooks, skills, agents, MCP, and LSP configuration.
+  - Plugin components do not override project-level or personal agents and skills.
+sources:
+  - https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-cli-plugins
+  - https://docs.github.com/copilot/how-tos/copilot-cli/customize-copilot/plugins-creating
+  - https://docs.github.com/copilot/reference/copilot-cli-reference/cli-plugin-reference
+  - https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-hooks-reference

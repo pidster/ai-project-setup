@@ -40,3 +40,9 @@ Status: verified from current OpenAI Codex docs.
   outputs.
 - Treat `.codex/config.toml`, `.codex/rules/`, hooks, and MCP settings as
   runtime adapters, not canonical prompt policy.
+
+## Plugin Model
+
+Codex has a verified installable plugin package model. See
+[plugin-model.yaml](../../vendors/codex/plugin-model.yaml) for structured
+details.

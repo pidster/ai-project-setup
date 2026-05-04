@@ -36,3 +36,10 @@ Status: verified from current Cursor docs.
 - Use `.cursor/commands/` for manually invoked workflows.
 - Do not project canonical skills into Cursor as `SKILL.md` unless Cursor adds
   native skill support.
+
+## Plugin Model
+
+Cursor currently has direct configuration surfaces, with no verified repo-native
+plugin package model. See
+[plugin-model.yaml](../../vendors/cursor/plugin-model.yaml) for structured
+details.

@@ -1,0 +1,21 @@
+vendor: cursor
+display_name: Cursor
+last_reviewed: 2026-05-04
+confidence: verified
+plugin_model: direct_config_only
+has_package_manifest: false
+direct_config_surfaces:
+  - .cursor/rules/*.mdc
+  - .cursor/commands/*.md
+  - AGENTS.md
+  - CLAUDE.md
+  - MCP configuration shared by editor and CLI
+plugin_config_surfaces: []
+marketplace_surfaces: []
+notes:
+  - No verified repo-native plugin package surface for rules, skills, hooks, or agents.
+  - MCP is configured directly rather than through a verified plugin package model.
+sources:
+  - https://docs.cursor.com/en/context/rules
+  - https://docs.cursor.com/en/agent/chat/commands
+  - https://docs.cursor.com/cli/mcp

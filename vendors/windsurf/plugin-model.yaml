@@ -1,0 +1,21 @@
+vendor: windsurf
+display_name: Windsurf
+last_reviewed: 2026-05-04
+confidence: verified
+plugin_model: direct_config_only
+has_package_manifest: false
+direct_config_surfaces:
+  - AGENTS.md
+  - .windsurf/rules/*.md
+  - .windsurf/skills/*/SKILL.md
+  - .windsurf/workflows/*.md
+  - .windsurf/hooks.json
+plugin_config_surfaces: []
+marketplace_surfaces: []
+notes:
+  - No verified repo-native plugin package surface comparable to Codex or Copilot CLI.
+  - Workspace, user, system, and enterprise hook locations are direct configuration surfaces.
+sources:
+  - https://docs.windsurf.com/windsurf/cascade/hooks
+  - https://docs.windsurf.com/windsurf/cascade/skills
+  - https://docs.windsurf.com/windsurf/cascade/workflows

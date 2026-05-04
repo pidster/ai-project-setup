@@ -40,3 +40,9 @@ Status: verified from current OpenCode docs.
   cross-vendor skills.
 - Represent executable integration behavior in canonical rules or skills before
   enforcing it in runtime hooks or plugins.
+
+## Plugin Model
+
+OpenCode has a verified module plugin model rather than a manifest package
+model. See [plugin-model.yaml](../../vendors/opencode/plugin-model.yaml) for
+structured details.

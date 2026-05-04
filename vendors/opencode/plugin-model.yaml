@@ -1,0 +1,27 @@
+vendor: opencode
+display_name: OpenCode
+last_reviewed: 2026-05-04
+confidence: verified
+plugin_model: module_plugin
+has_package_manifest: false
+direct_config_surfaces:
+  - opencode.json
+  - .opencode/agents/*.md
+  - .opencode/commands/*.md
+  - .opencode/skills/*/SKILL.md
+  - .opencode/tools/
+  - .opencode/plugins/*.js
+  - .opencode/plugins/*.ts
+plugin_config_surfaces:
+  - .opencode/plugins/*.js
+  - .opencode/plugins/*.ts
+  - npm packages listed in opencode.json plugin
+marketplace_surfaces:
+  - npm packages
+notes:
+  - OpenCode plugins are JavaScript or TypeScript modules, not manifest packages.
+  - Npm plugins are selected through the plugin key in opencode.json.
+  - Local plugins are loaded from project or user plugin directories.
+sources:
+  - https://opencode.ai/docs/config/
+  - https://opencode.ai/docs/plugins/

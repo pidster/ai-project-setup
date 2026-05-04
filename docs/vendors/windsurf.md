@@ -35,3 +35,10 @@ Status: verified from current Windsurf docs.
 - Use skills for complex procedures with supporting files.
 - Use workflows for manual slash-command runbooks.
 - Use hooks for enforcement, logging, validation, and lifecycle automation.
+
+## Plugin Model
+
+Windsurf currently has direct configuration surfaces, with no verified
+repo-native plugin package model. See
+[plugin-model.yaml](../../vendors/windsurf/plugin-model.yaml) for structured
+details.

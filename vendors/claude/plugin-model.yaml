@@ -1,0 +1,32 @@
+vendor: claude
+display_name: Claude Code
+last_reviewed: 2026-05-04
+confidence: verified
+plugin_model: package_manifest
+has_package_manifest: true
+direct_config_surfaces:
+  - .claude/settings.json
+  - .claude/rules/*.md
+  - .claude/skills/*/SKILL.md
+  - .claude/commands/*.md
+  - .claude/agents/*.md
+plugin_config_surfaces:
+  - .claude-plugin/plugin.json
+  - skills/
+  - commands/
+  - agents/
+  - hooks/hooks.json
+  - .mcp.json
+  - .lsp.json
+  - monitors/monitors.json
+  - settings.json
+marketplace_surfaces:
+  - .claude-plugin/marketplace.json
+notes:
+  - Project hooks are configured through .claude/settings.json.
+  - Plugin hooks may be bundled through hooks/hooks.json.
+  - Keep plugin package metadata separate from direct project configuration.
+sources:
+  - https://docs.claude.com/en/docs/claude-code/plugins
+  - https://docs.claude.com/en/docs/claude-code/hooks
+  - https://docs.claude.com/en/docs/claude-code/settings
