@@ -6,9 +6,9 @@ Use [../plugin-models.md](../plugin-models.md) for the shared plugin-model
 vocabulary.
 
 - [Claude Code](claude-code.md)
+- [Codex](codex.md)
+- [Cursor](cursor.md)
+- [Devin](devin.md)
 - [GitHub Copilot](github-copilot.md)
 - [OpenCode](opencode.md)
 - [Windsurf](windsurf.md)
-- [Devin](devin.md)
-- [Codex](codex.md)
-- [Cursor](cursor.md)

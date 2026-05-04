@@ -14,12 +14,12 @@ details.
   [plugin model](claude/plugin-model.yaml)
 - [Codex](codex/capabilities.yaml) and
   [plugin model](codex/plugin-model.yaml)
-- [GitHub Copilot](copilot/capabilities.yaml) and
-  [plugin model](copilot/plugin-model.yaml)
 - [Cursor](cursor/capabilities.yaml) and
   [plugin model](cursor/plugin-model.yaml)
 - [Devin](devin/capabilities.yaml) and
   [plugin model](devin/plugin-model.yaml)
+- [GitHub Copilot](copilot/capabilities.yaml) and
+  [plugin model](copilot/plugin-model.yaml)
 - [OpenCode](opencode/capabilities.yaml) and
   [plugin model](opencode/plugin-model.yaml)
 - [Windsurf](windsurf/capabilities.yaml) and

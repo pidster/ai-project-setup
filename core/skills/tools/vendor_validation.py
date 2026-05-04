@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Validate vendor capability metadata.
+"""Validate vendor metadata.
 
 This validator intentionally uses only the Python standard library. It supports
-the limited YAML shape currently used by vendors/*/capabilities.yaml.
+the limited YAML shape currently used by vendors/*/capabilities.yaml and
+vendors/*/plugin-model.yaml.
 """
 
 from __future__ import annotations
@@ -17,8 +18,25 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 VENDORS_ROOT = REPO_ROOT / "vendors"
 
 REQUIRED_FIELDS = {"vendor", "last_reviewed", "confidence", "sources", "supports"}
+PLUGIN_MODEL_REQUIRED_FIELDS = {
+    "vendor",
+    "last_reviewed",
+    "confidence",
+    "sources",
+    "plugin_model",
+    "has_package_manifest",
+    "direct_config_surfaces",
+    "plugin_config_surfaces",
+    "marketplace_surfaces",
+}
 CONFIDENCE_VALUES = {"verified", "provisional", "unknown"}
 SUPPORT_VALUES = {"partial", "unknown", "planned", "unsupported"}
+PLUGIN_MODEL_VALUES = {
+    "package_manifest",
+    "module_plugin",
+    "direct_config_only",
+    "none_verified",
+}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 URI_RE = re.compile(r"^https?://[^\s]+$")
 
@@ -34,6 +52,10 @@ RENDERING_LOGIC_KEYS = {
     "templates",
     "transform",
     "transforms",
+}
+
+DISALLOWED_SUPPORT_KEYS = {
+    "plugin_package",
 }
 
 
@@ -97,6 +119,12 @@ def capability_paths() -> list[Path]:
     return sorted(VENDORS_ROOT.glob("*/capabilities.yaml"))
 
 
+def plugin_model_paths() -> list[Path]:
+    if not VENDORS_ROOT.exists():
+        return []
+    return sorted(VENDORS_ROOT.glob("*/plugin-model.yaml"))
+
+
 def validate_capability(path: Path, data: dict[str, Any], errors: list[str]) -> None:
     missing = sorted(REQUIRED_FIELDS - data.keys())
     if missing:
@@ -134,6 +162,11 @@ def validate_capability(path: Path, data: dict[str, Any], errors: list[str]) -> 
         for key, value in sorted(supports.items()):
             if not isinstance(key, str) or not key:
                 errors.append(f"{rel(path)}: supports keys must be non-empty strings")
+            if key in DISALLOWED_SUPPORT_KEYS:
+                errors.append(
+                    f"{rel(path)}: supports.{key} belongs in plugin-model.yaml, "
+                    "not capabilities.yaml"
+                )
             if isinstance(value, bool):
                 continue
             if isinstance(value, str) and value in SUPPORT_VALUES:
@@ -163,6 +196,93 @@ def validate_capability(path: Path, data: dict[str, Any], errors: list[str]) -> 
         )
 
 
+def validate_plugin_model(path: Path, data: dict[str, Any], errors: list[str]) -> None:
+    missing = sorted(PLUGIN_MODEL_REQUIRED_FIELDS - data.keys())
+    if missing:
+        errors.append(f"{rel(path)}: missing required fields: {', '.join(missing)}")
+
+    vendor = data.get("vendor")
+    if not isinstance(vendor, str) or not vendor:
+        errors.append(f"{rel(path)}: vendor must be a non-empty string")
+    elif vendor != path.parent.name:
+        errors.append(
+            f"{rel(path)}: vendor must match directory name {path.parent.name!r}"
+        )
+
+    last_reviewed = data.get("last_reviewed")
+    if not isinstance(last_reviewed, str) or not DATE_RE.match(last_reviewed):
+        errors.append(f"{rel(path)}: last_reviewed must use YYYY-MM-DD")
+
+    confidence = data.get("confidence")
+    if confidence not in CONFIDENCE_VALUES:
+        errors.append(
+            f"{rel(path)}: confidence must be one of "
+            f"{', '.join(sorted(CONFIDENCE_VALUES))}"
+        )
+
+    sources = data.get("sources")
+    if not isinstance(sources, list) or not sources:
+        errors.append(f"{rel(path)}: sources must be a non-empty list")
+    elif any(not isinstance(source, str) or not URI_RE.match(source) for source in sources):
+        errors.append(f"{rel(path)}: sources entries must be http(s) URLs")
+
+    plugin_model = data.get("plugin_model")
+    if plugin_model not in PLUGIN_MODEL_VALUES:
+        errors.append(
+            f"{rel(path)}: plugin_model must be one of "
+            f"{', '.join(sorted(PLUGIN_MODEL_VALUES))}"
+        )
+
+    has_package_manifest = data.get("has_package_manifest")
+    if not isinstance(has_package_manifest, bool):
+        errors.append(f"{rel(path)}: has_package_manifest must be boolean")
+
+    if plugin_model == "package_manifest" and has_package_manifest is not True:
+        errors.append(
+            f"{rel(path)}: package_manifest requires has_package_manifest: true"
+        )
+    if plugin_model != "package_manifest" and has_package_manifest is True:
+        errors.append(
+            f"{rel(path)}: only package_manifest may set has_package_manifest: true"
+        )
+
+    list_fields = (
+        "direct_config_surfaces",
+        "plugin_config_surfaces",
+        "marketplace_surfaces",
+        "notes",
+    )
+    for field in list_fields:
+        values = data.get(field, [])
+        if not isinstance(values, list):
+            errors.append(f"{rel(path)}: {field} must be a list")
+        elif any(not isinstance(value, str) or not value for value in values):
+            errors.append(f"{rel(path)}: {field} entries must be non-empty strings")
+
+    plugin_config_surfaces = data.get("plugin_config_surfaces", [])
+    marketplace_surfaces = data.get("marketplace_surfaces", [])
+    if plugin_model == "package_manifest" and not plugin_config_surfaces:
+        errors.append(
+            f"{rel(path)}: package_manifest requires plugin_config_surfaces entries"
+        )
+    if plugin_model in {"direct_config_only", "none_verified"}:
+        if plugin_config_surfaces:
+            errors.append(
+                f"{rel(path)}: {plugin_model} must not define plugin_config_surfaces"
+            )
+        if marketplace_surfaces:
+            errors.append(
+                f"{rel(path)}: {plugin_model} must not define marketplace_surfaces"
+            )
+
+    rendering_keys = sorted(RENDERING_LOGIC_KEYS & data.keys())
+    if rendering_keys:
+        errors.append(
+            f"{rel(path)}: plugin model files must not define rendering logic "
+            f"keys: {', '.join(rendering_keys)}"
+        )
+
+
 def main() -> int:
     errors: list[str] = []
     paths = capability_paths()
@@ -179,6 +299,33 @@ def main() -> int:
             errors.append(str(exc))
             continue
         validate_capability(path, data, errors)
+
+    plugin_paths = plugin_model_paths()
+    capability_vendors = {path.parent.name for path in paths}
+    plugin_vendors = {path.parent.name for path in plugin_paths}
+    missing_plugin_models = sorted(capability_vendors - plugin_vendors)
+    if missing_plugin_models:
+        errors.append(
+            "vendors: missing plugin-model.yaml for: "
+            f"{', '.join(missing_plugin_models)}"
+        )
+    extra_plugin_models = sorted(plugin_vendors - capability_vendors)
+    if extra_plugin_models:
+        errors.append(
+            "vendors: plugin-model.yaml without capabilities.yaml for: "
+            f"{', '.join(extra_plugin_models)}"
+        )
+
+    for path in plugin_paths:
+        try:
+            data = parse_yaml_subset(path.read_text(encoding="utf-8"), path)
+        except OSError as exc:
+            errors.append(f"{rel(path)}: could not read file: {exc}")
+            continue
+        except ValueError as exc:
+            errors.append(str(exc))
+            continue
+        validate_plugin_model(path, data, errors)
 
     if errors:
         print("vendor validation failed", file=sys.stderr)

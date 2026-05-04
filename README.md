@@ -143,4 +143,5 @@ Likely next steps:
 2. Deepen renderer coverage beyond the initial output shapes for each supported
    vendor.
 3. Add richer vendor-specific projections, such as command, hook, agent, or
-   plugin-package outputs where supported by verified vendor capabilities.
+   plugin outputs where supported by verified vendor capability and plugin-model
+   data.

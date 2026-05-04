@@ -17,7 +17,6 @@ supports:
   custom_agents: unsupported
   hooks: true
   mcp: true
-  plugin_package: partial
 preferred_outputs:
   - AGENTS.md
   - .windsurf/rules/*.md

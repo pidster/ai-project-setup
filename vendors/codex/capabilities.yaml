@@ -19,7 +19,6 @@ supports:
   custom_agents: true
   hooks: true
   mcp: true
-  plugin_package: true
 preferred_outputs:
   - AGENTS.md
   - .agents/skills/*/SKILL.md

@@ -91,23 +91,15 @@ Findings:
 
 Remaining risk:
 
-- Vendor capabilities change over time. The project needs a way to mark
-  capability maps with source, last-reviewed date, and confidence.
-
-Suggested metadata:
-
-```yaml
-vendor: cursor
-last_reviewed: 2026-05-02
-confidence: provisional
-sources: []
-```
+- Vendor capabilities change over time. Capability maps and plugin-model maps
+  now record source URLs, review dates, and confidence, but the project still
+  needs semantic checks that keep related structured files consistent.
 
 ## Review 5: Validation and Drift Prevention
 
-Status: executable checks implemented for core metadata, vendor metadata,
-adapter guardrails, generated-output freshness, and generated-output manifest
-freshness.
+Status: executable checks implemented for core metadata, vendor capability
+metadata, vendor plugin-model metadata, adapter guardrails, generated-output
+freshness, and generated-output manifest freshness.
 
 The validation expectations cover the important graph and metadata invariants.
 
@@ -116,12 +108,17 @@ Findings:
 - Dependency direction, unique IDs, missing dependencies, and dependency cycles
   are checked.
 - Vendor capability metadata is checked for required declarative fields.
+- Vendor plugin-model metadata is checked for required declarative fields,
+  allowed model categories, source URLs, review dates, and package-manifest
+  consistency.
 - Generated outputs are checked for freshness and source ID coverage.
 - Vendor adapter policy drift remains harder to validate semantically.
 
 Remaining validation additions:
 
 - Require adapter overlays to use an allowlisted schema.
+- Add semantic consistency checks between capability maps, plugin-model maps,
+  documentation tables, and renderer behavior.
 - Add semantic checks or review workflows for adapter policy drift beyond
   mechanical source ID and generated marker checks.
 

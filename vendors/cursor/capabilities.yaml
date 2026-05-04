@@ -15,7 +15,6 @@ supports:
   custom_agents: false
   hooks: false
   mcp: true
-  plugin_package: false
 preferred_outputs:
   - .cursor/rules/*.mdc
   - .cursor/commands/*.md

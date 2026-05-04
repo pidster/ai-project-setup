@@ -37,8 +37,8 @@ an installable plugin package.
 
 - [Claude Code](../vendors/claude/plugin-model.yaml)
 - [Codex](../vendors/codex/plugin-model.yaml)
-- [GitHub Copilot](../vendors/copilot/plugin-model.yaml)
 - [Cursor](../vendors/cursor/plugin-model.yaml)
 - [Devin](../vendors/devin/plugin-model.yaml)
+- [GitHub Copilot](../vendors/copilot/plugin-model.yaml)
 - [OpenCode](../vendors/opencode/plugin-model.yaml)
 - [Windsurf](../vendors/windsurf/plugin-model.yaml)

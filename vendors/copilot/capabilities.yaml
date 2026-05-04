@@ -15,7 +15,6 @@ supports:
   custom_agents: true
   hooks: true
   mcp: true
-  plugin_package: partial
 preferred_outputs:
   - .github/copilot-instructions.md
   - .github/instructions/*.instructions.md

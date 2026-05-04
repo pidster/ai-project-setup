@@ -38,12 +38,12 @@ details, sources, caveats, and adapter notes live in the linked vendor pages.
 
 - [Vendor detail index](vendors/README.md)
 - [Claude Code](vendors/claude-code.md)
+- [Codex](vendors/codex.md)
+- [Cursor](vendors/cursor.md)
+- [Devin](vendors/devin.md)
 - [GitHub Copilot](vendors/github-copilot.md)
 - [OpenCode](vendors/opencode.md)
 - [Windsurf](vendors/windsurf.md)
-- [Devin](vendors/devin.md)
-- [Codex](vendors/codex.md)
-- [Cursor](vendors/cursor.md)
 
 ## Maintenance
 
@@ -51,6 +51,8 @@ When vendor behavior changes:
 
 1. Verify current official documentation.
 2. Update the relevant `vendors/*/capabilities.yaml` file.
-3. Update the matching `docs/vendors/*.md` page.
-4. Update the table in this file only when the quick-reference answer changes.
-5. Keep generated output under `dist/` in sync with adapter behavior.
+3. Update the relevant `vendors/*/plugin-model.yaml` file if packaging or plugin
+   behavior changed.
+4. Update the matching `docs/vendors/*.md` page.
+5. Update the table in this file only when the quick-reference answer changes.
+6. Keep generated output under `dist/` in sync with adapter behavior.

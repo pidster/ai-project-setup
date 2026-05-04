@@ -15,7 +15,6 @@ supports:
   custom_agents: true
   hooks: true
   mcp: true
-  plugin_package: true
 preferred_outputs:
   - CLAUDE.md
   - .claude/rules/*.md

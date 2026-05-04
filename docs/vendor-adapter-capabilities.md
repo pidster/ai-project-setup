@@ -10,9 +10,10 @@ Vendor capabilities change over time. Do not update adapter behavior from
 memory. Verify current official documentation first, then update:
 
 1. `vendors/<vendor>/capabilities.yaml`
-2. `docs/vendors/<product>.md`
-3. [docs/README.md](README.md), if the quick-reference table changes
-4. Any affected adapter and generated output
+2. `vendors/<vendor>/plugin-model.yaml`, if packaging or plugin behavior changed
+3. `docs/vendors/<product>.md`
+4. [docs/README.md](README.md), if the quick-reference table changes
+5. Any affected adapter and generated output
 
 ## Rich Profile
 
