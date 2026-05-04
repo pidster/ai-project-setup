@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render canonical content into Claude-oriented generated output."""
+"""Render canonical content into a Claude Code marketplace package."""
 
 from __future__ import annotations
 
@@ -23,9 +23,12 @@ from render_support import (  # noqa: E402
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-PLUGIN_ROOT = REPO_ROOT / "dist" / "claude" / "plugin" / "ai-project-setup"
+MARKETPLACE_ROOT = REPO_ROOT / "dist" / "claude" / "marketplace"
+MARKETPLACE_MANIFEST_OUTPUT = MARKETPLACE_ROOT / ".claude-plugin" / "marketplace.json"
+PLUGIN_ROOT = MARKETPLACE_ROOT / "plugins" / "ai-project-setup"
 PLUGIN_MANIFEST_OUTPUT = PLUGIN_ROOT / ".claude-plugin" / "plugin.json"
 PLUGIN_SKILLS_OUTPUT = PLUGIN_ROOT / "skills"
+OBSOLETE_PLUGIN_ROOT = REPO_ROOT / "dist" / "claude" / "plugin"
 RENDERER = "adapters/claude/render.py"
 
 
@@ -62,9 +65,36 @@ def render_plugin_manifest() -> str:
     return json.dumps(manifest, indent=2, sort_keys=False) + "\n"
 
 
+def render_marketplace_manifest() -> str:
+    manifest = {
+        "name": "ai-project-setup",
+        "owner": {
+            "name": "ai-project-setup",
+        },
+        "description": "Canonical repository guidance and workflows for AI project setup.",
+        "plugins": [
+            {
+                "name": "ai-project-setup",
+                "source": {
+                    "source": "git-subdir",
+                    "url": "https://github.com/pidster/ai-project-setup.git",
+                    "path": "dist/claude/marketplace/plugins/ai-project-setup",
+                    "ref": "main",
+                },
+                "description": "Canonical repository guidance and workflows for AI project setup.",
+                "category": "Productivity",
+            }
+        ],
+    }
+    return json.dumps(manifest, indent=2, sort_keys=False) + "\n"
+
+
 def rendered_outputs() -> dict[Path, str]:
     items = canonical_items(REPO_ROOT)
-    outputs = {PLUGIN_MANIFEST_OUTPUT: render_plugin_manifest()}
+    outputs = {
+        MARKETPLACE_MANIFEST_OUTPUT: render_marketplace_manifest(),
+        PLUGIN_MANIFEST_OUTPUT: render_plugin_manifest(),
+    }
     for item in sorted([candidate for candidate in items if candidate.kind == "skill"], key=lambda i: i.item_id):
         outputs[PLUGIN_SKILLS_OUTPUT / skill_name(item.item_id) / "SKILL.md"] = render_skill(item)
     return outputs
@@ -78,13 +108,18 @@ def check_outputs(outputs: dict[Path, str]) -> int:
         if path.read_text(encoding="utf-8") != rendered:
             print(f"{rel(REPO_ROOT, path)}: generated output is stale", file=sys.stderr)
             return 1
-    print("dist/claude/plugin is up to date")
+    if OBSOLETE_PLUGIN_ROOT.exists():
+        print(f"{rel(REPO_ROOT, OBSOLETE_PLUGIN_ROOT)}: obsolete generated artifact", file=sys.stderr)
+        return 1
+    print("dist/claude/marketplace is up to date")
     return 0
 
 
 def write_outputs(outputs: dict[Path, str]) -> None:
-    if PLUGIN_ROOT.exists():
-        shutil.rmtree(PLUGIN_ROOT)
+    if MARKETPLACE_ROOT.exists():
+        shutil.rmtree(MARKETPLACE_ROOT)
+    if OBSOLETE_PLUGIN_ROOT.exists():
+        shutil.rmtree(OBSOLETE_PLUGIN_ROOT)
     for path, rendered in sorted(outputs.items()):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(rendered, encoding="utf-8")

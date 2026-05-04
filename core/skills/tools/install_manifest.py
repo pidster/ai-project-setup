@@ -191,6 +191,16 @@ def plugin_package_root(vendor: str) -> Path:
 def install_details(vendor: str, deliverable_type: str) -> tuple[str, str, str]:
     if deliverable_type == "repo_files":
         return ("npx", f"npx ai-project-setup install {vendor}", "target_repo")
+    if vendor == "claude" and deliverable_type == "marketplace":
+        return (
+            "vendor",
+            (
+                "claude plugin marketplace add "
+                "https://raw.githubusercontent.com/pidster/ai-project-setup/main/"
+                "dist/claude/marketplace/.claude-plugin/marketplace.json"
+            ),
+            "user_config",
+        )
     if vendor == "codex" and deliverable_type == "marketplace":
         return (
             "vendor",
@@ -202,6 +212,32 @@ def install_details(vendor: str, deliverable_type: str) -> tuple[str, str, str]:
 
 def manual_actions(vendor: str, deliverable_type: str) -> list[Action]:
     root = artifact_root(vendor, deliverable_type)
+    if vendor == "claude" and deliverable_type == "marketplace":
+        marketplace_add = (
+            "claude plugin marketplace add "
+            "https://raw.githubusercontent.com/pidster/ai-project-setup/main/"
+            "dist/claude/marketplace/.claude-plugin/marketplace.json"
+        )
+        return [
+            Action(
+                action_type="vendor_command",
+                fields={
+                    "command": marketplace_add,
+                    "summary": "Add the public ai-project-setup Claude Code marketplace.",
+                    "mutates": "user_config",
+                    "manual": "true",
+                },
+            ),
+            Action(
+                action_type="vendor_command",
+                fields={
+                    "command": "claude plugin install ai-project-setup@ai-project-setup",
+                    "summary": "Install the ai-project-setup plugin from the Claude Code marketplace.",
+                    "mutates": "user_config",
+                    "manual": "true",
+                },
+            ),
+        ]
     if vendor == "codex" and deliverable_type == "marketplace":
         return [
             Action(

@@ -155,7 +155,13 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
     append_skill_outputs(
         claude_outputs,
         source_items,
-        REPO_ROOT / "dist" / "claude" / "plugin" / "ai-project-setup" / "skills",
+        REPO_ROOT
+        / "dist"
+        / "claude"
+        / "marketplace"
+        / "plugins"
+        / "ai-project-setup"
+        / "skills",
     )
 
     codex_outputs = IMPLEMENTED_RENDERERS["codex"]["outputs"]

@@ -11,17 +11,24 @@ review:
 plugin_model:
   category: package_manifest
 distribution:
-  type: plugin
-  artifact: "dist/claude/plugin/ai-project-setup"
-  rationale: "Selected plugin; higher-priority surfaces skipped because marketplace artifact is not generated."
+  type: marketplace
+  artifact: "dist/claude/marketplace"
+  rationale: "Selected marketplace as the best generated deliverable for this vendor."
 install:
-  method: manual
-  command: ""
-  mutates: external
+  method: vendor
+  command: "claude plugin marketplace add https://raw.githubusercontent.com/pidster/ai-project-setup/main/dist/claude/marketplace/.claude-plugin/marketplace.json"
+  mutates: user_config
 actions:
-  - type: manual_step
-    summary: "Load or publish the generated Claude Code plugin package."
-    instructions: "Use dist/claude/plugin/ai-project-setup with Claude Code plugin development or marketplace tooling, then enable the plugin in Claude Code."
+  - type: vendor_command
+    command: "claude plugin marketplace add https://raw.githubusercontent.com/pidster/ai-project-setup/main/dist/claude/marketplace/.claude-plugin/marketplace.json"
+    summary: "Add the public ai-project-setup Claude Code marketplace."
+    mutates: "user_config"
+    manual: "true"
+  - type: vendor_command
+    command: "claude plugin install ai-project-setup@ai-project-setup"
+    summary: "Install the ai-project-setup plugin from the Claude Code marketplace."
+    mutates: "user_config"
+    manual: "true"
 sources:
   - https://docs.claude.com/en/docs/claude-code/plugins
   - https://docs.claude.com/en/docs/claude-code/hooks

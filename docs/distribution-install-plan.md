@@ -30,8 +30,7 @@ vendor's packaging and installation model.
 ## Current State
 
 - Generated install manifests exist for all current vendors.
-- Claude's selected distribution is
-  `dist/claude/plugin/ai-project-setup/`.
+- Claude's selected distribution is `dist/claude/marketplace/`.
 - Codex's selected distribution is `dist/codex/marketplace/`.
 - Copilot, Cursor, Devin, OpenCode, and Windsurf currently use
   `dist/<vendor>/repo-files/`.

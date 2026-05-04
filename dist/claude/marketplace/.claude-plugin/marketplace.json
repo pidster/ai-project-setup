@@ -1,0 +1,20 @@
+{
+  "name": "ai-project-setup",
+  "owner": {
+    "name": "ai-project-setup"
+  },
+  "description": "Canonical repository guidance and workflows for AI project setup.",
+  "plugins": [
+    {
+      "name": "ai-project-setup",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/pidster/ai-project-setup.git",
+        "path": "dist/claude/marketplace/plugins/ai-project-setup",
+        "ref": "main"
+      },
+      "description": "Canonical repository guidance and workflows for AI project setup.",
+      "category": "Productivity"
+    }
+  ]
+}
