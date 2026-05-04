@@ -8,6 +8,7 @@ sources:
   - https://opencode.ai/docs/config/
   - https://opencode.ai/docs/skills/
   - https://opencode.ai/docs/plugins/
+  - https://opencode.ai/docs/ecosystem/
 supports:
   always_on_instructions: true
   path_scoped_rules: true
@@ -18,11 +19,8 @@ supports:
   mcp: true
 preferred_outputs:
   - AGENTS.md
-  - opencode.json
   - .opencode/skills/*/SKILL.md
-  - .opencode/commands/*.md
-  - .opencode/agents/*.md
-  - .opencode/plugins/*.ts
 notes:
-  - OpenCode has a first-class module plugin surface, described in plugin-model.yaml.
-  - Use .agents/skills for cross-vendor skills when appropriate.
+  - OpenCode has a module plugin surface for runtime hooks and custom tools, described in plugin-model.yaml.
+  - The current best ai-project-setup deliverable is direct repo files because OpenCode natively loads AGENTS.md and .opencode/skills.
+  - Use .agents/skills for cross-vendor skills only when a shared skills directory is more important than OpenCode-native placement.

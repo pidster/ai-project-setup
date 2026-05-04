@@ -16,12 +16,16 @@ plugin_config_surfaces:
   - .opencode/plugins/*.js
   - .opencode/plugins/*.ts
   - npm packages listed in opencode.json plugin
-marketplace_surfaces:
-  - npm packages
+marketplace_surfaces: []
 notes:
   - OpenCode plugins are JavaScript or TypeScript modules, not manifest packages.
   - Npm plugins are selected through the plugin key in opencode.json.
+  - The opencode plugin <module> command installs an npm plugin module and updates OpenCode config.
   - Local plugins are loaded from project or user plugin directories.
+  - The OpenCode ecosystem is a curated plugin list, not a vendor-native marketplace install surface.
+  - Runtime plugin modules do not package AGENTS.md or .opencode/skills as a native guidance bundle.
+  - ai-project-setup should keep using repo-files until a published npm plugin builder is intentionally added.
 sources:
   - https://opencode.ai/docs/config/
   - https://opencode.ai/docs/plugins/
+  - https://opencode.ai/docs/ecosystem/

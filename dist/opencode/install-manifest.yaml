@@ -13,7 +13,7 @@ plugin_model:
 distribution:
   type: repo_files
   artifact: "dist/opencode/repo-files"
-  rationale: "Selected repo_files; higher-priority surfaces skipped because marketplace artifact is not generated; plugin artifact is not generated."
+  rationale: "Selected repo_files; higher-priority surfaces skipped because marketplace is not a verified vendor surface; plugin artifact is not generated."
 install:
   method: npx
   command: "npx ai-project-setup install opencode"
@@ -218,3 +218,4 @@ actions:
 sources:
   - https://opencode.ai/docs/config/
   - https://opencode.ai/docs/plugins/
+  - https://opencode.ai/docs/ecosystem/
