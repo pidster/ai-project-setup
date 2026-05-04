@@ -7,13 +7,13 @@ source_files:
   plugin_model: vendors/cursor/plugin-model.yaml
 review:
   last_reviewed: 2026-05-04
-  confidence: verified
+  confidence: provisional
 plugin_model:
-  category: direct_config_only
+  category: package_manifest
 distribution:
   type: repo_files
   artifact: "dist/cursor/repo-files"
-  rationale: "Selected repo_files; higher-priority surfaces skipped because marketplace is not a verified vendor surface; plugin is not a verified vendor surface."
+  rationale: "Selected repo_files; higher-priority surfaces skipped because marketplace artifact is not generated; plugin artifact is not generated."
 install:
   method: npx
   command: "npx ai-project-setup install cursor"
@@ -27,3 +27,7 @@ sources:
   - https://docs.cursor.com/en/context/rules
   - https://docs.cursor.com/en/agent/chat/commands
   - https://docs.cursor.com/cli/mcp
+  - https://cursor.com/blog/marketplace
+  - https://cursor.com/marketplace/
+  - https://cursor.com/marketplace/skills/plugin-builder
+  - https://github.com/runlayer/plugins

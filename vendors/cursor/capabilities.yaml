@@ -1,24 +1,34 @@
 vendor: cursor
 display_name: Cursor
 last_reviewed: 2026-05-02
-confidence: verified
+confidence: provisional
 profile_fit: partial
 sources:
   - https://docs.cursor.com/en/context/rules
   - https://docs.cursor.com/en/agent/chat/commands
   - https://docs.cursor.com/cli/mcp
+  - https://cursor.com/blog/marketplace
+  - https://cursor.com/marketplace/
+  - https://cursor.com/marketplace/skills/plugin-builder
+  - https://github.com/runlayer/plugins
 supports:
   always_on_instructions: true
   path_scoped_rules: true
-  skills: false
+  skills: partial
   manual_commands: true
-  custom_agents: false
-  hooks: false
+  custom_agents: partial
+  hooks: partial
   mcp: true
+  marketplace: true
+  plugins: partial
 preferred_outputs:
   - .cursor/rules/*.mdc
   - .cursor/commands/*.md
   - AGENTS.md
 notes:
   - Cursor rules are the main rich adapter surface.
-  - No verified repo-native SKILL.md or event hook support yet.
+  - Cursor announced marketplace plugins in 2026 that can bundle MCP servers, skills, subagents, rules, and hooks.
+  - Verified public examples use .cursor-plugin/marketplace.json and <plugin>/.cursor-plugin/plugin.json.
+  - Cursor CLI 3.0.16 does not expose plugin management commands; Marketplace pages expose /add-plugin <plugin>.
+  - Public submission and non-marketplace repository install flows are not yet verified for generated adapter output.
+  - Current generated adapter output remains direct repo rules until the plugin package model is verified.

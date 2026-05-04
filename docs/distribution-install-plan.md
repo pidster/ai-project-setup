@@ -34,8 +34,9 @@ vendor's packaging and installation model.
 - Codex's selected distribution is `dist/codex/marketplace/`.
 - Copilot's selected distribution is `dist/copilot/marketplace/`, with the
   vendor-required public index generated at `.github/plugin/marketplace.json`.
-- Cursor, Devin, OpenCode, and Windsurf currently use
-  `dist/<vendor>/repo-files/`.
+- Cursor currently uses `dist/cursor/repo-files/` while its newly announced
+  marketplace/plugin package model is under review.
+- Devin, OpenCode, and Windsurf currently use `dist/<vendor>/repo-files/`.
 - The NPX installer is not implemented yet.
 - Codex marketplace output is implemented. Other marketplace-capable vendors
   remain implementation gaps until their native package shape and install

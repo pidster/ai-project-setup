@@ -1,21 +1,39 @@
 vendor: cursor
 display_name: Cursor
 last_reviewed: 2026-05-04
-confidence: verified
-plugin_model: direct_config_only
-has_package_manifest: false
+confidence: provisional
+plugin_model: package_manifest
+has_package_manifest: true
 direct_config_surfaces:
   - .cursor/rules/*.mdc
   - .cursor/commands/*.md
   - AGENTS.md
   - CLAUDE.md
   - MCP configuration shared by editor and CLI
-plugin_config_surfaces: []
-marketplace_surfaces: []
+plugin_config_surfaces:
+  - .cursor-plugin/plugin.json
+  - skills/
+  - commands/
+  - rules/
+  - hooks/hooks.json
+  - MCP configuration
+marketplace_surfaces:
+  - .cursor-plugin/marketplace.json
+  - Cursor Marketplace
+  - /add-plugin <plugin>
 notes:
-  - No verified repo-native plugin package surface for rules, skills, hooks, or agents.
+  - Previous direct-config-only assessment is stale as of the 2026 Cursor plugin announcement.
+  - Cursor now documents marketplace plugins that bundle MCP servers, skills, subagents, rules, and hooks.
+  - Verified public plugin examples use a root .cursor-plugin/marketplace.json with plugin entries whose source points at a plugin subdirectory.
+  - Verified public plugin examples put plugin package metadata at <plugin>/.cursor-plugin/plugin.json.
+  - Cursor CLI 3.0.16 does not expose plugin management commands; the verified user-facing install surface is marketplace /add-plugin <plugin>.
+  - Public submission and non-marketplace repository install flows still need verification before adapter changes.
   - MCP is configured directly rather than through a verified plugin package model.
 sources:
   - https://docs.cursor.com/en/context/rules
   - https://docs.cursor.com/en/agent/chat/commands
   - https://docs.cursor.com/cli/mcp
+  - https://cursor.com/blog/marketplace
+  - https://cursor.com/marketplace/
+  - https://cursor.com/marketplace/skills/plugin-builder
+  - https://github.com/runlayer/plugins
