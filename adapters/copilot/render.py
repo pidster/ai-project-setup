@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Render canonical content into GitHub Copilot-oriented generated output."""
+"""Render canonical content into a GitHub Copilot CLI marketplace package."""
 
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import shutil
 import sys
@@ -22,37 +23,14 @@ from render_support import (  # noqa: E402
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "dist" / "copilot" / "repo-files"
-INSTRUCTIONS_OUTPUT = OUTPUT_ROOT / ".github" / "copilot-instructions.md"
-SKILLS_OUTPUT = OUTPUT_ROOT / ".github" / "skills"
+PUBLIC_MARKETPLACE_MANIFEST_OUTPUT = REPO_ROOT / ".github" / "plugin" / "marketplace.json"
+MARKETPLACE_ROOT = REPO_ROOT / "dist" / "copilot" / "marketplace"
+PLUGIN_ROOT = MARKETPLACE_ROOT / "plugins" / "ai-project-setup"
+PLUGIN_MANIFEST_OUTPUT = PLUGIN_ROOT / "plugin.json"
+SKILLS_OUTPUT = PLUGIN_ROOT / "skills"
+OBSOLETE_REPO_FILES_ROOT = REPO_ROOT / "dist" / "copilot" / "repo-files"
+OBSOLETE_PLUGIN_ROOT = REPO_ROOT / "dist" / "copilot" / "plugin"
 RENDERER = "adapters/copilot/render.py"
-
-
-def render_instructions(items) -> str:
-    rules = sorted([item for item in items if item.kind == "rule"], key=lambda item: item.item_id)
-    skills = sorted([item for item in items if item.kind == "skill"], key=lambda item: item.item_id)
-    source_ids = ", ".join(f"`{item.item_id}`" for item in rules)
-    lines = [
-        generated_header(RENDERER),
-        "",
-        "# Copilot Instructions",
-        "",
-        "This generated file adapts canonical repository rules for GitHub Copilot.",
-        "Canonical policy and procedure remain in `core/`.",
-        "",
-        f"Sources: {source_ids}",
-        "",
-        "## Rules",
-        "",
-    ]
-    for item in rules:
-        lines.extend([f"### {title(item)}", "", f"Source: `{item.item_id}`", "", body_without_title(item.body), ""])
-    lines.extend(["## Skills", ""])
-    for item in skills:
-        lines.append(f"- `{skill_name(item.item_id)}`: {item.summary}")
-    lines.append("")
-    lines.append("Generated skills are under `.github/skills/<name>/SKILL.md`.")
-    return "\n".join(lines).rstrip() + "\n"
 
 
 def render_skill(item) -> str:
@@ -76,9 +54,49 @@ def render_skill(item) -> str:
     )
 
 
+def render_plugin_manifest() -> str:
+    manifest = {
+        "name": "ai-project-setup",
+        "description": "Canonical repository guidance and workflows for AI project setup.",
+        "version": "0.1.0",
+        "author": {
+            "name": "ai-project-setup",
+        },
+        "skills": "skills/",
+        "category": "Productivity",
+    }
+    return json.dumps(manifest, indent=2, sort_keys=False) + "\n"
+
+
+def render_marketplace_manifest() -> str:
+    manifest = {
+        "name": "ai-project-setup",
+        "owner": {
+            "name": "ai-project-setup",
+        },
+        "metadata": {
+            "description": "Canonical repository guidance and workflows for AI project setup.",
+            "version": "0.1.0",
+        },
+        "plugins": [
+            {
+                "name": "ai-project-setup",
+                "description": "Canonical repository guidance and workflows for AI project setup.",
+                "version": "0.1.0",
+                "source": "dist/copilot/marketplace/plugins/ai-project-setup",
+                "category": "Productivity",
+            }
+        ],
+    }
+    return json.dumps(manifest, indent=2, sort_keys=False) + "\n"
+
+
 def rendered_outputs() -> dict[Path, str]:
     items = canonical_items(REPO_ROOT)
-    outputs = {INSTRUCTIONS_OUTPUT: render_instructions(items)}
+    outputs = {
+        PUBLIC_MARKETPLACE_MANIFEST_OUTPUT: render_marketplace_manifest(),
+        PLUGIN_MANIFEST_OUTPUT: render_plugin_manifest(),
+    }
     for item in sorted([candidate for candidate in items if candidate.kind == "skill"], key=lambda i: i.item_id):
         outputs[SKILLS_OUTPUT / skill_name(item.item_id) / "SKILL.md"] = render_skill(item)
     return outputs
@@ -92,13 +110,20 @@ def check_outputs(outputs: dict[Path, str]) -> int:
         if path.read_text(encoding="utf-8") != rendered:
             print(f"{rel(REPO_ROOT, path)}: generated output is stale", file=sys.stderr)
             return 1
-    print(f"{rel(REPO_ROOT, OUTPUT_ROOT)} is up to date")
+    for obsolete_root in (OBSOLETE_REPO_FILES_ROOT, OBSOLETE_PLUGIN_ROOT):
+        if obsolete_root.exists():
+            print(f"{rel(REPO_ROOT, obsolete_root)}: obsolete generated artifact", file=sys.stderr)
+            return 1
+    print(f"{rel(REPO_ROOT, MARKETPLACE_ROOT)} is up to date")
     return 0
 
 
 def write_outputs(outputs: dict[Path, str]) -> None:
-    if SKILLS_OUTPUT.exists():
-        shutil.rmtree(SKILLS_OUTPUT)
+    if MARKETPLACE_ROOT.exists():
+        shutil.rmtree(MARKETPLACE_ROOT)
+    for obsolete_root in (OBSOLETE_REPO_FILES_ROOT, OBSOLETE_PLUGIN_ROOT):
+        if obsolete_root.exists():
+            shutil.rmtree(obsolete_root)
     for path, rendered in sorted(outputs.items()):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(rendered, encoding="utf-8")

@@ -1,0 +1,19 @@
+{
+  "name": "ai-project-setup",
+  "owner": {
+    "name": "ai-project-setup"
+  },
+  "metadata": {
+    "description": "Canonical repository guidance and workflows for AI project setup.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ai-project-setup",
+      "description": "Canonical repository guidance and workflows for AI project setup.",
+      "version": "0.1.0",
+      "source": "dist/copilot/marketplace/plugins/ai-project-setup",
+      "category": "Productivity"
+    }
+  ]
+}

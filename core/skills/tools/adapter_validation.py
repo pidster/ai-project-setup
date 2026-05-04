@@ -180,21 +180,16 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
 
     copilot_outputs = IMPLEMENTED_RENDERERS["copilot"]["outputs"]
     copilot_outputs.clear()
-    copilot_outputs.append(
-        {
-            "path": REPO_ROOT
-            / "dist"
-            / "copilot"
-            / "repo-files"
-            / ".github"
-            / "copilot-instructions.md",
-            "source_ids": rule_ids,
-        }
-    )
     append_skill_outputs(
         copilot_outputs,
         source_items,
-        REPO_ROOT / "dist" / "copilot" / "repo-files" / ".github" / "skills",
+        REPO_ROOT
+        / "dist"
+        / "copilot"
+        / "marketplace"
+        / "plugins"
+        / "ai-project-setup"
+        / "skills",
     )
 
     opencode_outputs = IMPLEMENTED_RENDERERS["opencode"]["outputs"]

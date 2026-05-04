@@ -1,11 +1,19 @@
 # Copilot Adapter
 
-Renders canonical content into GitHub Copilot surfaces.
+Renders canonical content into a GitHub Copilot CLI marketplace package.
 
 Current outputs:
 
-- `dist/copilot/repo-files/.github/copilot-instructions.md`
-- `dist/copilot/repo-files/.github/skills/*/SKILL.md`
+- `.github/plugin/marketplace.json`
+- `dist/copilot/marketplace/plugins/ai-project-setup/plugin.json`
+- `dist/copilot/marketplace/plugins/ai-project-setup/skills/*/SKILL.md`
+
+Native install commands:
+
+```sh
+copilot plugin marketplace add pidster/ai-project-setup
+copilot plugin install ai-project-setup@ai-project-setup
+```
 
 Run:
 
@@ -19,5 +27,5 @@ Check freshness:
 python3 adapters/copilot/render.py --check
 ```
 
-Future output may include `.github/instructions/`, `.github/prompts/`,
-`.github/agents/`, and `.github/hooks/`.
+Future output may include `agents/`, hooks, MCP, and LSP configuration when they
+can be generated from canonical content without redefining policy.

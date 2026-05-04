@@ -1,0 +1,10 @@
+{
+  "name": "ai-project-setup",
+  "description": "Canonical repository guidance and workflows for AI project setup.",
+  "version": "0.1.0",
+  "author": {
+    "name": "ai-project-setup"
+  },
+  "skills": "skills/",
+  "category": "Productivity"
+}

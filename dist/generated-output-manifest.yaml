@@ -396,201 +396,195 @@ generated_outputs:
     renderer: core/skills/tools/install_manifest.py
     source_ids:
       - none
-  - path: dist/copilot/repo-files/.github/copilot-instructions.md
-    renderer: adapters/copilot/render.py
-    source_ids:
-      - rule.atomic.git-safety
-      - rule.atomic.security
-      - rule.atomic.source-code
-  - path: dist/copilot/repo-files/.github/skills/adapter-validation/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/adapter-validation/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.tool.adapter-validation
-  - path: dist/copilot/repo-files/.github/skills/api-change/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/api-change/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.api-change
-  - path: dist/copilot/repo-files/.github/skills/audit/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/audit/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.audit
-  - path: dist/copilot/repo-files/.github/skills/build/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/build/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.build
-  - path: dist/copilot/repo-files/.github/skills/canonical-validation/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/canonical-validation/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.tool.canonical-validation
-  - path: dist/copilot/repo-files/.github/skills/ci-fix/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/ci-fix/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.ci-fix
-  - path: dist/copilot/repo-files/.github/skills/cleanup/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/cleanup/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.cleanup
-  - path: dist/copilot/repo-files/.github/skills/commit/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/commit/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.commit
-  - path: dist/copilot/repo-files/.github/skills/coverage/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/coverage/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.coverage
-  - path: dist/copilot/repo-files/.github/skills/data-change/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/data-change/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.data-change
-  - path: dist/copilot/repo-files/.github/skills/db-migration/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/db-migration/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.db-migration
-  - path: dist/copilot/repo-files/.github/skills/debug/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/debug/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.debug
-  - path: dist/copilot/repo-files/.github/skills/deploy/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/deploy/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.deploy
-  - path: dist/copilot/repo-files/.github/skills/docs-update/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/docs-update/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.docs-update
-  - path: dist/copilot/repo-files/.github/skills/e2e-test/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/e2e-test/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.e2e-test
-  - path: dist/copilot/repo-files/.github/skills/environment-setup/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/environment-setup/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.environment-setup
-  - path: dist/copilot/repo-files/.github/skills/format/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/format/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.format
-  - path: dist/copilot/repo-files/.github/skills/generated-manifest/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/generated-manifest/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.tool.generated-manifest
-  - path: dist/copilot/repo-files/.github/skills/generated-validation/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/generated-validation/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.tool.generated-validation
-  - path: dist/copilot/repo-files/.github/skills/git/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/git/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.atomic.git
-  - path: dist/copilot/repo-files/.github/skills/incident-investigation/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/incident-investigation/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.incident-investigation
-  - path: dist/copilot/repo-files/.github/skills/install-manifest/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/install-manifest/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.tool.install-manifest
-  - path: dist/copilot/repo-files/.github/skills/language-toolchain/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/language-toolchain/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.atomic.language-toolchain
-  - path: dist/copilot/repo-files/.github/skills/lint/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/lint/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.lint
-  - path: dist/copilot/repo-files/.github/skills/merge/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/merge/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.merge
-  - path: dist/copilot/repo-files/.github/skills/migrate/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/migrate/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.migrate
-  - path: dist/copilot/repo-files/.github/skills/observability/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/observability/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.observability
-  - path: dist/copilot/repo-files/.github/skills/onboard-repo/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/onboard-repo/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.onboard-repo
-  - path: dist/copilot/repo-files/.github/skills/perf-check/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/perf-check/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.perf-check
-  - path: dist/copilot/repo-files/.github/skills/policy-check/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/policy-check/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.policy-check
-  - path: dist/copilot/repo-files/.github/skills/pr-address-comments/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/pr-address-comments/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.pr-address-comments
-  - path: dist/copilot/repo-files/.github/skills/pr-create/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/pr-create/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.pr-create
-  - path: dist/copilot/repo-files/.github/skills/pre-commit/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/pre-commit/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.pre-commit
-  - path: dist/copilot/repo-files/.github/skills/project-discovery/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/project-discovery/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.atomic.project-discovery
-  - path: dist/copilot/repo-files/.github/skills/rebase/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/rebase/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.rebase
-  - path: dist/copilot/repo-files/.github/skills/release/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/release/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.release
-  - path: dist/copilot/repo-files/.github/skills/review/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/review/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.review
-  - path: dist/copilot/repo-files/.github/skills/rollback/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/rollback/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.rollback
-  - path: dist/copilot/repo-files/.github/skills/scaffold-feature/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/scaffold-feature/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.scaffold-feature
-  - path: dist/copilot/repo-files/.github/skills/service-start/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/service-start/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.service-start
-  - path: dist/copilot/repo-files/.github/skills/sync-generated/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/sync-generated/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.sync-generated
-  - path: dist/copilot/repo-files/.github/skills/test/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/test/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.test
-  - path: dist/copilot/repo-files/.github/skills/typecheck/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/typecheck/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.typecheck
-  - path: dist/copilot/repo-files/.github/skills/update-dependencies/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/update-dependencies/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.update-dependencies
-  - path: dist/copilot/repo-files/.github/skills/upgrade-runtime/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/upgrade-runtime/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.upgrade-runtime
-  - path: dist/copilot/repo-files/.github/skills/validation/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/validation/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.tool.validation
-  - path: dist/copilot/repo-files/.github/skills/vendor-validation/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/vendor-validation/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.tool.vendor-validation
-  - path: dist/copilot/repo-files/.github/skills/visual-check/SKILL.md
+  - path: dist/copilot/marketplace/plugins/ai-project-setup/skills/visual-check/SKILL.md
     renderer: adapters/copilot/render.py
     source_ids:
       - skill.compositional.visual-check

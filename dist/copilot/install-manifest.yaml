@@ -11,210 +11,24 @@ review:
 plugin_model:
   category: package_manifest
 distribution:
-  type: repo_files
-  artifact: "dist/copilot/repo-files"
-  rationale: "Selected repo_files; higher-priority surfaces skipped because marketplace artifact is not generated; plugin artifact is not generated."
+  type: marketplace
+  artifact: "dist/copilot/marketplace"
+  rationale: "Selected marketplace as the best generated deliverable for this vendor."
 install:
-  method: npx
-  command: "npx ai-project-setup install copilot"
-  mutates: target_repo
+  method: vendor
+  command: "copilot plugin marketplace add pidster/ai-project-setup"
+  mutates: user_config
 actions:
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/copilot-instructions.md"
-    target: ".github/copilot-instructions.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/adapter-validation/SKILL.md"
-    target: ".github/skills/adapter-validation/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/api-change/SKILL.md"
-    target: ".github/skills/api-change/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/audit/SKILL.md"
-    target: ".github/skills/audit/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/build/SKILL.md"
-    target: ".github/skills/build/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/canonical-validation/SKILL.md"
-    target: ".github/skills/canonical-validation/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/ci-fix/SKILL.md"
-    target: ".github/skills/ci-fix/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/cleanup/SKILL.md"
-    target: ".github/skills/cleanup/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/commit/SKILL.md"
-    target: ".github/skills/commit/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/coverage/SKILL.md"
-    target: ".github/skills/coverage/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/data-change/SKILL.md"
-    target: ".github/skills/data-change/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/db-migration/SKILL.md"
-    target: ".github/skills/db-migration/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/debug/SKILL.md"
-    target: ".github/skills/debug/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/deploy/SKILL.md"
-    target: ".github/skills/deploy/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/docs-update/SKILL.md"
-    target: ".github/skills/docs-update/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/e2e-test/SKILL.md"
-    target: ".github/skills/e2e-test/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/environment-setup/SKILL.md"
-    target: ".github/skills/environment-setup/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/format/SKILL.md"
-    target: ".github/skills/format/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/generated-manifest/SKILL.md"
-    target: ".github/skills/generated-manifest/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/generated-validation/SKILL.md"
-    target: ".github/skills/generated-validation/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/git/SKILL.md"
-    target: ".github/skills/git/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/incident-investigation/SKILL.md"
-    target: ".github/skills/incident-investigation/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/install-manifest/SKILL.md"
-    target: ".github/skills/install-manifest/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/language-toolchain/SKILL.md"
-    target: ".github/skills/language-toolchain/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/lint/SKILL.md"
-    target: ".github/skills/lint/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/merge/SKILL.md"
-    target: ".github/skills/merge/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/migrate/SKILL.md"
-    target: ".github/skills/migrate/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/observability/SKILL.md"
-    target: ".github/skills/observability/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/onboard-repo/SKILL.md"
-    target: ".github/skills/onboard-repo/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/perf-check/SKILL.md"
-    target: ".github/skills/perf-check/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/policy-check/SKILL.md"
-    target: ".github/skills/policy-check/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/pr-address-comments/SKILL.md"
-    target: ".github/skills/pr-address-comments/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/pr-create/SKILL.md"
-    target: ".github/skills/pr-create/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/pre-commit/SKILL.md"
-    target: ".github/skills/pre-commit/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/project-discovery/SKILL.md"
-    target: ".github/skills/project-discovery/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/rebase/SKILL.md"
-    target: ".github/skills/rebase/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/release/SKILL.md"
-    target: ".github/skills/release/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/review/SKILL.md"
-    target: ".github/skills/review/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/rollback/SKILL.md"
-    target: ".github/skills/rollback/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/scaffold-feature/SKILL.md"
-    target: ".github/skills/scaffold-feature/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/service-start/SKILL.md"
-    target: ".github/skills/service-start/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/sync-generated/SKILL.md"
-    target: ".github/skills/sync-generated/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/test/SKILL.md"
-    target: ".github/skills/test/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/typecheck/SKILL.md"
-    target: ".github/skills/typecheck/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/update-dependencies/SKILL.md"
-    target: ".github/skills/update-dependencies/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/upgrade-runtime/SKILL.md"
-    target: ".github/skills/upgrade-runtime/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/validation/SKILL.md"
-    target: ".github/skills/validation/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/vendor-validation/SKILL.md"
-    target: ".github/skills/vendor-validation/SKILL.md"
-    on_conflict: "fail"
-  - type: copy_file
-    source: "dist/copilot/repo-files/.github/skills/visual-check/SKILL.md"
-    target: ".github/skills/visual-check/SKILL.md"
-    on_conflict: "fail"
+  - type: vendor_command
+    command: "copilot plugin marketplace add pidster/ai-project-setup"
+    summary: "Add the public ai-project-setup GitHub Copilot CLI marketplace."
+    mutates: "user_config"
+    manual: "true"
+  - type: vendor_command
+    command: "copilot plugin install ai-project-setup@ai-project-setup"
+    summary: "Install the ai-project-setup plugin from the Copilot CLI marketplace."
+    mutates: "user_config"
+    manual: "true"
 sources:
   - https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-cli-plugins
   - https://docs.github.com/copilot/how-tos/copilot-cli/customize-copilot/plugins-creating

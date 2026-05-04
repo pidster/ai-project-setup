@@ -207,6 +207,12 @@ def install_details(vendor: str, deliverable_type: str) -> tuple[str, str, str]:
             "codex plugin marketplace add dist/codex/marketplace",
             "user_config",
         )
+    if vendor == "copilot" and deliverable_type == "marketplace":
+        return (
+            "vendor",
+            "copilot plugin marketplace add pidster/ai-project-setup",
+            "user_config",
+        )
     return ("manual", "", "external")
 
 
@@ -249,6 +255,27 @@ def manual_actions(vendor: str, deliverable_type: str) -> list[Action]:
                     "manual": "true",
                 },
             )
+        ]
+    if vendor == "copilot" and deliverable_type == "marketplace":
+        return [
+            Action(
+                action_type="vendor_command",
+                fields={
+                    "command": "copilot plugin marketplace add pidster/ai-project-setup",
+                    "summary": "Add the public ai-project-setup GitHub Copilot CLI marketplace.",
+                    "mutates": "user_config",
+                    "manual": "true",
+                },
+            ),
+            Action(
+                action_type="vendor_command",
+                fields={
+                    "command": "copilot plugin install ai-project-setup@ai-project-setup",
+                    "summary": "Install the ai-project-setup plugin from the Copilot CLI marketplace.",
+                    "mutates": "user_config",
+                    "manual": "true",
+                },
+            ),
         ]
     if vendor == "claude" and deliverable_type == "plugin":
         package_root = plugin_package_root(vendor)
