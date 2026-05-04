@@ -22,7 +22,7 @@ from render_support import (  # noqa: E402
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "dist" / "devin"
+OUTPUT_ROOT = REPO_ROOT / "dist" / "devin" / "repo-files"
 AGENTS_OUTPUT = OUTPUT_ROOT / "AGENTS.md"
 AGENTS_SKILLS_OUTPUT = OUTPUT_ROOT / ".agents" / "skills"
 DEVIN_CONFIG_OUTPUT = OUTPUT_ROOT / ".devin" / "config.json"

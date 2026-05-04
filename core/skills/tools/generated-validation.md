@@ -26,7 +26,8 @@ python3 core/skills/tools/generated_validation.py
 The validator runs each implemented renderer in check mode and reports generated
 outputs that are missing or stale.
 
-It also checks that `dist/generated-output-manifest.yaml` is up to date.
+It also checks that `dist/generated-output-manifest.yaml` and generated vendor
+install manifests are up to date.
 
 Do not run `py_compile` or `compileall` as part of normal validation. Direct
 execution already catches syntax errors and avoids creating repo-local bytecode

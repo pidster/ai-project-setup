@@ -27,7 +27,7 @@ IMPLEMENTED_RENDERERS = {
         "renderer": REPO_ROOT / "adapters" / "codex" / "render.py",
         "outputs": [
             {
-                "path": REPO_ROOT / "dist" / "codex" / "AGENTS.md",
+                "path": REPO_ROOT / "dist" / "codex" / "repo-files" / "AGENTS.md",
                 "source_ids": "all",
             }
         ],
@@ -39,6 +39,7 @@ IMPLEMENTED_RENDERERS = {
                 "path": REPO_ROOT
                 / "dist"
                 / "cursor"
+                / "repo-files"
                 / ".cursor"
                 / "rules"
                 / "canonical-guidance.mdc",
@@ -156,44 +157,43 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
 
     claude_outputs = IMPLEMENTED_RENDERERS["claude"]["outputs"]
     claude_outputs.clear()
-    claude_outputs.append(
-        {
-            "path": REPO_ROOT / "dist" / "claude" / "CLAUDE.md",
-            "source_ids": rule_ids,
-        }
-    )
     append_skill_outputs(
         claude_outputs,
         source_items,
-        REPO_ROOT / "dist" / "claude" / ".claude" / "skills",
+        REPO_ROOT / "dist" / "claude" / "plugin" / "ai-project-setup" / "skills",
     )
 
     copilot_outputs = IMPLEMENTED_RENDERERS["copilot"]["outputs"]
     copilot_outputs.clear()
     copilot_outputs.append(
         {
-            "path": REPO_ROOT / "dist" / "copilot" / ".github" / "copilot-instructions.md",
+            "path": REPO_ROOT
+            / "dist"
+            / "copilot"
+            / "repo-files"
+            / ".github"
+            / "copilot-instructions.md",
             "source_ids": rule_ids,
         }
     )
     append_skill_outputs(
         copilot_outputs,
         source_items,
-        REPO_ROOT / "dist" / "copilot" / ".github" / "skills",
+        REPO_ROOT / "dist" / "copilot" / "repo-files" / ".github" / "skills",
     )
 
     opencode_outputs = IMPLEMENTED_RENDERERS["opencode"]["outputs"]
     opencode_outputs.clear()
     opencode_outputs.append(
         {
-            "path": REPO_ROOT / "dist" / "opencode" / "AGENTS.md",
+            "path": REPO_ROOT / "dist" / "opencode" / "repo-files" / "AGENTS.md",
             "source_ids": rule_ids,
         }
     )
     append_skill_outputs(
         opencode_outputs,
         source_items,
-        REPO_ROOT / "dist" / "opencode" / ".opencode" / "skills",
+        REPO_ROOT / "dist" / "opencode" / "repo-files" / ".opencode" / "skills",
     )
 
     devin_outputs = IMPLEMENTED_RENDERERS["devin"]["outputs"]
@@ -201,17 +201,23 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
     devin_outputs.extend(
         [
             {
-                "path": REPO_ROOT / "dist" / "devin" / "AGENTS.md",
-                "source_ids": "all",
-            },
-            {
-                "path": REPO_ROOT / "dist" / "devin" / ".devin" / "config.json",
+                "path": REPO_ROOT / "dist" / "devin" / "repo-files" / "AGENTS.md",
                 "source_ids": "all",
             },
             {
                 "path": REPO_ROOT
                 / "dist"
                 / "devin"
+                / "repo-files"
+                / ".devin"
+                / "config.json",
+                "source_ids": "all",
+            },
+            {
+                "path": REPO_ROOT
+                / "dist"
+                / "devin"
+                / "repo-files"
                 / ".devin"
                 / "agents"
                 / "canonical-guidance"
@@ -219,7 +225,12 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
                 "source_ids": "all",
             },
             {
-                "path": REPO_ROOT / "dist" / "devin" / ".devin" / "hooks.v1.json",
+                "path": REPO_ROOT
+                / "dist"
+                / "devin"
+                / "repo-files"
+                / ".devin"
+                / "hooks.v1.json",
                 "source_ids": [],
             },
         ]
@@ -227,12 +238,12 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
     append_skill_outputs(
         devin_outputs,
         source_items,
-        REPO_ROOT / "dist" / "devin" / ".agents" / "skills",
+        REPO_ROOT / "dist" / "devin" / "repo-files" / ".agents" / "skills",
     )
     append_skill_outputs(
         devin_outputs,
         source_items,
-        REPO_ROOT / "dist" / "devin" / ".devin" / "skills",
+        REPO_ROOT / "dist" / "devin" / "repo-files" / ".devin" / "skills",
     )
 
     windsurf_outputs = IMPLEMENTED_RENDERERS["windsurf"]["outputs"]
@@ -240,20 +251,26 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
     windsurf_outputs.extend(
         [
             {
-                "path": REPO_ROOT / "dist" / "windsurf" / "AGENTS.md",
+                "path": REPO_ROOT / "dist" / "windsurf" / "repo-files" / "AGENTS.md",
                 "source_ids": "all",
             },
             {
                 "path": REPO_ROOT
                 / "dist"
                 / "windsurf"
+                / "repo-files"
                 / ".windsurf"
                 / "rules"
                 / "canonical-rules.md",
                 "source_ids": rule_ids,
             },
             {
-                "path": REPO_ROOT / "dist" / "windsurf" / ".windsurf" / "hooks.json",
+                "path": REPO_ROOT
+                / "dist"
+                / "windsurf"
+                / "repo-files"
+                / ".windsurf"
+                / "hooks.json",
                 "source_ids": [],
             },
         ]
@@ -261,12 +278,12 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
     append_skill_outputs(
         windsurf_outputs,
         source_items,
-        REPO_ROOT / "dist" / "windsurf" / ".windsurf" / "skills",
+        REPO_ROOT / "dist" / "windsurf" / "repo-files" / ".windsurf" / "skills",
     )
     append_workflow_outputs(
         windsurf_outputs,
         source_items,
-        REPO_ROOT / "dist" / "windsurf" / ".windsurf" / "workflows",
+        REPO_ROOT / "dist" / "windsurf" / "repo-files" / ".windsurf" / "workflows",
     )
 
 

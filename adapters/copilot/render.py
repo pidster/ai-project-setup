@@ -22,7 +22,7 @@ from render_support import (  # noqa: E402
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "dist" / "copilot"
+OUTPUT_ROOT = REPO_ROOT / "dist" / "copilot" / "repo-files"
 INSTRUCTIONS_OUTPUT = OUTPUT_ROOT / ".github" / "copilot-instructions.md"
 SKILLS_OUTPUT = OUTPUT_ROOT / ".github" / "skills"
 RENDERER = "adapters/copilot/render.py"

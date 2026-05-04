@@ -4,7 +4,7 @@ Renders canonical content into Cursor surfaces.
 
 Current output:
 
-- `dist/cursor/.cursor/rules/canonical-guidance.mdc`
+- `dist/cursor/repo-files/.cursor/rules/canonical-guidance.mdc`
 
 Run:
 

@@ -22,7 +22,7 @@ from render_support import (  # noqa: E402
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "dist" / "windsurf"
+OUTPUT_ROOT = REPO_ROOT / "dist" / "windsurf" / "repo-files"
 AGENTS_OUTPUT = OUTPUT_ROOT / "AGENTS.md"
 RULE_OUTPUT = OUTPUT_ROOT / ".windsurf" / "rules" / "canonical-rules.md"
 SKILLS_OUTPUT = OUTPUT_ROOT / ".windsurf" / "skills"

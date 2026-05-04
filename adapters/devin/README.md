@@ -4,12 +4,12 @@ Renders canonical content into Devin product and Devin for Terminal surfaces.
 
 Current outputs:
 
-- `dist/devin/AGENTS.md`
-- `dist/devin/.agents/skills/*/SKILL.md`
-- `dist/devin/.devin/config.json`
-- `dist/devin/.devin/skills/*/SKILL.md`
-- `dist/devin/.devin/agents/*/AGENT.md`
-- `dist/devin/.devin/hooks.v1.json`
+- `dist/devin/repo-files/AGENTS.md`
+- `dist/devin/repo-files/.agents/skills/*/SKILL.md`
+- `dist/devin/repo-files/.devin/config.json`
+- `dist/devin/repo-files/.devin/skills/*/SKILL.md`
+- `dist/devin/repo-files/.devin/agents/*/AGENT.md`
+- `dist/devin/repo-files/.devin/hooks.v1.json`
 
 Run:
 

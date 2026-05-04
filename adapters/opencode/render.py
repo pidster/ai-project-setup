@@ -12,7 +12,7 @@ from typing import Any
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "dist" / "opencode"
+OUTPUT_ROOT = REPO_ROOT / "dist" / "opencode" / "repo-files"
 AGENTS_OUTPUT = OUTPUT_ROOT / "AGENTS.md"
 SKILLS_OUTPUT = OUTPUT_ROOT / ".opencode" / "skills"
 CANONICAL_ROOTS = (

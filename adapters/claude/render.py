@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import shutil
 import sys
@@ -22,39 +23,10 @@ from render_support import (  # noqa: E402
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = REPO_ROOT / "dist" / "claude"
-CLAUDE_OUTPUT = OUTPUT_ROOT / "CLAUDE.md"
-SKILLS_OUTPUT = OUTPUT_ROOT / ".claude" / "skills"
+PLUGIN_ROOT = REPO_ROOT / "dist" / "claude" / "plugin" / "ai-project-setup"
+PLUGIN_MANIFEST_OUTPUT = PLUGIN_ROOT / ".claude-plugin" / "plugin.json"
+PLUGIN_SKILLS_OUTPUT = PLUGIN_ROOT / "skills"
 RENDERER = "adapters/claude/render.py"
-
-
-def render_claude_md(items) -> str:
-    rules = sorted([item for item in items if item.kind == "rule"], key=lambda item: item.item_id)
-    source_ids = ", ".join(f"`{item.item_id}`" for item in rules)
-    lines = [
-        generated_header(RENDERER),
-        "",
-        "# Claude Instructions",
-        "",
-        "This generated file adapts canonical repository rules for Claude Code.",
-        "Canonical policy and procedure remain in `core/`.",
-        "",
-        f"Sources: {source_ids}",
-        "",
-    ]
-    for item in rules:
-        lines.extend(
-            [
-                f"## {title(item)}",
-                "",
-                f"Source: `{item.item_id}`",
-                "",
-                body_without_title(item.body),
-                "",
-            ]
-        )
-    lines.append("Generated skills are under `.claude/skills/<name>/SKILL.md`.")
-    return "\n".join(lines).rstrip() + "\n"
 
 
 def render_skill(item) -> str:
@@ -78,11 +50,23 @@ def render_skill(item) -> str:
     )
 
 
+def render_plugin_manifest() -> str:
+    manifest = {
+        "name": "ai-project-setup",
+        "description": "Canonical repository guidance and workflows for AI project setup.",
+        "version": "0.1.0",
+        "author": {
+            "name": "ai-project-setup",
+        },
+    }
+    return json.dumps(manifest, indent=2, sort_keys=False) + "\n"
+
+
 def rendered_outputs() -> dict[Path, str]:
     items = canonical_items(REPO_ROOT)
-    outputs = {CLAUDE_OUTPUT: render_claude_md(items)}
+    outputs = {PLUGIN_MANIFEST_OUTPUT: render_plugin_manifest()}
     for item in sorted([candidate for candidate in items if candidate.kind == "skill"], key=lambda i: i.item_id):
-        outputs[SKILLS_OUTPUT / skill_name(item.item_id) / "SKILL.md"] = render_skill(item)
+        outputs[PLUGIN_SKILLS_OUTPUT / skill_name(item.item_id) / "SKILL.md"] = render_skill(item)
     return outputs
 
 
@@ -94,13 +78,13 @@ def check_outputs(outputs: dict[Path, str]) -> int:
         if path.read_text(encoding="utf-8") != rendered:
             print(f"{rel(REPO_ROOT, path)}: generated output is stale", file=sys.stderr)
             return 1
-    print(f"{rel(REPO_ROOT, OUTPUT_ROOT)} is up to date")
+    print("dist/claude/plugin is up to date")
     return 0
 
 
 def write_outputs(outputs: dict[Path, str]) -> None:
-    if SKILLS_OUTPUT.exists():
-        shutil.rmtree(SKILLS_OUTPUT)
+    if PLUGIN_ROOT.exists():
+        shutil.rmtree(PLUGIN_ROOT)
     for path, rendered in sorted(outputs.items()):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(rendered, encoding="utf-8")

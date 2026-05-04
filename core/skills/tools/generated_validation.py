@@ -20,6 +20,7 @@ CHECKS = (
     ("windsurf", "adapters/windsurf/render.py"),
 )
 MANIFEST_CHECK = "core/skills/tools/generated_manifest.py"
+INSTALL_MANIFEST_CHECK = "core/skills/tools/install_manifest.py"
 
 
 def main() -> int:
@@ -37,6 +38,12 @@ def main() -> int:
     result = subprocess.run(command, cwd=REPO_ROOT, check=False)
     if result.returncode != 0:
         failures.append("generated manifest")
+
+    command = [sys.executable, INSTALL_MANIFEST_CHECK, "--check"]
+    print(f"checking install manifests: {' '.join(command)}", flush=True)
+    result = subprocess.run(command, cwd=REPO_ROOT, check=False)
+    if result.returncode != 0:
+        failures.append("install manifests")
 
     if failures:
         print("generated validation failed", file=sys.stderr)

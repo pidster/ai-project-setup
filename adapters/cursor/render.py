@@ -11,7 +11,15 @@ from typing import Any
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_PATH = REPO_ROOT / "dist" / "cursor" / ".cursor" / "rules" / "canonical-guidance.mdc"
+OUTPUT_PATH = (
+    REPO_ROOT
+    / "dist"
+    / "cursor"
+    / "repo-files"
+    / ".cursor"
+    / "rules"
+    / "canonical-guidance.mdc"
+)
 CANONICAL_ROOTS = (
     REPO_ROOT / "core" / "rules" / "atomic",
     REPO_ROOT / "core" / "rules" / "languages",

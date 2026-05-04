@@ -4,8 +4,8 @@ Renders canonical content into OpenCode surfaces.
 
 Current outputs:
 
-- `dist/opencode/AGENTS.md`
-- `dist/opencode/.opencode/skills/*/SKILL.md`
+- `dist/opencode/repo-files/AGENTS.md`
+- `dist/opencode/repo-files/.opencode/skills/*/SKILL.md`
 
 Run:
 

@@ -4,8 +4,8 @@ Renders canonical content into GitHub Copilot surfaces.
 
 Current outputs:
 
-- `dist/copilot/.github/copilot-instructions.md`
-- `dist/copilot/.github/skills/*/SKILL.md`
+- `dist/copilot/repo-files/.github/copilot-instructions.md`
+- `dist/copilot/repo-files/.github/skills/*/SKILL.md`
 
 Run:
 

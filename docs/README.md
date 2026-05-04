@@ -29,8 +29,8 @@ details, sources, caveats, and adapter notes live in the linked vendor pages.
   mapping.
 - [Plugin models](plugin-models.md): shared vocabulary for direct configuration,
   module plugins, and installable plugin packages.
-- [Distribution and install plan](distribution-install-plan.md): planned
-  `dist/` contract and NPX installer behavior.
+- [Distribution and install contract](distribution-install-plan.md): current
+  one-distribution-per-vendor `dist/` contract and NPX installer behavior.
 - [Activity skill backlog](activity-skill-backlog.md): implemented
   compositional activity skills and original batching rationale.
 

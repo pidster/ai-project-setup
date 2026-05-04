@@ -4,7 +4,7 @@ Renders canonical content into Codex surfaces.
 
 Current output:
 
-- `dist/codex/AGENTS.md`
+- `dist/codex/repo-files/AGENTS.md`
 
 Run:
 

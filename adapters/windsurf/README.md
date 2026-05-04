@@ -4,11 +4,11 @@ Renders canonical content into Windsurf surfaces.
 
 Current outputs:
 
-- `dist/windsurf/AGENTS.md`
-- `dist/windsurf/.windsurf/rules/*.md`
-- `dist/windsurf/.windsurf/skills/*/SKILL.md`
-- `dist/windsurf/.windsurf/workflows/*.md`
-- `dist/windsurf/.windsurf/hooks.json`
+- `dist/windsurf/repo-files/AGENTS.md`
+- `dist/windsurf/repo-files/.windsurf/rules/*.md`
+- `dist/windsurf/repo-files/.windsurf/skills/*/SKILL.md`
+- `dist/windsurf/repo-files/.windsurf/workflows/*.md`
+- `dist/windsurf/repo-files/.windsurf/hooks.json`
 
 Run:
 

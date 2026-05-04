@@ -4,8 +4,8 @@ Renders canonical content into Claude Code surfaces.
 
 Current outputs:
 
-- `dist/claude/CLAUDE.md`
-- `dist/claude/.claude/skills/*/SKILL.md`
+- `dist/claude/plugin/ai-project-setup/.claude-plugin/plugin.json`
+- `dist/claude/plugin/ai-project-setup/skills/*/SKILL.md`
 
 Run:
 
@@ -19,5 +19,4 @@ Check freshness:
 python3 adapters/claude/render.py --check
 ```
 
-Future output may include `.claude/rules/`, `.claude/commands/`, and
-`.claude/agents/`.
+Future plugin output may include `commands/`, `agents/`, and plugin hooks.
