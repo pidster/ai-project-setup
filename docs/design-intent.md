@@ -1,9 +1,9 @@
 # Initial Design Intent
 
 This project provides vendor-neutral guidance for configuring repositories so AI
-tools can work effectively, safely, and consistently. It should support multiple
-AI tool surfaces, including Claude, Copilot, Codex, OpenCode, Windsurf, Devin, and
-Cursor, without allowing each vendor format to become its own source of policy.
+tools can work effectively, safely, and consistently. It should support the AI
+tool surfaces listed in `docs/README.md` without allowing each vendor format to
+become its own source of policy.
 
 The project should be treated as a content compiler: canonical rules and skills
 are authored once, then rendered into vendor-specific plugin, rule, skill, or
@@ -128,10 +128,10 @@ policy.
 
 Examples:
 
-- Claude frontmatter for a skill.
-- Cursor rule globs and descriptions.
-- Copilot compact instruction wrappers.
-- Codex execution caveats.
+- vendor-specific frontmatter for a skill.
+- rule globs and descriptions.
+- compact instruction wrappers.
+- runtime execution caveats.
 
 Vendor-specific material should be limited to file placement, formatting,
 frontmatter, invocation hints, capability notes, and execution caveats.
@@ -299,14 +299,14 @@ to run when they are relevant.
 Each vendor should have an explicit capability map. The project should not assume
 all tools support equivalent primitives.
 
-Example:
+Example shape:
 
 ```yaml
-vendor: cursor
+vendor: example
 last_reviewed: 2026-05-02
 confidence: provisional
 sources:
-  - https://docs.cursor.com/en/context
+  - https://vendor.example/docs/agent-config
 supports:
   scoped_rules: true
   globs: true
@@ -314,7 +314,7 @@ supports:
   frontmatter: true
   generated_summary: true
 preferred_outputs:
-  - .cursor/rules/*.mdc
+  - .vendor/rules/*.md
 ```
 
 Adapters should use these capability maps to decide whether to preserve
@@ -331,8 +331,9 @@ review date before changing adapter behavior.
 Use when a vendor supports multiple scoped files, explicit skills, or rich rule
 formats. Preserve atomic and compositional structure where possible.
 
-Likely targets include Claude, Codex, Cursor, and OpenCode, depending on their
-available mechanics.
+Use this when a product supports multiple scoped files, explicit skills, or rich
+rule formats. Product-specific fit and caveats are recorded in `docs/README.md`
+and `docs/vendors/`.
 
 ### Compact Render
 
@@ -340,14 +341,16 @@ Use when a vendor has a limited instruction surface. Emit a concise generated
 summary that prioritizes required rules, high-value workflows, command safety,
 and repository-local commands.
 
-Likely target: Copilot.
+Use this when only plain instruction files are verified for a product surface.
 
 ### Hybrid Render
 
-Use when a vendor supports some scoped files but not true skill composition. Emit
-scoped rules plus compact workflow guidance.
+Use when a vendor supports some rich surfaces but lacks a native equivalent for
+one canonical concept. Emit native surfaces where available and compact guidance
+for missing concepts.
 
-Potential targets include Windsurf and Devin, depending on supported formats.
+Use this for products whose native support is rich in some areas but missing a
+direct equivalent for one canonical concept.
 
 ## Validation Expectations
 

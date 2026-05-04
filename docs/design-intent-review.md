@@ -72,19 +72,22 @@ Follow-up questions:
 
 ## Review 4: Compatibility Across Vendors
 
-Status: partially proven, with initial renderers implemented.
+Status: proven mechanically, with multiple renderers implemented and remaining
+work focused on deeper per-vendor output coverage.
 
 The design identifies three rendering modes: full-fidelity, compact, and hybrid.
-Initial renderers now cover Codex, Cursor, and OpenCode, which exercise compact
-instruction output, rule-style output, and skill-style output.
+Implemented renderers now cover the current vendor adapter set listed in
+`docs/README.md`. They exercise compact instruction output, rule-style output,
+native skill output, workflow output, and generated runtime placeholders.
 
 Findings:
 
 - The capability-map approach avoids assuming every AI tool supports scoped
   rules or skill invocation.
-- Compact rendering is necessary for tools with a small instruction surface.
-- Hybrid rendering is realistic for tools that support scoped memories or rules
-  but not composable skills.
+- Compact rendering remains necessary for product surfaces with a small
+  committed instruction surface.
+- Hybrid rendering is realistic for tools that support some rich concepts but
+  lack a native equivalent for one part of the common profile.
 
 Remaining risk:
 
@@ -128,18 +131,9 @@ Status: complete.
 
 The first milestone proved the model without attempting every vendor immediately.
 
-Recommended first vendor pair:
+The initial milestone considered contrasting vendor surfaces so the renderer
+model would exercise compact instruction output, scoped rules, and richer
+skill-style output without trying to cover every product immediately.
 
-- Codex, because it exercises repo instructions, skills, and execution caveats.
-- Cursor, because it exercises scoped rules, globs, and rule-style rendering.
-
-Alternative pair:
-
-- Codex and Copilot, if the first milestone should prove both rich and compact
-  rendering immediately.
-
-Implemented first renderers:
-
-- Codex, for compact repository instruction output.
-- Cursor, for rule-style output.
-- OpenCode, for richer skill-style output.
+Current renderer coverage has expanded beyond the first milestone. Use
+`docs/README.md` for the current product compatibility table and adapter links.
