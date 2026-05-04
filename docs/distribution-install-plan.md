@@ -20,20 +20,25 @@ vendor's packaging and installation model.
   independent policy sources.
 - Keep vendor capability data, plugin model data, adapter rendering, and
   installer behavior separate.
-- Make `npx ai-project-setup install <vendor>` the user-facing path, without
-  asking users to choose between marketplace, plugin, and repo-file variants.
-- Do not mutate user-level tool configuration, registries, package-manager
-  state, marketplace state, or vendor setup outside the target repository.
+- Use the vendor's own install command for vendor-native marketplace or plugin
+  distributions when a verified command exists.
+- Use `npx ai-project-setup install <vendor>` only for direct repository-file
+  distributions.
+- Do not use NPX as a wrapper around vendor marketplace, plugin, package-manager,
+  user-configuration, or registry operations.
 
 ## Current State
 
 - Generated install manifests exist for all current vendors.
 - Claude's selected distribution is
   `dist/claude/plugin/ai-project-setup/`.
-- Codex, Copilot, Cursor, Devin, OpenCode, and Windsurf currently use
+- Codex's selected distribution is `dist/codex/marketplace/`.
+- Copilot, Cursor, Devin, OpenCode, and Windsurf currently use
   `dist/<vendor>/repo-files/`.
 - The NPX installer is not implemented yet.
-- Marketplace artifacts are not implemented yet.
+- Codex marketplace output is implemented. Other marketplace-capable vendors
+  remain implementation gaps until their native package shape and install
+  command are verified.
 
 ## Distribution Selection
 
@@ -81,7 +86,7 @@ dist/<vendor>/repo-files/
 - Source capability and plugin-model files.
 - Review date, confidence, and source URLs.
 - Selected distribution type and artifact path.
-- Whether the distribution is installable by repository-local CLI writes.
+- Install method, command, and mutation boundary.
 - Rationale for the selected distribution.
 - Ordered install actions or manual steps.
 
@@ -112,9 +117,14 @@ the target repository. Required fields: `surface`, `package`, `version`, and
 marketplace selection, package publication, package installation, or vendor
 setup outside version control. Required fields: `summary` and `instructions`.
 
+`vendor_command` records a verified vendor command for a native marketplace or
+plugin distribution. Required fields: `command`, `summary`, `mutates`, and
+`manual`.
+
 Only `copy_file`, `copy_tree`, and `merge_structured_file` may write during
 `install`, and all targets must remain inside the target repository.
-`external_package` and `manual_step` must be reported, not executed.
+`external_package`, `manual_step`, and `vendor_command` must be reported, not
+executed by the NPX installer.
 
 ## CLI Contract
 
@@ -141,24 +151,31 @@ Flags:
 --force
 ```
 
-`list` prints available vendors, selected distribution type, and review
-confidence.
+`list` prints available vendors, selected distribution type, install method, and
+review confidence.
 
 `plan <vendor>` prints the selected distribution, rationale, target repository,
-planned repository writes, external package references, manual steps, skipped
-writes, and warnings. It performs no writes.
+planned repository writes for `repo_files`, vendor install commands for native
+distributions, external package references, manual steps, skipped writes, and
+warnings. It performs no writes.
 
-`install <vendor>` applies repository-local write actions from the selected
-plan. It uses the current working directory as the target repository unless
-`--repo <path>` is provided. It must still report external package references
-and manual steps.
+`install <vendor>` applies repository-local write actions only when the selected
+distribution uses `install.method: npx`. It uses the current working directory
+as the target repository unless `--repo <path>` is provided.
+
+For `install.method: vendor`, `install <vendor>` must print the verified vendor
+command and exit without mutating the repository or user configuration.
+
+For `install.method: manual`, `install <vendor>` must print the manual steps and
+exit without mutating the repository or user configuration.
 
 The CLI must not expose a distribution-mode choice. The generated manifest is
 the source of truth for the single selected distribution.
 
 ## Safety
 
-The installer must write only inside the target repository.
+The NPX installer must write only inside the target repository, and only for
+`repo_files` distributions.
 
 Target paths in manifests must be relative paths. They must not be absolute,
 empty, contain parent-directory traversal, or resolve outside the target repo
@@ -177,9 +194,10 @@ install would execute.
 must still obey repository-boundary checks.
 
 Installer implementations must not execute arbitrary commands from manifests.
-External commands, package-manager commands, marketplace operations, user-config
-edits, and vendor product setup belong in `manual_step` text unless a later
-review explicitly adds a narrowly validated action type.
+Vendor commands, package-manager commands, marketplace operations, user-config
+edits, and vendor product setup must be reported for the user to run through the
+vendor tool unless a later review explicitly adds a narrowly validated execution
+path.
 
 ## Validation
 
@@ -198,11 +216,14 @@ Validation should check:
   packaging is present.
 - Direct repo-file output exists only when selected for direct configuration or
   as a temporary fallback while a stronger builder is not implemented.
-- `installable_by_cli` is false when every action is external or manual.
+- `install.method` is `vendor` only when a verified vendor command exists.
+- `install.method` is `npx` only for `repo_files` distributions.
+- `install.method` is `manual` when a generated vendor-native artifact exists
+  but no verified vendor command has been captured yet.
 - Manifest actions use only allowlisted action types.
 - Write actions use relative, repository-contained targets.
-- `external_package` and `manual_step` actions are never executed by the
-  installer.
+- `external_package`, `manual_step`, and `vendor_command` actions are never
+  executed by the NPX installer.
 - Generated outputs are fresh relative to canonical content, vendor
   capabilities, plugin model data, and adapter templates.
 

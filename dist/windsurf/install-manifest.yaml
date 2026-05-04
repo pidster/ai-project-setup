@@ -13,8 +13,11 @@ plugin_model:
 distribution:
   type: repo_files
   artifact: "dist/windsurf/repo-files"
-  installable_by_cli: true
   rationale: "Selected repo_files; higher-priority surfaces skipped because marketplace is not a verified vendor surface; plugin is not a verified vendor surface."
+install:
+  method: npx
+  command: "npx ai-project-setup install windsurf"
+  mutates: target_repo
 actions:
   - type: copy_file
     source: "dist/windsurf/repo-files/.windsurf/hooks.json"

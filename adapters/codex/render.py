@@ -1,164 +1,151 @@
 #!/usr/bin/env python3
-"""Render canonical content into Codex-oriented generated output."""
+"""Render canonical content into a Codex marketplace package."""
 
 from __future__ import annotations
 
 import argparse
-from dataclasses import dataclass
+import json
 from pathlib import Path
+import shutil
 import sys
-from typing import Any
 
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_PATH = REPO_ROOT / "dist" / "codex" / "repo-files" / "AGENTS.md"
-CANONICAL_ROOTS = (
-    REPO_ROOT / "core" / "rules" / "atomic",
-    REPO_ROOT / "core" / "rules" / "languages",
-    REPO_ROOT / "core" / "rules" / "compositional",
-    REPO_ROOT / "core" / "skills" / "atomic",
-    REPO_ROOT / "core" / "skills" / "tools",
-    REPO_ROOT / "core" / "skills" / "compositional",
+from render_support import (  # noqa: E402
+    body_without_title,
+    canonical_items,
+    generated_header,
+    rel,
+    skill_name,
+    title,
 )
 
 
-@dataclass(frozen=True)
-class Item:
-    path: Path
-    metadata: dict[str, Any]
-    body: str
-
-    @property
-    def item_id(self) -> str:
-        return str(self.metadata["id"])
-
-    @property
-    def kind(self) -> str:
-        return str(self.metadata["kind"])
-
-    @property
-    def scope(self) -> str:
-        return str(self.metadata["scope"])
-
-    @property
-    def summary(self) -> str:
-        return str(self.metadata["summary"])
+REPO_ROOT = Path(__file__).resolve().parents[2]
+MARKETPLACE_ROOT = REPO_ROOT / "dist" / "codex" / "marketplace"
+MARKETPLACE_MANIFEST_OUTPUT = MARKETPLACE_ROOT / ".agents" / "plugins" / "marketplace.json"
+PLUGIN_ROOT = MARKETPLACE_ROOT / "plugins" / "ai-project-setup"
+PLUGIN_MANIFEST_OUTPUT = PLUGIN_ROOT / ".codex-plugin" / "plugin.json"
+PLUGIN_SKILLS_OUTPUT = PLUGIN_ROOT / "skills"
+OBSOLETE_REPO_FILES_ROOT = REPO_ROOT / "dist" / "codex" / "repo-files"
+OBSOLETE_PLUGIN_ROOT = REPO_ROOT / "dist" / "codex" / "plugin"
+RENDERER = "adapters/codex/render.py"
 
 
-def rel(path: Path) -> str:
-    return str(path.relative_to(REPO_ROOT))
+def render_skill(item) -> str:
+    name = skill_name(item.item_id)
+    return (
+        "---\n"
+        f"name: {name}\n"
+        f"description: {item.summary}\n"
+        f"source_id: {item.item_id}\n"
+        "---\n"
+        "\n"
+        f"{generated_header(RENDERER)}\n"
+        "\n"
+        f"# {title(item)}\n"
+        "\n"
+        "Canonical policy and procedure remain in `core/`.\n"
+        "\n"
+        f"Source: `{item.item_id}`\n"
+        "\n"
+        f"{body_without_title(item.body)}\n"
+    )
 
 
-def parse_scalar(raw: str) -> Any:
-    value = raw.strip()
-    if value == "[]":
-        return []
-    if value == "{}":
-        return {}
-    if value in {"true", "false"}:
-        return value == "true"
-    return value.strip('"').strip("'")
+def render_plugin_manifest() -> str:
+    manifest = {
+        "name": "ai-project-setup",
+        "version": "0.1.0",
+        "description": "Canonical repository guidance and workflows for AI project setup.",
+        "author": {
+            "name": "ai-project-setup",
+        },
+        "skills": "./skills/",
+        "interface": {
+            "displayName": "AI Project Setup",
+            "shortDescription": "Canonical repository guidance and workflows.",
+            "longDescription": "Distribute vendor-neutral AI project setup guidance as Codex skills.",
+            "developerName": "ai-project-setup",
+            "category": "Productivity",
+            "capabilities": ["Read", "Write"],
+        },
+    }
+    return json.dumps(manifest, indent=2, sort_keys=False) + "\n"
 
 
-def parse_markdown(path: Path) -> Item:
-    lines = path.read_text(encoding="utf-8").splitlines()
-    if not lines or lines[0] != "---":
-        raise ValueError(f"{rel(path)}: missing frontmatter")
-    closing_index = lines[1:].index("---") + 1
-
-    metadata: dict[str, Any] = {}
-    current_key: str | None = None
-    for line in lines[1:closing_index]:
-        if not line.strip():
-            continue
-        if line.startswith("  - "):
-            if current_key is None:
-                raise ValueError(f"{rel(path)}: list item without key")
-            metadata.setdefault(current_key, []).append(parse_scalar(line[4:]))
-            continue
-        key, raw_value = line.split(":", 1)
-        current_key = key.strip()
-        raw_value = raw_value.strip()
-        metadata[current_key] = [] if not raw_value else parse_scalar(raw_value)
-
-    body = "\n".join(lines[closing_index + 1 :]).strip()
-    return Item(path=path, metadata=metadata, body=body)
-
-
-def canonical_items() -> list[Item]:
-    paths: list[Path] = []
-    for root in CANONICAL_ROOTS:
-        paths.extend(path for path in root.glob("*.md") if path.is_file())
-    return [parse_markdown(path) for path in sorted(paths)]
+def render_marketplace_manifest() -> str:
+    manifest = {
+        "name": "ai-project-setup",
+        "interface": {
+            "displayName": "AI Project Setup",
+        },
+        "plugins": [
+            {
+                "name": "ai-project-setup",
+                "source": {
+                    "source": "local",
+                    "path": "./plugins/ai-project-setup",
+                },
+                "policy": {
+                    "installation": "AVAILABLE",
+                    "authentication": "ON_INSTALL",
+                },
+                "category": "Productivity",
+            }
+        ],
+    }
+    return json.dumps(manifest, indent=2, sort_keys=False) + "\n"
 
 
-def body_without_title(body: str) -> str:
-    lines = body.splitlines()
-    if lines and lines[0].startswith("# "):
-        return "\n".join(lines[1:]).strip()
-    return body.strip()
+def rendered_outputs() -> dict[Path, str]:
+    items = canonical_items(REPO_ROOT)
+    outputs = {
+        MARKETPLACE_MANIFEST_OUTPUT: render_marketplace_manifest(),
+        PLUGIN_MANIFEST_OUTPUT: render_plugin_manifest(),
+    }
+    for item in sorted([candidate for candidate in items if candidate.kind == "skill"], key=lambda i: i.item_id):
+        outputs[PLUGIN_SKILLS_OUTPUT / skill_name(item.item_id) / "SKILL.md"] = render_skill(item)
+    return outputs
 
 
-def section(title: str, items: list[Item]) -> list[str]:
-    if not items:
-        return []
-    lines = [f"## {title}", ""]
-    for item in sorted(items, key=lambda candidate: candidate.item_id):
-        lines.extend(
-            [
-                f"### {item.body.splitlines()[0].lstrip('# ').strip()}",
-                "",
-                f"Source: `{item.item_id}`",
-                "",
-                body_without_title(item.body),
-                "",
-            ]
-        )
-    return lines
+def check_outputs(outputs: dict[Path, str]) -> int:
+    for path, rendered in sorted(outputs.items()):
+        if not path.exists():
+            print(f"{rel(REPO_ROOT, path)}: missing generated output", file=sys.stderr)
+            return 1
+        if path.read_text(encoding="utf-8") != rendered:
+            print(f"{rel(REPO_ROOT, path)}: generated output is stale", file=sys.stderr)
+            return 1
+    for obsolete_root in (OBSOLETE_REPO_FILES_ROOT, OBSOLETE_PLUGIN_ROOT):
+        if obsolete_root.exists():
+            print(f"{rel(REPO_ROOT, obsolete_root)}: obsolete generated artifact", file=sys.stderr)
+            return 1
+    print("dist/codex/marketplace is up to date")
+    return 0
 
 
-def render() -> str:
-    items = canonical_items()
-    rules = [item for item in items if item.kind == "rule"]
-    skills = [item for item in items if item.kind == "skill"]
-    source_ids = ", ".join(f"`{item.item_id}`" for item in sorted(items, key=lambda i: i.item_id))
-
-    lines = [
-        "<!-- Generated by adapters/codex/render.py. Do not edit directly. -->",
-        "",
-        "# Codex Instructions",
-        "",
-        "This generated file adapts canonical repository guidance for Codex.",
-        "Canonical policy and procedure remain in `core/`.",
-        "",
-        f"Sources: {source_ids}",
-        "",
-    ]
-    lines.extend(section("Rules", rules))
-    lines.extend(section("Skills", skills))
-    return "\n".join(lines).rstrip() + "\n"
+def write_outputs(outputs: dict[Path, str]) -> None:
+    if MARKETPLACE_ROOT.exists():
+        shutil.rmtree(MARKETPLACE_ROOT)
+    for obsolete_root in (OBSOLETE_REPO_FILES_ROOT, OBSOLETE_PLUGIN_ROOT):
+        if obsolete_root.exists():
+            shutil.rmtree(obsolete_root)
+    for path, rendered in sorted(outputs.items()):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(rendered, encoding="utf-8")
+        print(f"wrote {rel(REPO_ROOT, path)}")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="check generated output freshness")
     args = parser.parse_args()
-
-    rendered = render()
+    outputs = rendered_outputs()
     if args.check:
-        if not OUTPUT_PATH.exists():
-            print(f"{rel(OUTPUT_PATH)}: missing generated output", file=sys.stderr)
-            return 1
-        current = OUTPUT_PATH.read_text(encoding="utf-8")
-        if current != rendered:
-            print(f"{rel(OUTPUT_PATH)}: generated output is stale", file=sys.stderr)
-            return 1
-        print(f"{rel(OUTPUT_PATH)} is up to date")
-        return 0
-
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_text(rendered, encoding="utf-8")
-    print(f"wrote {rel(OUTPUT_PATH)}")
+        return check_outputs(outputs)
+    write_outputs(outputs)
     return 0
 
 

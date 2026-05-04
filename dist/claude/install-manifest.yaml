@@ -13,12 +13,15 @@ plugin_model:
 distribution:
   type: plugin
   artifact: "dist/claude/plugin/ai-project-setup"
-  installable_by_cli: false
   rationale: "Selected plugin; higher-priority surfaces skipped because marketplace artifact is not generated."
+install:
+  method: manual
+  command: ""
+  mutates: external
 actions:
   - type: manual_step
     summary: "Load or publish the generated Claude Code plugin package."
-    instructions: "Use dist/claude/plugin/ai-project-setup with Claude Code plugin development or marketplace tooling, such as claude --plugin-dir, then enable the plugin in Claude Code."
+    instructions: "Use dist/claude/plugin/ai-project-setup with Claude Code plugin development or marketplace tooling, then enable the plugin in Claude Code."
 sources:
   - https://docs.claude.com/en/docs/claude-code/plugins
   - https://docs.claude.com/en/docs/claude-code/hooks

@@ -13,8 +13,11 @@ plugin_model:
 distribution:
   type: repo_files
   artifact: "dist/copilot/repo-files"
-  installable_by_cli: true
   rationale: "Selected repo_files; higher-priority surfaces skipped because marketplace artifact is not generated; plugin artifact is not generated."
+install:
+  method: npx
+  command: "npx ai-project-setup install copilot"
+  mutates: target_repo
 actions:
   - type: copy_file
     source: "dist/copilot/repo-files/.github/copilot-instructions.md"

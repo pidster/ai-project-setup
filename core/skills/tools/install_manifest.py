@@ -21,7 +21,7 @@ DELIVERABLE_DIRS = {
     "repo_files": "repo-files",
 }
 WRITE_ACTIONS = {"copy_file", "copy_tree", "merge_structured_file"}
-NON_EXECUTED_ACTIONS = {"external_package", "manual_step"}
+NON_EXECUTED_ACTIONS = {"external_package", "manual_step", "vendor_command"}
 ACTION_TYPES = WRITE_ACTIONS | NON_EXECUTED_ACTIONS
 
 
@@ -35,7 +35,9 @@ class Action:
 class Distribution:
     distribution_type: str
     artifact: str
-    installable_by_cli: bool
+    install_method: str
+    install_command: str
+    mutates: str
     rationale: str
     actions: list[Action]
 
@@ -186,8 +188,32 @@ def plugin_package_root(vendor: str) -> Path:
     return root
 
 
+def install_details(vendor: str, deliverable_type: str) -> tuple[str, str, str]:
+    if deliverable_type == "repo_files":
+        return ("npx", f"npx ai-project-setup install {vendor}", "target_repo")
+    if vendor == "codex" and deliverable_type == "marketplace":
+        return (
+            "vendor",
+            "codex plugin marketplace add dist/codex/marketplace",
+            "user_config",
+        )
+    return ("manual", "", "external")
+
+
 def manual_actions(vendor: str, deliverable_type: str) -> list[Action]:
     root = artifact_root(vendor, deliverable_type)
+    if vendor == "codex" and deliverable_type == "marketplace":
+        return [
+            Action(
+                action_type="vendor_command",
+                fields={
+                    "command": "codex plugin marketplace add dist/codex/marketplace",
+                    "summary": "Install the generated Codex marketplace with Codex CLI.",
+                    "mutates": "user_config",
+                    "manual": "true",
+                },
+            )
+        ]
     if vendor == "claude" and deliverable_type == "plugin":
         package_root = plugin_package_root(vendor)
         return [
@@ -197,8 +223,21 @@ def manual_actions(vendor: str, deliverable_type: str) -> list[Action]:
                     "summary": "Load or publish the generated Claude Code plugin package.",
                     "instructions": (
                         f"Use {rel(package_root)} with Claude Code plugin development "
-                        "or marketplace tooling, such as claude --plugin-dir, then "
-                        "enable the plugin in Claude Code."
+                        "or marketplace tooling, then enable the plugin in Claude Code."
+                    ),
+                },
+            )
+        ]
+    if vendor == "codex" and deliverable_type == "plugin":
+        package_root = plugin_package_root(vendor)
+        return [
+            Action(
+                action_type="manual_step",
+                fields={
+                    "summary": "Install or publish the generated Codex plugin package.",
+                    "instructions": (
+                        f"Use {rel(package_root)} with Codex plugin tooling or add it "
+                        "to a curated plugin marketplace, then enable the plugin in Codex."
                     ),
                 },
             )
@@ -235,25 +274,33 @@ def select_distribution(vendor: str, plugin_model: dict[str, Any]) -> Distributi
     for deliverable_type in DELIVERABLE_ORDER:
         if vendor_supports_deliverable(plugin_model, deliverable_type) and artifact_exists(vendor, deliverable_type):
             if deliverable_type == "repo_files":
+                method, command, mutates = install_details(vendor, deliverable_type)
                 return Distribution(
                     distribution_type=deliverable_type,
                     artifact=rel(artifact_root(vendor, deliverable_type)),
-                    installable_by_cli=True,
+                    install_method=method,
+                    install_command=command,
+                    mutates=mutates,
                     rationale=selection_rationale(vendor, plugin_model, deliverable_type),
                     actions=repo_file_actions(vendor),
                 )
             root = plugin_package_root(vendor) if deliverable_type == "plugin" else artifact_root(vendor, deliverable_type)
+            method, command, mutates = install_details(vendor, deliverable_type)
             return Distribution(
                 distribution_type=deliverable_type,
                 artifact=rel(root),
-                installable_by_cli=False,
+                install_method=method,
+                install_command=command,
+                mutates=mutates,
                 rationale=selection_rationale(vendor, plugin_model, deliverable_type),
                 actions=manual_actions(vendor, deliverable_type),
             )
     return Distribution(
         distribution_type="none",
         artifact="none",
-        installable_by_cli=False,
+        install_method="none",
+        install_command="",
+        mutates="none",
         rationale="No supported generated distribution artifact exists for this vendor.",
         actions=[],
     )
@@ -297,8 +344,11 @@ def render_manifest(manifest: Manifest) -> str:
         "distribution:",
         f"  type: {distribution.distribution_type}",
         f"  artifact: {quote(distribution.artifact)}",
-        f"  installable_by_cli: {bool_text(distribution.installable_by_cli)}",
         f"  rationale: {quote(distribution.rationale)}",
+        "install:",
+        f"  method: {distribution.install_method}",
+        f"  command: {quote(distribution.install_command)}",
+        f"  mutates: {distribution.mutates}",
         "actions:",
     ]
     if distribution.actions:
@@ -340,6 +390,15 @@ def validate_action(vendor: str, action: Action, errors: list[str]) -> None:
             value = action.fields.get(field)
             if not isinstance(value, str) or not value:
                 errors.append(f"{vendor}: external_package missing {field}")
+    elif action.action_type == "vendor_command":
+        for field in ("command", "summary", "mutates", "manual"):
+            value = action.fields.get(field)
+            if not isinstance(value, str) or not value:
+                errors.append(f"{vendor}: vendor_command missing {field}")
+        if action.fields.get("mutates") not in {"user_config", "external"}:
+            errors.append(f"{vendor}: vendor_command must not mutate target repo")
+        if action.fields.get("manual") != "true":
+            errors.append(f"{vendor}: vendor_command must be manual")
 
 
 def generated_artifact_dirs(vendor: str) -> list[str]:
@@ -366,10 +425,22 @@ def validate_manifest(manifest: Manifest, errors: list[str]) -> None:
             errors.append(f"{manifest.vendor}: selected distribution is not vendor-supported")
         if not artifact_exists(manifest.vendor, manifest.distribution.distribution_type):
             errors.append(f"{manifest.vendor}: selected distribution artifact is missing")
-    if manifest.distribution.installable_by_cli and not manifest.distribution.actions:
-        errors.append(f"{manifest.vendor}: installable distribution has no actions")
-    if manifest.distribution.distribution_type != "repo_files" and manifest.distribution.installable_by_cli:
-        errors.append(f"{manifest.vendor}: non-repo distribution must not be CLI-installable yet")
+    if manifest.distribution.install_method not in {"vendor", "npx", "manual", "none"}:
+        errors.append(f"{manifest.vendor}: unknown install method {manifest.distribution.install_method}")
+    if manifest.distribution.distribution_type == "repo_files":
+        if manifest.distribution.install_method != "npx":
+            errors.append(f"{manifest.vendor}: repo-files distributions must use npx install")
+        if manifest.distribution.mutates != "target_repo":
+            errors.append(f"{manifest.vendor}: repo-files install must mutate only the target repo")
+    elif manifest.distribution.distribution_type != "none":
+        if manifest.distribution.install_method == "npx":
+            errors.append(f"{manifest.vendor}: npx must not install vendor-native distributions")
+        if any(action.action_type in WRITE_ACTIONS for action in manifest.distribution.actions):
+            errors.append(f"{manifest.vendor}: vendor-native distributions must not have repo write actions")
+    if manifest.distribution.install_method == "vendor" and not manifest.distribution.install_command:
+        errors.append(f"{manifest.vendor}: vendor install method requires a command")
+    if manifest.distribution.install_method == "npx" and not manifest.distribution.actions:
+        errors.append(f"{manifest.vendor}: npx-installable distribution has no actions")
 
     for action in manifest.distribution.actions:
         validate_action(manifest.vendor, action, errors)

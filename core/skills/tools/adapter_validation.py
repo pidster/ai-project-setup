@@ -25,12 +25,7 @@ IMPLEMENTED_RENDERERS = {
     },
     "codex": {
         "renderer": REPO_ROOT / "adapters" / "codex" / "render.py",
-        "outputs": [
-            {
-                "path": REPO_ROOT / "dist" / "codex" / "repo-files" / "AGENTS.md",
-                "source_ids": "all",
-            }
-        ],
+        "outputs": [],
     },
     "cursor": {
         "renderer": REPO_ROOT / "adapters" / "cursor" / "render.py",
@@ -161,6 +156,20 @@ def populate_dynamic_outputs(source_items: dict[str, dict[str, Any]]) -> None:
         claude_outputs,
         source_items,
         REPO_ROOT / "dist" / "claude" / "plugin" / "ai-project-setup" / "skills",
+    )
+
+    codex_outputs = IMPLEMENTED_RENDERERS["codex"]["outputs"]
+    codex_outputs.clear()
+    append_skill_outputs(
+        codex_outputs,
+        source_items,
+        REPO_ROOT
+        / "dist"
+        / "codex"
+        / "marketplace"
+        / "plugins"
+        / "ai-project-setup"
+        / "skills",
     )
 
     copilot_outputs = IMPLEMENTED_RENDERERS["copilot"]["outputs"]

@@ -1,0 +1,20 @@
+{
+  "name": "ai-project-setup",
+  "version": "0.1.0",
+  "description": "Canonical repository guidance and workflows for AI project setup.",
+  "author": {
+    "name": "ai-project-setup"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI Project Setup",
+    "shortDescription": "Canonical repository guidance and workflows.",
+    "longDescription": "Distribute vendor-neutral AI project setup guidance as Codex skills.",
+    "developerName": "ai-project-setup",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ]
+  }
+}
